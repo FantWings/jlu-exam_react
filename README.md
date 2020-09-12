@@ -13,7 +13,7 @@
 ### 操作步骤
 
 - [登录吉林大学网络教育平台](http://dec.jlu.edu.cn/baozi/cmslogin.jsp)
-- 进入[作业系统](http://dec.jlu.edu.cn/jludec/work/work/student/index_admin.jsp（未登陆之前点这个链接会报错）
+- 进入[作业系统](http://dec.jlu.edu.cn/jludec/work/work/student/index_admin.jsp)（未登陆之前点这个链接会报错）
 - 在作业管理系统，选择要做的作业，点击开始考试
 - 按下 F12 键，打开浏览器调试工具
 - 选择"网络"，在筛选器上筛选“XHR”
