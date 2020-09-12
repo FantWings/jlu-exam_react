@@ -31,6 +31,6 @@
 - 安装 flask 扩展 `pip install flask`
 - 使用命令将代码 clone 至本地：
   `git clone https://github.com/FantWings/jlu_homework_helper.git`
-- 使用`cp .token token`复制一份 token 文件，并修改里面的内容为你想要的 token（越长越好）
+- 使用`cp .config config`命令复制一份配置文件，并修改里面的 token 字段为你想要的 token（越长越好）
 - 运行程序 `flask run`，浏览器输入地址 http://localhost:5000 即可访问
   - 默认监听 127.0.0.1:5000，如果需要任意网络访问请使用参数-h 0.0.0.0（非常不建议）
