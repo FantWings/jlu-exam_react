@@ -8,7 +8,7 @@
 
 ## 使用方法
 
-**在线使用 https://exam.furrys.cn**
+**在线使用：https://exam.furrys.cn**
 
 ### 操作步骤
 
@@ -25,12 +25,12 @@
 
 环境需求：3.X 或以上的 Python && 1.1.X 以上的 Flask 库版本
 
-## 部署方法
+## 在自己电脑/服务器上部署
 
 - 请确保系统内安装了 3.X 或以上的 Python 版本，使用`python -v`查看 Python 版本。
 - 安装 flask 扩展 `pip install flask`
 - 使用命令将代码 clone 至本地：
   `git clone https://github.com/FantWings/jlu_homework_helper.git`
 - 使用`cp .token token`复制一份 token 文件，并修改里面的内容为你想要的 token（越长越好）
-- 运行程序 `flask run`
-  - 默认监听 127.0.0.1，如果需要任意网络访问请使用参数-h 0.0.0.0（非常不建议）
+- 运行程序 `flask run`，浏览器输入地址 http://localhost:5000 即可访问
+  - 默认监听 127.0.0.1:5000，如果需要任意网络访问请使用参数-h 0.0.0.0（非常不建议）
