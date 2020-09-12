@@ -3,11 +3,14 @@
 **吉林大学在线教育作业解析工具，从 HTTP 包中直接获取试卷/作业答案**
 ![screenshot](static/img/demo.png)
 适用范围：吉林大学弘成科技发展有限公司开发的学生作业系统
+
 程序语言：Python3，Flask
 
 ## 使用方法
 
-在线使用 https://exam.furrys.cn
+**在线使用 https://exam.furrys.cn**
+
+### 操作步骤
 
 - [登录吉林大学网络教育平台](http://dec.jlu.edu.cn/baozi/cmslogin.jsp)
 - 进入[作业系统](http://dec.jlu.edu.cn/jludec/work/work/student/index_admin.jsp（未登陆之前点这个链接会报错）
