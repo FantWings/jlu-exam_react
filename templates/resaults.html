@@ -7,92 +7,94 @@
     <title>作业解析结果</title>
   </head>
   <body>
-    <div class="title">
-      <h2>问卷解析结果</h2>
-      <small>下面是服务器返回的解析结果，需要解析其他问卷？<a href="/">返回首页</a></small>
-      <span class="warn">请适度使用该工具！如行为太过明显导致的问题本工具不会为你付任何责任！</span></span>
-    </div>
-    {% if answer['single'] %}
-    <div class="answer_contain">
-      <h3 class="q_type">单选题</h3>
-      {% for data in answer['single'] %}
-      <div class="answer_block">
-        <span class="answer">{{data['answer']}}</span>
-        <div>
-          <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
-          <span class="question">{{data['question']}}</span>
-        </div>
+    <div class="container">
+      <div class="title">
+        <h2>问卷解析结果</h2>
+        <small>下面是服务器返回的解析结果，需要解析其他问卷？<a href="/">返回首页</a></small>
+        <span class="warn">本工具仅供交流学习用途，请适度使用！任何因本工具导致的问题将不会为你付任何责任！</span></span>
       </div>
-      {% endfor %}
-    </div>
-    {% endif %} {% if answer['multi'] %}
-    <div class="answer_contain">
-      <h3 class="q_type">多选题</h3>
-      {% for data in answer['multi'] %}
-      <div class="answer_block">
-        <span class="multi_answer">{{data['answer']}}</span>
-        <div>
-          <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
-          <span class="question">{{data['question']}}</span>
+      {% if answer['single'] %}
+      <div class="answer_contain">
+        <h3 class="q_type">单选题</h3>
+        {% for data in answer['single'] %}
+        <div class="answer_block">
+          <span class="answer">{{data['answer']}}</span>
+          <div>
+            <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
+            <span class="question">{{data['question']}}</span>
+          </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %} {% if answer['judge'] %}
-    <div class="answer_contain">
-      <h3 class="q_type">判断题</h3>
-      {% for data in answer['judge'] %}
-      <div class="answer_block">
-        <span class="answer">{{data['answer']}}</span>
-        <div>
-          <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
-          <span class="question">{{data['question']}}</span>
+      {% endif %} {% if answer['multi'] %}
+      <div class="answer_contain">
+        <h3 class="q_type">多选题</h3>
+        {% for data in answer['multi'] %}
+        <div class="answer_block">
+          <span class="multi_answer">{{data['answer']}}</span>
+          <div>
+            <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
+            <span class="question">{{data['question']}}</span>
+          </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    {% if answer['combound'] %}
-      {% for value in answer['combound'] %}
-        {% if value == "fill_in" %}
-        <div class="answer_contain">
-          <h3 class="q_type">完形填空</h3>
-          {% for data in answer['combound']['fill_in'] %}
-            {% if data['is_last'] %}
+      {% endif %} {% if answer['judge'] %}
+      <div class="answer_contain">
+        <h3 class="q_type">判断题</h3>
+        {% for data in answer['judge'] %}
+        <div class="answer_block">
+          <span class="answer">{{data['answer']}}</span>
+          <div>
+            <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
+            <span class="question">{{data['question']}}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+  
+      {% if answer['combound'] %}
+        {% for value in answer['combound'] %}
+          {% if value == "fill_in" %}
+          <div class="answer_contain">
+            <h3 class="q_type">完形填空</h3>
+            {% for data in answer['combound']['fill_in'] %}
+              {% if data['is_last'] %}
+                <div class="answer_block last">
+              {% else %}
+                <div class="answer_block">
+              {% endif %}
+                <span class="answer">{{data['answer']}}</span>
+                <div>
+                  <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
+                  <span class="question">{{data['question']}}</span>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if value == "fill_in" %}
+          <div class="answer_contain">
+            <h3 class="q_type">阅读理解</h3>
+            {% for data in answer['combound']['read_understand'] %}
+              {% if data['is_last'] %}
               <div class="answer_block last">
-            {% else %}
-              <div class="answer_block">
-            {% endif %}
-              <span class="answer">{{data['answer']}}</span>
-              <div>
-                <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
-                <span class="question">{{data['question']}}</span>
+              {% else %}
+                <div class="answer_block">
+              {% endif %}
+                <span class="answer">{{data['answer']}}</span>
+                <div>
+                  <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
+                  <span class="question">{{data['question']}}</span>
+                </div>
               </div>
-            </div>
-          {% endfor %}
-        </div>
-        {% endif %}
-        {% if value == "fill_in" %}
-        <div class="answer_contain">
-          <h3 class="q_type">阅读理解</h3>
-          {% for data in answer['combound']['read_understand'] %}
-            {% if data['is_last'] %}
-            <div class="answer_block last">
-            {% else %}
-              <div class="answer_block">
-            {% endif %}
-              <span class="answer">{{data['answer']}}</span>
-              <div>
-                <span class="q_id">{{data['quesion_id']}} <small class="question_type">{{ data['question_type'] }}</small></span>
-                <span class="question">{{data['question']}}</span>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+            {% endfor %}
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
     <footer><p>版本号 version 1.1   适用于 吉林大学弘成科技发展有限公司 学生作业系统</p></footer></footer>
   </body>
 </html>

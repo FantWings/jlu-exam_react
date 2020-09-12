@@ -108,13 +108,14 @@ class Select:
                 answer = {
                     "question_type": value['questiontypename'],
                     "quesion_id": "第%s题" % (key),
-                    "question": "本题为完形填空，没有题目",
+                    "question": value['stem'].lstrip('<p>').rstrip('</p>'),
                     "answer": self.answer_dict[value['answer']['id']]
                 }
                 if i == key:
                     answer["is_last"] = True
                 if value['stem'] == "":
                     answer['question_master_type'] = "fill_in"
+                    answer['question'] = "本题为完形填空，没有题目"
                     answers['fill_in'].append(answer)
                 else:
                     answer['question_master_type'] = "read_understand"
