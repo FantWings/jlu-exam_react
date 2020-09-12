@@ -2,7 +2,8 @@ body {
   background: #f9f9fb;
 }
 .container {
-  margin: 80px 120px;
+  margin: 80px auto;
+  max-width: 1000px;
 }
 a {
   text-decoration: none;
@@ -19,7 +20,7 @@ a:hover {
   display: block;
   background-color: #fa4e4e;
   color: #f9f9fb;
-  margin: 30px 40px;
+  margin: 30px 0;
   padding: 10px;
   box-shadow: 8px 0px 20px rgba(187, 0, 0, 0.16);
 }
@@ -38,8 +39,8 @@ form input[type='password'] {
 }
 .answer_contain {
   padding: 32px;
-  box-shadow: 8px 0px 20px rgba(0, 68, 187, 0.16);
-  margin: 30px 40px;
+  box-shadow: 0px 0px 35px #e7e7ef;
+  margin: 65px auto;
 }
 .answer_contain .q_type {
   text-align: center;
