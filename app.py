@@ -9,7 +9,8 @@ def index():
         return render_template("index.html")
     if request.method == "POST":
         submit_info = request.form.to_dict()
-        if submit_info.get("token") == open('token', 'r').read():
+        conf = json.load(open('config.json', 'r'))
+        if submit_info.get("token") == conf['token']:
             try:
                 data = json.loads(submit_info['question'])
                 answers = answer_proccesser(data['data']['questions'])
