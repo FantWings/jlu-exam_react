@@ -11,25 +11,25 @@ def index():
         submit_info = request.form.to_dict()
         conf = json.load(open('config.json', 'r'))
         if submit_info.get("token") == conf['token']:
-            try:
-                data = json.loads(submit_info['question'])
-                answers = answer_proccesser(data['data']['questions'])
-                return render_template('resaults.html', answer=answers)
-            except Exception:
-                error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
-                return render_template('index.html', error=error_msg)
+            # try:
+            data = json.loads(submit_info['question'])
+            answers = answer_proccesser(
+                data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
+            return render_template('resaults.html', answer=answers)
+        # except Exception:
+        #     error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
+        #     return render_template('index.html', error=error_msg)
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
             return render_template('index.html', error=error_msg)
 
 
-def answer_proccesser(data):
+def answer_proccesser(data, paper_id, ip_addr):
     pre_proccess = {
         "single": [],
         "multi": [],
         "judge": [],
-        "combound": [],
-        "r_n_q": []
+        "combound": []
     }
 
     for q in data:
@@ -46,10 +46,12 @@ def answer_proccesser(data):
                 pass
 
     answers = {
+        "paper_id": paper_id,
+        "ip_addr": ip_addr,
         "single": Select(pre_proccess).single(),
         "multi": Select(pre_proccess).multi(),
         "judge": judge(pre_proccess),
-        "combound": Select(pre_proccess).combound()
+        "combound": Select(pre_proccess).combound(),
     }
 
     return answers
