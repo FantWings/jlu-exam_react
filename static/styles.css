@@ -35,7 +35,11 @@ form input[type='submit'] {
   margin: 20px auto;
 }
 form input[type='password'] {
-  min-width: 400px;
+  min-width: 280px;
+  padding: 3px;
+}
+form input[type='password']::placeholder {
+  text-align: center;
 }
 .answer_contain {
   padding: 32px;
