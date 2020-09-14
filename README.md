@@ -23,9 +23,9 @@
 - 按下键盘 Ctrl+A（苹果电脑 Command+A）全选，复制预览内容
 - 粘贴至解析工具，输入执行密钥，点击提交。
 
-环境需求：3.X 或以上的 Python && 1.1.X 以上的 Flask 库版本
-
 ## 在自己电脑/服务器上部署
+
+环境需求：3.X 或以上的 Python && 1.1.X 以上的 Flask 库版本
 
 - 请确保系统内安装了 3.X 或以上的 Python 版本，使用`python -v`查看 Python 版本。
 - 安装 flask 扩展 `pip install flask`
