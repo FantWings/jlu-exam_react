@@ -16,10 +16,10 @@ def index():
                 answers = answer_proccesser(data['data']['questions'])
                 return render_template('resaults.html', answer=answers)
             except Exception:
-                error_msg = "你输入的试卷数据不正确，解析失败！"
+                error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
                 return render_template('index.html', error=error_msg)
         else:
-            error_msg = "密钥不正确，请重新输入密钥！"
+            error_msg = "密钥不正确，请重新输入正确的密钥！"
             return render_template('index.html', error=error_msg)
 
 
