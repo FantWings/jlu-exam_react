@@ -116,7 +116,7 @@ class Select:
                     answer["is_last"] = True
                 if value['stem'] == "":
                     answer['question_master_type'] = "fill_in"
-                    answer['question'] = "本题为完形填空，没有题目"
+                    answer['question'] = "本题为完形填空，原文章太长无法显示"
                     answers['fill_in'].append(answer)
                 else:
                     answer['question_master_type'] = "read_understand"
