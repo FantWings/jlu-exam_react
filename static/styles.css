@@ -135,6 +135,7 @@ textarea,
   border: #8d8eff solid 1px;
   min-height: 450px;
   max-height: 600px;
+  padding: 8px;
 }
 footer {
   position: fixed;
