@@ -1,28 +1,55 @@
 from flask import Flask, render_template, request, url_for, make_response
 import json
+from flask_cors import *
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
+# @app.route('/', methods=["GET", "POST"])
+# def index():
+#     if request.method == "GET":
+#         return render_template("index.html")
+#     if request.method == "POST":
+#         submit_info = request.form.to_dict()
+#         conf = json.load(open('config.json', 'r'))
+#         if submit_info.get("token") == conf['token']:
+#             try:
+#                 data = json.loads(submit_info['question'])
+#                 answers = make_response(answer_proccesser(
+#                     data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp']))
+#                 answers.headers['Access-Control-Allow-Origin'] = '*'
+#                 return answers
+#             except Exception:
+#                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
+#                 return render_template('index.html', error=error_msg)
+#         else:
+#             error_msg = "密钥不正确，请重新输入正确的密钥！"
+#             return render_template('index.html', error=error_msg)
 
-
-@app.route('/', methods=["GET", "POST"])
+@app.route('/', methods=["POST"])
+@cross_origin()
 def index():
-    if request.method == "GET":
-        return render_template("index.html")
-    if request.method == "POST":
-        submit_info = request.form.to_dict()
-        conf = json.load(open('config.json', 'r'))
-        if submit_info.get("token") == conf['token']:
-            try:
-                data = json.loads(submit_info['question'])
-                answers = answer_proccesser(
-                    data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
-                return render_template('resaults.html', answer=answers)
-            except Exception:
-                error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
-                return render_template('index.html', error=error_msg)
-        else:
-            error_msg = "密钥不正确，请重新输入正确的密钥！"
-            return render_template('index.html', error=error_msg)
-
+    submit_info = request.get_json()
+    conf = json.load(open('config.json', 'r'))
+    resp = {}
+    if submit_info["token"] == conf['token']:
+        try:
+            data = json.loads(submit_info['question_data'])
+            answers = answer_proccesser(
+                data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
+            resp['status'] = 'success'
+            resp['answers'] = answers
+            return make_response(resp,200)
+        except Exception:
+            error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
+            print(error_msg)
+            resp['status'] = 'error'
+            resp['error_msg'] = error_msg
+            return make_response(resp,200)
+    else:
+        error_msg = "密钥不正确，请重新输入正确的密钥！"
+        print(error_msg)
+        resp['status'] = 'error'
+        resp['error_msg'] = error_msg
+        return make_response(resp,200)
 
 def answer_proccesser(data, paper_id, ip_addr):
     pre_proccess = {
