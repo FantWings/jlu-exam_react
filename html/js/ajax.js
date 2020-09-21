@@ -18,7 +18,7 @@ function submitQuestion() {
 }
 
 function response() {
-    if(httpRequest.readyState==4) {
+    if (httpRequest.readyState==4) {
         if(httpRequest.status==200) {
             var answer = JSON.parse(httpRequest.response)
             console.log(answer)
@@ -28,6 +28,9 @@ function response() {
             if (answer['status']=='error') {
                 showError(answer['error_msg'])
             }
+        }
+        else {
+            showError('与服务器通讯失败！')
         }
     }
 }
@@ -41,22 +44,48 @@ function showError(error) {
 }
 
 
-function createElement(element_name,class_name) {
-    let ele = document.createElement(element_name)
-    ele.class_name = class_name
-    return ele
-}
 
 function showAnswer(answer_data) {
-    let answer_contain = createElement('div','answer_contain')
-    let q_type = createElement('h3','q_type')
-    let answer_block = createElement('div','answer_block')
-    let answer = createElement('span','answer')
-    let q_id = createElement('span','q_id')
-    let question = createElement('span','question')
+    let answer_contain = document.createElement('div')
+    answer_contain.className = 'answer_contain'
 
-    console.log('Bingo')
-    if (answer_data['single']){
+    let q_type = document.createElement('h3')
+    q_type.className = 'q_type'
 
+    let answer_block = document.createElement('div')
+    answer_block.className = 'answer_block'
+
+    let answer = document.createElement('span')
+    answer.className = 'answer'
+
+    let q_id = document.createElement('span')
+    q_id.className = 'q_id'
+
+    let question = document.createElement('span')
+    question.className = 'question'
+
+    let question_type = document.createElement('small')
+    question_type.className = 'question_type'
+
+    if (answer_data['single']) {
+        q_type.innerText = '单选题'
+        contain = document.querySelector('.container')
+        answer_contain.appendChild(q_type)
+        contain.appendChild(answer_contain)
+
+        answer_data['single'].forEach(element => {
+            console.log(element)
+            answer.innerText = element['answer']
+            q_id.innerText = element['quesion_id']
+            question_type.innerText = element['question']
+            
+            q_id.appendChild(question_type)
+
+            answer_block.appendChild(answer)
+            answer_block.appendChild(q_id)
+            answer_block.appendChild(question)
+
+            answer_contain.appendChild(answer_block)
+        })
     }
 }
