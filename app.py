@@ -13,6 +13,7 @@ def index():
         if submit_info.get("token") == conf['token']:
             try:
                 data = json.loads(submit_info['question'])
+                print("\n* 处理来自[ %s ]的试卷分析请求" % (data['data']['sourceIp']))
                 answers = answer_proccesser(
                     data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
                 return render_template('resaults.html', answer=answers)
