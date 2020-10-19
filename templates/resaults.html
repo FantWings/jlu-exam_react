@@ -53,11 +53,10 @@
         </div>
         {% endfor %}
       </div>
-      {% endif %}
-  
+      {% endif %} 
       {% if answer['combound'] %}
         {% for value in answer['combound'] %}
-          {% if value == "fill_in" %}
+          {% if "fill_in" in value %}
           <div class="answer_contain">
             <h3 class="q_type">完形填空</h3>
             {% for data in answer['combound']['fill_in'] %}
@@ -75,7 +74,7 @@
             {% endfor %}
           </div>
           {% endif %}
-          {% if value == "fill_in" %}
+          {% if "read_understand" in value %}
           <div class="answer_contain">
             <h3 class="q_type">阅读理解</h3>
             {% for data in answer['combound']['read_understand'] %}

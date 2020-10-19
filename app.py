@@ -29,7 +29,6 @@ def answer_proccesser(data, paper_id, ip_addr):
         "single": [],
         "multi": [],
         "judge": [],
-        "combound": []
     }
 
     for q in data:
@@ -41,6 +40,7 @@ def answer_proccesser(data, paper_id, ip_addr):
             pre_proccess['judge'].append(q)
         if q['questiontypename'] == '复合':
             try:
+                pre_proccess['combound'] = []
                 pre_proccess['combound'].append(q['subqustionList'])
             except Exception:
                 pass
@@ -51,8 +51,10 @@ def answer_proccesser(data, paper_id, ip_addr):
         "single": Select(pre_proccess).single(),
         "multi": Select(pre_proccess).multi(),
         "judge": judge(pre_proccess),
-        "combound": Select(pre_proccess).combound(),
     }
+
+    if "combound" in pre_proccess:
+        answers['combound'] = Select(pre_proccess).combound()
 
     return answers
 
