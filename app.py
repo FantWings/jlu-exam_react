@@ -13,15 +13,18 @@ def index():
         if submit_info.get("token") == conf['token']:
             try:
                 data = json.loads(submit_info['question'])
-                print("\n* 处理来自[ %s ]的试卷分析请求" % (data['data']['sourceIp']))
+                print("\n* 已处理来自[ %s ]的试卷分析请求，返回答案数据给用户" %
+                      (data['data']['sourceIp']))
                 answers = answer_proccesser(
                     data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
                 return render_template('resaults.html', answer=answers)
             except Exception:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
+                print("\n用户数据内容错误，返回错误消息")
                 return render_template('index.html', error=error_msg)
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
+            print("\n用户密钥错误，返回错误消息")
             return render_template('index.html', error=error_msg)
 
 
