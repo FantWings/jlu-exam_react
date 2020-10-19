@@ -3,8 +3,10 @@ body {
 }
 
 .container {
-  margin: 80px auto;
+  margin: 40px auto;
   max-width: 1000px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 a {
@@ -19,14 +21,16 @@ a:hover {
 
 .title {
   text-align: center;
+  flex: 100%;
 }
 
 .warn {
+  flex: 100%;
   display: none;
   background-color: rgb(250, 78, 78);
   color: #f9f9fb;
   margin: 30px 0;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 8px 0px 20px rgba(187, 0, 0, 0.16);
   h3 {
     margin: 0;
@@ -51,7 +55,8 @@ form {
 .answer_contain {
   padding: 32px;
   box-shadow: 0px 0px 35px rgb(231, 231, 239);
-  margin: 65px auto;
+  margin: 40px auto;
+  flex: 100%;
   .q_type {
     text-align: center;
     margin: 10px 0 30px 0;
@@ -65,7 +70,7 @@ input[type='submit'] {
 .answer_block {
   display: flex;
   margin: 10px 5px;
-  padding: 8px 8px;
+  padding: 10px 8px;
   border: 1px solid rgb(238, 238, 238);
   border-radius: 5px;
   transition: 0.5s;
@@ -75,7 +80,7 @@ input[type='submit'] {
     margin-bottom: 2px;
     .question_type {
       color: rgb(163, 163, 163);
-      margin-left: 4px;
+      margin-left: 6px;
     }
   }
   .question {
@@ -128,7 +133,7 @@ textarea,
 .flex-text-wrap textarea,
 .flex-text-wrap pre {
   white-space: pre-wrap;
-  width: 100%;
+  flex: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -143,12 +148,12 @@ textarea,
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
+  flex: 100%;
   resize: none;
 
   /* IE7 box-sizing fudge factor */
   *height: 94%;
-  *width: 94%;
+  width: 100%;
 }
 
 .flex-text-wrap pre {
@@ -175,4 +180,16 @@ footer {
     text-align: center;
     font-size: small;
   }
+}
+
+#submit {
+  padding: 8px 25px;
+  border-radius: 999em;
+  background-color: #5882dd;
+  color: #fff;
+  margin: 25px auto;
+}
+
+#form_contain {
+  flex: 100%;
 }
