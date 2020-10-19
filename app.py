@@ -79,9 +79,14 @@ class Select:
             answer = {
                 "question_type": value['questiontypename'],
                 "quesion_id": "第%s题" % (key),
-                "question": value['stem'].lstrip('<p>').rstrip('</p>'),
                 "answer": self.answer_dict[value['answer']['id']]
             }
+
+            if len(value['stem']) >= 300:
+                answer['question'] = "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *"
+            else:
+                answer['question'] = value['stem'].lstrip('<p>').rstrip('</p>')
+
             answers.append(answer)
         return answers
 
@@ -95,9 +100,14 @@ class Select:
             answer = {
                 "question_type": value['questiontypename'],
                 "quesion_id": "第%s题" % (key),
-                "question": value['stem'].lstrip('<p>').rstrip('</p>'),
                 "answer": gg
             }
+
+            if len(value['stem']) >= 300:
+                answer['question'] = "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *"
+            else:
+                answer['question'] = value['stem'].lstrip('<p>').rstrip('</p>')
+
             answers.append(answer)
         return answers
 
@@ -139,7 +149,13 @@ def judge(question):
         answer = {
             "question_type": value['questiontypename'],
             "quesion_id": "第%s题" % (key),
-            "question": value['stem'].lstrip('<p>').rstrip('</p>'),
-            "answer": answer_dict[value['answer']['id']]}
+            "answer": answer_dict[value['answer']['id']]
+        }
+
+        if len(value['stem']) >= 300:
+            answer['question'] = "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *"
+        else:
+            answer['question'] = value['stem'].lstrip('<p>').rstrip('</p>')
+
         answers.append(answer)
     return answers
