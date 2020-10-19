@@ -43,6 +43,7 @@ def answer_proccesser(data, paper_id, ip_addr):
         "single": [],
         "multi": [],
         "judge": [],
+        "combound": [],
     }
 
     for q in data:
@@ -54,7 +55,6 @@ def answer_proccesser(data, paper_id, ip_addr):
             pre_proccess['judge'].append(q)
         if q['questiontypename'] == '复合':
             try:
-                pre_proccess['combound'] = []
                 pre_proccess['combound'].append(q['subqustionList'])
             except Exception:
                 pass
@@ -65,10 +65,8 @@ def answer_proccesser(data, paper_id, ip_addr):
         "single": Select(pre_proccess).single(),
         "multi": Select(pre_proccess).multi(),
         "judge": judge(pre_proccess),
+        'combound': elect(pre_proccess).combound(),
     }
-
-    if "combound" in pre_proccess:
-        answers['combound'] = Select(pre_proccess).combound()
 
     return answers
 
@@ -96,7 +94,7 @@ class Select:
                 "answer": self.answer_dict[value['answer']['id']]
             }
 
-            if len(value['stem']) >= 300:
+            if len(value['stem']) >= 200:
                 answer['question'] = "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *"
             else:
                 answer['question'] = value['stem'].lstrip('<p>').rstrip('</p>')
@@ -117,7 +115,7 @@ class Select:
                 "answer": gg
             }
 
-            if len(value['stem']) >= 300:
+            if len(value['stem']) >= 200:
                 answer['question'] = "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *"
             else:
                 answer['question'] = value['stem'].lstrip('<p>').rstrip('</p>')
@@ -166,7 +164,7 @@ def judge(question):
             "answer": answer_dict[value['answer']['id']]
         }
 
-        if len(value['stem']) >= 300:
+        if len(value['stem']) >= 200:
             answer['question'] = "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *"
         else:
             answer['question'] = value['stem'].lstrip('<p>').rstrip('</p>')
