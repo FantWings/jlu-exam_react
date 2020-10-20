@@ -23,19 +23,31 @@ def index():
                     data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
                 resp['status'] = 'success'
                 resp['answers'] = answers
-                return make_response(resp, 200)
+                cors_resp = make_response(resp, 200)
+                cors_resp.headers['Access-Control-Allow-Origin'] = '*'
+                cors_resp.headers['Access-Control-Allow-Method'] = '*'
+                cors_resp.headers['Access-Control-Allow-Headers'] = '*'
+                return cors_resp
             except Exception:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
                 print("\n* 用户数据内容错误，返回错误消息")
                 resp['status'] = 'error'
                 resp['error_msg'] = error_msg
-                return make_response(resp, 200)
+                cors_resp = make_response(resp, 200)
+                cors_resp.headers['Access-Control-Allow-Origin'] = '*'
+                cors_resp.headers['Access-Control-Allow-Method'] = '*'
+                cors_resp.headers['Access-Control-Allow-Headers'] = '*'
+                return cors_resp
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
             print("\n* 用户密钥错误，返回错误消息")
             resp['status'] = 'error'
             resp['error_msg'] = error_msg
-            return make_response(resp, 200)
+            cors_resp = make_response(resp, 200)
+            cors_resp.headers['Access-Control-Allow-Origin'] = '*'
+            cors_resp.headers['Access-Control-Allow-Method'] = '*'
+            cors_resp.headers['Access-Control-Allow-Headers'] = '*'
+            return cors_resp
 
 
 def answer_proccesser(data, paper_id, ip_addr):
