@@ -75,9 +75,11 @@ function showNotice(content,notice_type) {
     if (notice_type == 'error') {
         type.innerText = "错误"
         warn.style.background = "rgb(250, 78, 78)"
+        warn.style.boxShadow = "8px 0px 20px rgba(187, 0, 0, 0.16)"
     } else if (notice_type == 'loading') {
         type.innerText = "请稍等"
         warn.style.background = "#638eeb"
+        warn.style.boxShadow = "8px 0px 20px rgba(0, 65, 187, 0.16)"
     }
     warn_text.innerHTML = content
 }
