@@ -60,7 +60,7 @@ function response() {
         }
         else {
             //其余一律显示为服务器通讯失败
-            showNotice('与服务器通讯失败！可能是服务器离线或出错，请联系开发者。','error')
+            showNotice('与服务器通讯失败！可能是服务器离线或出错，请联系开发者（微信号@FantWings）','error')
             document.querySelector('#submit').innerText = "重新提交"
         }
     }
@@ -178,7 +178,7 @@ function actionSuccess() {
     document.querySelector('.title h2').innerText = '问卷解析完成'
     // document.querySelector('#menu').innerHTML = '<a href="javascript:void(0)" onclick="actionBack()">返回首页</a>丨<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
     document.querySelector('#menu').innerHTML = '<a href="/" target="__blank">返回首页</a>丨<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
-    document.querySelector('#notice').innerHTML = "需要解析其他问卷？<br>"
+    document.querySelector('#notice').innerHTML = "如发现BUG，请联系开发者（微信号@FantWings）丨需要解析其他问卷？<br>"
     document.querySelector('#form_contain').style.display = 'none'
     document.querySelector('#submit').style.display = 'none'
 }
