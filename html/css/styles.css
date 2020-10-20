@@ -19,16 +19,17 @@ a:hover {
   text-align: center;
   flex: 100%;
 }
-.warn {
+.notice_bar {
   flex: 100%;
   display: none;
-  background-color: #fa4e4e;
+  background-color: #d4d4d4;
   color: #f9f9fb;
-  margin: 30px 0;
+  margin: 30px 0 0;
   padding: 20px;
   box-shadow: 8px 0px 20px rgba(187, 0, 0, 0.16);
+  transition: 0.5s;
 }
-.warn h3 {
+.notice_bar h3 {
   margin: 0;
 }
 form {
@@ -54,9 +55,6 @@ form input[type='password']::placeholder {
 .answer_contain .q_type {
   text-align: center;
   margin: 10px 0 30px 0;
-}
-input[type='submit'] {
-  display: block;
 }
 .answer_block {
   display: flex;
@@ -142,8 +140,8 @@ textarea,
 textarea,
 .flex-text-wrap pre {
   border: #8d8eff solid 1px;
-  min-height: 450px;
-  max-height: 600px;
+  min-height: 400px;
+  max-height: 400px;
   padding: 8px;
 }
 footer {
@@ -159,11 +157,18 @@ footer p {
   font-size: small;
 }
 #submit {
-  padding: 8px 25px;
+  padding: 10px 80px;
   border-radius: 999em;
   background-color: #5882dd;
   color: #fff;
-  margin: 25px auto;
+  margin: auto;
+  transition: 0.3s;
+}
+#submit:hover {
+  background-color: #6596ff;
+}
+#submit:active {
+  background-color: #4a6fbe;
 }
 #form_contain {
   flex: 100%;
