@@ -1,7 +1,7 @@
 ## 吉林大学作业解析工具
 
 **吉林大学在线教育作业解析工具，从 HTTP 包中直接获取试卷/作业答案**
-![screenshot](static/img/demo.png)
+![screenshot](html/img/demo.png)
 适用范围：吉林大学弘成科技发展有限公司开发的学生作业系统
 
 程序语言：Python3，Flask
