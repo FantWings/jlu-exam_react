@@ -40,12 +40,24 @@ a:hover {
   }
 }
 
+#user_bar {
+  flex: 100%;
+  display: none;
+  margin: 30px 0 0;
+  padding: 20px;
+  color: #f9f9fb;
+  background: rgb(250, 78, 78);
+  text-align: center;
+  transition: 1s;
+  p {
+    margin-top: 0;
+    font-size: 18px;
+  }
+}
+
 form {
   text-align: center;
   margin-top: 35px;
-  input[type='submit'] {
-    margin: 20px auto;
-  }
   input[type='password'] {
     min-width: 280px;
     padding: 3px;
@@ -184,18 +196,23 @@ footer {
 #submit {
   padding: 10px 80px;
   border-radius: 999em;
-  background-color: #5882dd;
+  background: #5882dd;
   color: #fff;
   margin: auto;
   transition: 0.3s;
 }
 
 #submit:hover {
-  background-color: #6596ff;
+  background: #6596ff;
 }
 
 #submit:active {
-  background-color: #4a6fbe;
+  background: #4a6fbe;
+}
+
+.please-wait {
+  background: #b8ceff !important;
+  cursor: not-allowed;
 }
 
 #form_contain {
