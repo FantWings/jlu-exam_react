@@ -8,16 +8,15 @@ app.config['JSON_AS_ASCII'] = False
 @app.route('/v1/get_answer', methods=["POST"])
 @cross_origin()
 def index():
-    if request.method == "GET":
-        return render_template("index.html")
     if request.method == "POST":
+        print('接收用户IP请求来自: %s' % request.headers.get('HTTP_X_FORWARDED_FOR'))
         submit_info = request.get_json()
         conf = json.load(open('config.json', 'r'))
         resp = {}
         if submit_info["token"] == conf['token']:
             try:
                 data = json.loads(submit_info['question_data'])
-                print("\n* 已处理来自[ %s ]的试卷分析请求，返回答案数据给用户" %
+                print("* 已处理来自[ %s ]的试卷分析请求，返回答案数据给用户" %
                       (data['data']['sourceIp']))
                 answers = answer_proccesser(
                     data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
@@ -26,13 +25,13 @@ def index():
                 return make_response(resp, 200)
             except Exception:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
-                print("\n* 用户数据内容错误，返回错误消息")
+                print("* 用户数据内容错误，返回错误消息")
                 resp['status'] = 'error'
                 resp['error_msg'] = error_msg
                 return make_response(resp, 200)
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
-            print("\n* 用户密钥错误，返回错误消息")
+            print("* 用户密钥错误，返回错误消息")
             resp['status'] = 'error'
             resp['error_msg'] = error_msg
             return make_response(resp, 200)
