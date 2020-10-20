@@ -65,7 +65,7 @@ def answer_proccesser(data, paper_id, ip_addr):
         "single": Select(pre_proccess).single(),
         "multi": Select(pre_proccess).multi(),
         "judge": judge(pre_proccess),
-        'combound': elect(pre_proccess).combound(),
+        'combound': Select(pre_proccess).combound(),
     }
 
     return answers
