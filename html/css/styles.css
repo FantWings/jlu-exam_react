@@ -1,5 +1,6 @@
 body {
-  font-family: Arial, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: Arial, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
   background: #f9f9fb;
 }
 .container {
@@ -185,6 +186,7 @@ footer p {
 .please-wait {
   background: #b8ceff !important;
   cursor: not-allowed;
+  pointer-events: none;
 }
 #form_contain {
   flex: 100%;
