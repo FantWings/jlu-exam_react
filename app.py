@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 
-@app.route('/', methods=["POST"])
+@app.route('/v1/get_answer', methods=["POST"])
 @cross_origin()
 def index():
     if request.method == "GET":

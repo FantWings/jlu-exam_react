@@ -9,7 +9,7 @@ function submitQuestion() {
         httpRequest = new ActiveXObject()
     }
     //服务器地址，开启异步交互
-    httpRequest.open("POST", "http://127.0.0.1:5000",true)
+    httpRequest.open("POST", "https://api.htips.cn/jlu_helper/v1/get_answer",true)
     httpRequest.setRequestHeader("Content-type", "application/json")
     //构建数据结构
     var data = {
