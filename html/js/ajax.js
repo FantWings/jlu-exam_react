@@ -10,6 +10,8 @@ function submitQuestion() {
     }
     //服务器地址，开启异步交互
     httpRequest.open("POST", "https://api.htips.cn/jlu_helper/v1/get_answer",true)
+    //本地调试用，没什么问题别去开
+    // httpRequest.open("POST", "http://127.0.0.1:5000/v1/get_answer",true)
     httpRequest.setRequestHeader("Content-type", "application/json")
     //构建数据结构
     var data = {
@@ -19,6 +21,8 @@ function submitQuestion() {
     //发送数据
     httpRequest.send(JSON.stringify(data))
     httpRequest.onreadystatechange = response
+    showNotice('服务器正在处理您的数据，这可能需要一点时间，请稍等....','loading')
+    document.querySelector('#submit').innerText = "别着急"
 }
 
 //返回数据处理
@@ -28,7 +32,8 @@ function response() {
             //解包数据内容
             var answer = JSON.parse(httpRequest.response)
 
-            console.log(answer)
+            // 数据回显开关
+            // console.log(answer)
 
             //如果数据状态为success，代表后端处理成功，移交给答案处理函数
             if (answer['status']=='success') {
@@ -50,31 +55,37 @@ function response() {
             //如果数据状态为error，代表用户发送数据有误，移交给错误显示函数
             if (answer['status']=='error') {
                 showNotice(answer['error_msg'],'error')
+                document.querySelector('#submit').innerText = "重新提交"
             }
         }
         else {
             //其余一律显示为服务器通讯失败
-            showNotice('与服务器通讯失败！','error')
+            showNotice('与服务器通讯失败！可能是服务器离线或出错，请联系开发者。','error')
+            document.querySelector('#submit').innerText = "重新提交"
         }
     }
 }
 
 //提示条显示函数
 function showNotice(content,notice_type) {
-    let warn = document.querySelector('.warn')
-    let warn_text = document.querySelector('.warn small')
-    let type = document.querySelector('.err')
+    let warn = document.querySelector('.notice_bar')
+    let warn_text = document.querySelector('.notice_bar small')
+    let type = document.querySelector('#msg_title')
     warn.style.display = "block"
     if (notice_type == 'error') {
         type.innerText = "错误"
+        warn.style.background = "rgb(250, 78, 78)"
+    } else if (notice_type == 'loading') {
+        type.innerText = "请稍等"
+        warn.style.background = "#638eeb"
     }
     warn_text.innerHTML = content
 }
 
 function successNotice(paper_id,ip_addr) {
-    let warn = document.querySelector('.warn')
-    let warn_text = document.querySelector('.warn small')
-    let type = document.querySelector('.err')
+    let warn = document.querySelector('.notice_bar')
+    let warn_text = document.querySelector('.notice_bar small')
+    let type = document.querySelector('#msg_title')
     warn.style.display = "block"
     type.innerText = ""
     warn.style.textAlign = "center"
@@ -83,6 +94,7 @@ function successNotice(paper_id,ip_addr) {
     warn.appendChild(user_info)
     warn_text.innerHTML = "本工具仅供交流学习用途，请适度使用！任何因本工具导致的问题将不会为你付任何责任！<br>"
     warn_text.style.fontSize = '18px'
+    warn.style.background = "rgb(250, 78, 78)"
 }
 
 //答案处理函数

@@ -13,14 +13,16 @@
         <small id="notice">在下方输入问卷源数据，直接解析答案</small>
         <small id="menu"><a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a></a></a></small>
       </div>
-      <span class="warn">
-        <h3 class="err">错误</h3>
-        <small>{{ error }}</small>
+      <span class="notice_bar">
+        <h3 id="msg_title">标题</h3>
+        <small>{{ info }}</small>
       </span>
       <div id="form_contain">
         <form method="post" name="form">
           <textarea name="question" id="question_feid" required placeholder="在这里粘贴试卷源数据"></textarea>
-          <h4>执行密钥</h4><input type="password" name="token" id="token" required placeholder="为了避免恶意请求，请输入执行密钥">
+          <div style="margin: 40px 0;">
+            <h4>执行密钥</h4><input type="password" name="token" id="token" required placeholder="为了避免恶意请求，请输入执行密钥">
+          </div>
         </form>
       </div>
       <a href="javascript:void(0);" onclick="submitQuestion()" id="submit">提交</a>
