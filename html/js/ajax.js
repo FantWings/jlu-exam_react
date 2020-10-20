@@ -23,6 +23,7 @@ function submitQuestion() {
     httpRequest.onreadystatechange = response
     showNotice('服务器正在处理您的数据，这可能需要一点时间，请稍等....','loading')
     document.querySelector('#submit').innerText = "别着急"
+    document.querySelector('#submit').className = "please-wait"
 }
 
 //返回数据处理
@@ -63,6 +64,7 @@ function response() {
             showNotice('与服务器通讯失败！可能是服务器离线或出错，请联系开发者（微信号@FantWings）','error')
             document.querySelector('#submit').innerText = "重新提交"
         }
+        document.querySelector('#submit').classList.remove('please-wait')
     }
 }
 
@@ -85,18 +87,10 @@ function showNotice(content,notice_type) {
 }
 
 function successNotice(paper_id,ip_addr) {
-    let warn = document.querySelector('.notice_bar')
-    let warn_text = document.querySelector('.notice_bar small')
-    let type = document.querySelector('#msg_title')
-    warn.style.display = "block"
-    type.innerText = ""
-    warn.style.textAlign = "center"
-    let user_info = document.createElement('small')
-    user_info.innerText = `试卷号（UUID）：${paper_id} 丨 IP地址：${ip_addr}`
-    warn.appendChild(user_info)
-    warn_text.innerHTML = "本工具仅供交流学习用途，请适度使用！任何因本工具导致的问题将不会为你付任何责任！<br>"
-    warn_text.style.fontSize = '18px'
-    warn.style.background = "rgb(250, 78, 78)"
+    let bar = document.querySelector('#user_bar')
+    let info = document.querySelector('#info')
+    bar.style.display = "block"
+    info.innerHTML = `试卷号（UUID）：${paper_id} 丨 IP地址：${ip_addr}`
 }
 
 //答案处理函数
@@ -174,15 +168,34 @@ function showAnswers(answer_data,master_type) {
     })
 }
 
+//处理成功函数
 function actionSuccess() {
+    //改变标题内容
     document.querySelector('.title h2').innerText = '问卷解析完成'
-    // document.querySelector('#menu').innerHTML = '<a href="javascript:void(0)" onclick="actionBack()">返回首页</a>丨<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
-    document.querySelector('#menu').innerHTML = '<a href="/" target="__blank">返回首页</a>丨<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
-    document.querySelector('#notice').innerHTML = "如发现BUG，请联系开发者（微信号@FantWings）丨需要解析其他问卷？<br>"
+    //改变主菜单内容
+    document.querySelector('#menu').innerHTML = '<a href="javascript:void(0)" onclick="actionBack()">返回首页</a>丨<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
+    document.querySelector('#notice').innerHTML = "如发现BUG，请联系开发者（微信号@FantWings）丨需要解析其他问卷？"
+    //隐藏表单
     document.querySelector('#form_contain').style.display = 'none'
     document.querySelector('#submit').style.display = 'none'
+    document.querySelector('.notice_bar').style.display = 'none'
 }
 
 function actionBack() {
-    document.querySelector('.answer_contain').remove()
+    // 移除答案列表
+    while (document.querySelector('.answer_contain')) {
+        document.querySelector('.answer_contain').remove()
+    }
+    // 恢复表单显示
+    document.querySelector('#form_contain').style.display = 'block'
+    document.querySelector('#submit').style.display = 'block'
+    // 重置按钮文本
+    document.querySelector('#submit').innerText = "重新提交"
+    // 重置标题
+    document.querySelector('#menu').innerHTML = '<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
+    document.querySelector('#notice').innerHTML = "在下方输入问卷源数据，直接解析答案"
+    // 移除提示条
+    document.querySelector('#user_bar').style.display = "none"
+    // 重置标题
+    document.querySelector('.title h2').innerText = '你的支持是我开发的动力！'
 }
