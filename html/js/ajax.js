@@ -1,8 +1,8 @@
 var httpRequest
 
-//AJAX
+//提交试卷AJAX
 function submitQuestion() {
-    //AJAX支持判断函数
+    //AJAX支持判断
     if (window.XMLHttpRequest) {
         httpRequest = new XMLHttpRequest()
     } else if (window.ActiveXObject) {
@@ -33,7 +33,7 @@ function response() {
             //解包数据内容
             var answer = JSON.parse(httpRequest.response)
 
-            // 数据回显开关
+            //数据回显开关
             // console.log(answer)
 
             //如果数据状态为success，代表后端处理成功，移交给答案处理函数
