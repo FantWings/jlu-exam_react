@@ -61,7 +61,7 @@ function response() {
         }
         else {
             //其余一律显示为服务器通讯失败
-            showNotice('与服务器通讯失败！可能是服务器离线或出错，请联系开发者（微信号@FantWings）','error')
+            showNotice('与服务器通讯失败！可能是服务器或您的网络连接出现了问题，如果您确定不是您的问题，请联系开发者（微信号@FantWings）','error')
             document.querySelector('#submit').innerText = "重新提交"
         }
         document.querySelector('#submit').classList.remove('please-wait')
