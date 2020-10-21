@@ -183,7 +183,7 @@ function actionSuccess() {
     //改变标题内容
     document.querySelector('.title h2').innerText = '问卷解析完成'
     //改变主菜单内容
-    document.querySelector('#menu').innerHTML = '<a href="javascript:void(0)" onclick="actionBack()">返回首页</a>丨<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
+    document.querySelector('#menu').innerHTML = '<a href="javascript:void(0)" onclick="actionBack()">返回首页</a>丨<a href="https://github.com/FantWings/jlu_homework_helper" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
     document.querySelector('#notice').innerHTML = "如发现BUG，请联系开发者（微信号@FantWings）丨需要解析其他问卷？"
     //隐藏表单
     document.querySelector('#form_contain').style.display = 'none'
@@ -202,7 +202,7 @@ function actionBack() {
     // 重置按钮文本
     document.querySelector('#submit').innerText = "重新提交"
     // 重置标题
-    document.querySelector('#menu').innerHTML = '<a href="help" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
+    document.querySelector('#menu').innerHTML = '<a href="https://github.com/FantWings/jlu_homework_helper" target="_blank" rel="noopener noreferrer">需要帮助</a>丨<a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>'
     document.querySelector('#notice').innerHTML = "在下方输入问卷源数据，直接解析答案"
     // 移除提示条
     document.querySelector('#user_bar').style.display = "none"
