@@ -4,7 +4,7 @@
 ![screenshot](html/img/demo.png)
 适用范围：吉林大学弘成科技发展有限公司开发的学生作业系统
 
-前端程序语言：原生 HTML, 原生 JavaScript
+前端程序语言：原生 HTML, 原生 JavaScript  
 后端程序语言：Python3，Flask
 
 ## 使用方法
@@ -17,6 +17,8 @@
 - 进入[作业系统](http://dec.jlu.edu.cn/jludec/work/work/student/index_admin.jsp)（未登陆之前点这个链接会报错）
 - 在作业管理系统，选择要做的作业，点击开始考试
 - 按下 F12 键，打开浏览器调试工具
+  - 如果你用的是苹果电脑自带的 Safari 浏览器，请先[启用开发模式](https://jingyan.baidu.com/article/6dad507529d1c8a122e36e50.html)）
+  - 启用后，在页面按下键盘 Option+Command+A 组合键
 - 选择"网络（Network）"，在筛选器上筛选“XHR”
 - 在题目上随便选一个答案，点击“保存”
 - 这时可以在网络工具下看到出现一个“SubmitAnserPaper”
