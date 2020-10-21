@@ -9,9 +9,9 @@ function submitQuestion() {
         httpRequest = new ActiveXObject()
     }
     //服务器地址，开启异步交互
-    httpRequest.open("POST", "https://api.htips.cn/jlu_helper/v1/get_answer",true)
+    // httpRequest.open("POST", "https://api.htips.cn/jlu_helper/v1/get_answer",true)
     //本地调试用，没什么问题别去开
-    // httpRequest.open("POST", "http://127.0.0.1:5000/v1/get_answer",true)
+    httpRequest.open("POST", "http://127.0.0.1:5000/v1/get_answer",true)
     httpRequest.setRequestHeader("Content-type", "application/json")
     //构建数据结构
     var data = {
@@ -68,22 +68,32 @@ function response() {
     }
 }
 
-//提示条显示函数
+//提示条函数
 function showNotice(content,notice_type) {
-    let warn = document.querySelector('.notice_bar')
-    let warn_text = document.querySelector('.notice_bar small')
-    let type = document.querySelector('#msg_title')
-    warn.style.display = "block"
-    if (notice_type == 'error') {
-        type.innerText = "错误"
-        warn.style.background = "rgb(250, 78, 78)"
-        warn.style.boxShadow = "8px 0px 20px rgba(187, 0, 0, 0.16)"
-    } else if (notice_type == 'loading') {
-        type.innerText = "请稍等"
-        warn.style.background = "#638eeb"
-        warn.style.boxShadow = "8px 0px 20px rgba(0, 65, 187, 0.16)"
+    if (document.querySelector('.bar') == null) {
+        let bar = document.createElement('span')
+        bar.className = 'bar'
+        let title = document.createElement('h3')
+        title.id = 'msg_title'
+        let text = document.createElement('small')
+        text.id = 'msg_text'
+
+        bar.appendChild(title)
+        bar.appendChild(text)
+        document.querySelector('#bar_container').appendChild(bar)
     }
-    warn_text.innerHTML = content
+    let bar = document.querySelector('.bar')
+    let title = document.querySelector('#msg_title')
+    let text = document.querySelector('#msg_text')
+
+    if (notice_type == 'error') {
+        title.innerText = "错误"
+        bar.className = 'bar error'
+    } else if (notice_type == 'loading') {
+        title.innerText = "请稍等"
+        bar.className = 'bar info'
+    }
+    text.innerHTML = content
 }
 
 function successNotice(paper_id,ip_addr) {
@@ -178,7 +188,7 @@ function actionSuccess() {
     //隐藏表单
     document.querySelector('#form_contain').style.display = 'none'
     document.querySelector('#submit').style.display = 'none'
-    document.querySelector('.notice_bar').style.display = 'none'
+    document.querySelector('.bar').remove()
 }
 
 function actionBack() {
