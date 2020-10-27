@@ -8,6 +8,7 @@ app.config['JSON_AS_ASCII'] = False
 @app.route('/v1/ping', methods=["GET"])
 @cross_origin()
 def ping():
+    print('[PING] 客户端链路检测回复')
     return(make_response('success', 200))
 
 
