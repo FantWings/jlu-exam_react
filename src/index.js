@@ -59,7 +59,8 @@ class SendQuestion extends React.Component {
         this.handleData = this.handleData.bind(this)
     }
 
-    handleClick() {
+    handleClick(e) {
+        e.preventDefault();
         let data = {
             "question_data": document.querySelector("#question_feid").value,
             "token": document.querySelector("#token").value
