@@ -1,15 +1,20 @@
-from flask import Flask, render_template, request, url_for, make_response
+from flask import Flask, request, make_response
 import json
 from flask_cors import *
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 
+@app.route('/v1/ping', methods=["GET"])
+@cross_origin()
+def ping():
+    return(make_response('success', 200))
+
+
 @app.route('/v1/get_answer', methods=["POST"])
 @cross_origin()
 def index():
     if request.method == "POST":
-        print('接收用户IP请求来自: %s' % request.headers.get('HTTP_X_FORWARDED_FOR'))
         submit_info = request.get_json()
         conf = json.load(open('config.json', 'r'))
         resp = {}
@@ -18,10 +23,11 @@ def index():
                 data = json.loads(submit_info['question_data'])
                 print("* 已处理来自[ %s ]的试卷分析请求，返回答案数据给用户" %
                       (data['data']['sourceIp']))
-                answers = answer_proccesser(
-                    data['data']['questions'], data['data']['answerPaperRecordId'], data['data']['sourceIp'])
+                answers = answer_proccesser(data['data']['questions'])
                 resp['status'] = 'success'
                 resp['answers'] = answers
+                resp['paper_id'] = data['data']['answerPaperRecordId']
+                resp['ip_addr'] = data['data']['sourceIp']
                 return make_response(resp, 200)
             except Exception:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
@@ -37,7 +43,7 @@ def index():
             return make_response(resp, 200)
 
 
-def answer_proccesser(data, paper_id, ip_addr):
+def answer_proccesser(data):
     pre_proccess = {
         "single": [],
         "multi": [],
@@ -59,12 +65,26 @@ def answer_proccesser(data, paper_id, ip_addr):
                 pass
 
     answers = {
-        "paper_id": paper_id,
-        "ip_addr": ip_addr,
-        "single": Select(pre_proccess).single(),
-        "multi": Select(pre_proccess).multi(),
-        "judge": judge(pre_proccess),
-        'combound': Select(pre_proccess).combound(),
+        "1 single": {
+            "type_name": "选择题",
+            "answer": Select(pre_proccess).single()
+        },
+        "2 multi": {
+            "type_name": "多选题",
+            "answer": Select(pre_proccess).multi()
+        },
+        "3 judge": {
+            "type_name": "判断题",
+            "answer": judge(pre_proccess)
+        },
+        '4 fill_in': {
+            "type_name": "完形填空",
+            "answer": Select(pre_proccess).combound()['fill_in']
+        },
+        '5 read_understand': {
+            "type_name": "阅读理解",
+            "answer": Select(pre_proccess).combound()['read_understand']
+        },
     }
 
     return answers

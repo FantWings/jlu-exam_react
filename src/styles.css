@@ -7,6 +7,7 @@ body {
   max-width: 1000px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 a {
   text-decoration: none;
@@ -16,9 +17,21 @@ a {
 a:hover {
   color: #7ea7f5;
 }
-.title {
+#title {
   text-align: center;
   flex: 100%;
+}
+#title #s_title {
+  position: relative;
+  bottom: 20px;
+  color: #a0a0a0;
+  margin: 0;
+}
+#title #menu {
+  margin-top: 5px;
+}
+#title #menu a {
+  margin: 0 5px;
 }
 #bar_container {
   flex: auto;
@@ -38,17 +51,16 @@ a:hover {
   margin-top: 0;
   font-size: 18px;
 }
-.error {
+.bar.error {
   background: #fa4e4e;
   box-shadow: 8px 0px 20px rgba(187, 0, 0, 0.16);
 }
-.info {
+.bar.info {
   background: #638eeb;
   box-shadow: 8px 0px 20px rgba(0, 65, 187, 0.16);
 }
-#user_bar {
+#notices {
   flex: 100%;
-  display: none;
   margin: 30px 0 0;
   padding: 20px;
   color: #f9f9fb;
@@ -56,20 +68,37 @@ a:hover {
   text-align: center;
   transition: 1s;
 }
-#user_bar p {
+#notices p {
   margin-top: 0;
   font-size: 18px;
 }
 form {
   text-align: center;
   margin-top: 35px;
+  flex: 100% 1;
 }
 form input[type='password'] {
-  min-width: 280px;
-  padding: 3px;
+  min-width: 60%;
+  max-width: 380px;
+  padding: 8px;
+  border: #8d8eff solid 1px;
 }
 form input[type='password']::placeholder {
   text-align: center;
+}
+form #key_feid {
+  margin: 35px 0 45px 0;
+}
+form #key_feid p {
+  margin: 45px 0;
+}
+form #question_feid {
+  width: 90%;
+  box-sizing: border-box;
+  resize: none;
+}
+#answer_container {
+  flex: 100% 1;
 }
 .answer_contain {
   padding: 32px;
@@ -85,9 +114,12 @@ form input[type='password']::placeholder {
   display: flex;
   margin: 10px 5px;
   padding: 10px 8px;
-  border: 1px solid #eeeeee;
+  border: 1.5px solid #eeeeee;
   border-radius: 5px;
   transition: 0.5s;
+}
+.answer_block:hover {
+  border: 1.5px solid #8d8eff;
 }
 .answer_block .q_id {
   margin: 0;
@@ -105,14 +137,11 @@ form input[type='password']::placeholder {
 .answer_block .answer {
   margin: auto;
   font-size: 30px;
-  margin-right: 20px;
-  margin-left: 10px;
+  margin: auto 20px;
 }
-.answer_block .multi_answer {
-  margin: auto;
+.answer_block .multi {
   font-size: 20px;
-  margin-right: 15px;
-  margin-left: 10px;
+  margin: auto 15px;
   min-width: 70px;
 }
 .last {
@@ -120,9 +149,6 @@ form input[type='password']::placeholder {
 }
 .last:last-child {
   margin-bottom: 10px;
-}
-.answer_block:hover {
-  border: 1px solid #8d8eff;
 }
 .flex-text-wrap {
   position: relative;
@@ -176,9 +202,26 @@ footer {
   width: 100%;
   background-color: #222d44;
 }
-footer p {
+footer ul {
+  list-style: none;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 0;
+}
+@media screen and (max-width: 1000px) {
+  footer ul li:nth-child(3) {
+    display: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  footer ul li:nth-child(4) {
+    display: none;
+  }
+}
+footer ul li {
+  margin: 0 8px;
   color: #fff;
-  text-align: center;
   font-size: small;
 }
 #submit {
@@ -195,11 +238,30 @@ footer p {
 #submit:active {
   background: #4a6fbe;
 }
-.please-wait {
-  background: #b8ceff !important;
+#submit.sending {
+  background: #b8ceff;
   cursor: not-allowed;
   pointer-events: none;
 }
+#submit.failure {
+  background: #fa4e4e;
+}
+#submit.failure:hover {
+  background: #ff8080;
+}
+#submit.failure:active {
+  background: #ca6565;
+}
 #form_contain {
   flex: 100%;
+}
+span.ping::before {
+  content: '● ';
+  font-size: larger;
+}
+span#disconnected::before {
+  color: #fa4e4e;
+}
+span#connected::before {
+  color: #87f76b;
 }

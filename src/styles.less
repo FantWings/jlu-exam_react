@@ -9,6 +9,7 @@ body {
   max-width: 1000px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 a {
@@ -21,9 +22,23 @@ a:hover {
   color: rgb(126, 167, 245);
 }
 
-.title {
+#title {
   text-align: center;
   flex: 100%;
+
+  #s_title {
+    position: relative;
+    bottom: 20px;
+    color: #a0a0a0;
+    margin: 0;
+  }
+
+  #menu {
+    margin-top: 5px;
+    a {
+      margin: 0 5px;
+    }
+  }
 }
 
 #bar_container {
@@ -44,21 +59,18 @@ a:hover {
     margin-top: 0;
     font-size: 18px;
   }
+  &.error {
+    background: rgb(250, 78, 78);
+    box-shadow: 8px 0px 20px rgba(187, 0, 0, 0.16);
+  }
+  &.info {
+    background: #638eeb;
+    box-shadow: 8px 0px 20px rgba(0, 65, 187, 0.16);
+  }
 }
 
-.error {
-  background: rgb(250, 78, 78);
-  box-shadow: 8px 0px 20px rgba(187, 0, 0, 0.16);
-}
-
-.info {
-  background: #638eeb;
-  box-shadow: 8px 0px 20px rgba(0, 65, 187, 0.16);
-}
-
-#user_bar {
+#notices {
   flex: 100%;
-  display: none;
   margin: 30px 0 0;
   padding: 20px;
   color: #f9f9fb;
@@ -74,13 +86,31 @@ a:hover {
 form {
   text-align: center;
   margin-top: 35px;
+  flex: 100% 1;
   input[type='password'] {
-    min-width: 280px;
-    padding: 3px;
+    min-width: 60%;
+    max-width: 380px;
+    padding: 8px;
+    border: #8d8eff solid 1px;
   }
   input[type='password']::placeholder {
     text-align: center;
   }
+  #key_feid {
+    margin: 35px 0 45px 0;
+    p {
+      margin: 45px 0;
+    }
+  }
+  #question_feid {
+    width: 90%;
+    box-sizing: border-box;
+    resize: none;
+  }
+}
+
+#answer_container {
+  flex: 100% 1;
 }
 
 .answer_contain {
@@ -98,9 +128,12 @@ form {
   display: flex;
   margin: 10px 5px;
   padding: 10px 8px;
-  border: 1px solid rgb(238, 238, 238);
+  border: 1.5px solid rgb(238, 238, 238);
   border-radius: 5px;
   transition: 0.5s;
+  &:hover {
+    border: 1.5px solid rgb(141, 142, 255);
+  }
   .q_id {
     margin: 0;
     display: block;
@@ -117,14 +150,11 @@ form {
   .answer {
     margin: auto;
     font-size: 30px;
-    margin-right: 20px;
-    margin-left: 10px;
+    margin: auto 20px;
   }
-  .multi_answer {
-    margin: auto;
+  .multi {
     font-size: 20px;
-    margin-right: 15px;
-    margin-left: 10px;
+    margin: auto 15px;
     min-width: 70px;
   }
 }
@@ -135,10 +165,6 @@ form {
 
 .last:last-child {
   margin-bottom: 10px;
-}
-
-.answer_block:hover {
-  border: 1px solid rgb(141, 142, 255);
 }
 
 .flex-text-wrap {
@@ -202,10 +228,27 @@ footer {
   left: 0;
   width: 100%;
   background-color: #222d44;
-  p {
-    color: #fff;
-    text-align: center;
-    font-size: small;
+  ul {
+    list-style: none;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    padding: 0;
+    @media screen and (max-width: 1000px) {
+      li:nth-child(3) {
+        display: none;
+      }
+    }
+    @media screen and (max-width: 500px) {
+      li:nth-child(4) {
+        display: none;
+      }
+    }
+    li {
+      margin: 0 8px;
+      color: #fff;
+      font-size: small;
+    }
   }
 }
 
@@ -216,22 +259,48 @@ footer {
   color: #fff;
   margin: auto;
   transition: 0.3s;
-}
+  &:hover {
+    background: #6596ff;
+  }
 
-#submit:hover {
-  background: #6596ff;
-}
-
-#submit:active {
-  background: #4a6fbe;
-}
-
-.please-wait {
-  background: #b8ceff !important;
-  cursor: not-allowed;
-  pointer-events: none;
+  &:active {
+    background: #4a6fbe;
+  }
+  &.sending {
+    background: #b8ceff;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  &.failure {
+    background: #fa4e4e;
+  }
+  &.failure:hover {
+    background: #ff8080;
+  }
+  &.failure:active {
+    background: #ca6565;
+  }
 }
 
 #form_contain {
   flex: 100%;
+}
+
+span {
+  &.ping::before {
+    content: '● ';
+    font-size: larger;
+  }
+
+  &#disconnected {
+    &::before {
+      color: #fa4e4e;
+    }
+  }
+
+  &#connected {
+    &::before {
+      color: #87f76b;
+    }
+  }
 }
