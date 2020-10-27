@@ -155,7 +155,7 @@ class Footer extends React.Component {
         super(props)
         this.state = {
             isConnected: null,
-            text: '与服务器通讯失败'
+            text: '正在联系服务器....'
         }
     }
 
