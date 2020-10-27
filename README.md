@@ -2,13 +2,13 @@
 
 **这个公司开发的考试系统居然在考试期间回传答案数据....于是做了这么一个阴间工具，从 HTTP 包中直接获取试卷/作业答案，并且以简洁易懂的方式展现给有需要的同学，仅供学习交流使用。**
 
-**现已使用现学现用的 ReactJS 重写了前端，优化一些前端的体验**
+> 现已使用现学现用的 ReactJS 重写了前端，优化一些前端的体验。
 
 ![screenshot](public/demo.png)
 适用范围：吉林大学弘成科技发展有限公司开发的学生作业系统
 
-前端程序语言：ReactJS，Fetch
-后端程序语言：Python3，Flask
+**前端程序语言**：[ReactJS](https://reactjs.org/)，[Fetch](https://github.com/github/fetch)  
+**后端程序语言**：[Python3](https://www.python.org/)，[Flask](https://github.com/pallets/flask)
 
 ## 使用方法
 
@@ -16,12 +16,10 @@
 
 ### 操作步骤
 
-- [登录吉林大学网络教育平台](http://dec.jlu.edu.cn/baozi/cmslogin.jsp)
-- 进入[作业系统](http://dec.jlu.edu.cn/jludec/work/work/student/index_admin.jsp)（未登陆之前点这个链接会报错）
-- 在作业管理系统，选择要做的作业，点击开始考试
-- 按下 F12 键，打开浏览器调试工具
-  - 如果你用的是苹果电脑自带的 Safari 浏览器，请先[启用开发模式](https://jingyan.baidu.com/article/6dad507529d1c8a122e36e50.html)）
-  - 启用后，在页面按下键盘 Option+Command+A 组合键
+- 在操作之前，请先点击开始考试，进入考试界面
+- 按下 F12 键，打开浏览器调试工具（**如果你用的是苹果电脑自带的 Safari 浏览器，请看下面**）
+  - Safari默认关闭了开发者模式，请先[启用开发模式](https://jingyan.baidu.com/article/6dad507529d1c8a122e36e50.html)）才可调出F12界面
+  - 开发者模式启用后，在页面按下键盘 Option+Command+A 组合键，继续下一步。
 - 选择"网络（Network）"，在筛选器上筛选“XHR”
 - 在题目上随便选一个答案，点击“保存”
 - 这时可以在网络工具下看到出现一个“SubmitAnserPaper”
@@ -41,7 +39,7 @@
 
 如果你对源码感兴趣或者你也想试试改进这个工具，下面将指引你如何去做：
 
-**前端环境需求：8.10 或以上的 Node 版本 && 5.6 以上的 npm 程序版本**
+**前端环境需求：8.10 或以上的 Node 版本 && 5.6 以上的 npm 程序版本**  
 **后端环境需求：3.X 或以上的 Python && 1.1.X 以上的 Flask 库版本**
 
 ### 下载源码
@@ -55,7 +53,7 @@
 - 测试&构建前端页面
   - 使用 `npm start` 测试前端是否正常配置
   - 使用 `npm run build` 构建静态前端页面
-- 构建的前端静态页面会生成在 build 文件夹
+- 构建的前端静态页面会生成在 `build` 文件夹
 
 ### 后端
 
@@ -63,4 +61,4 @@
 - 安装 flask 扩展 `pip install flask flask_cors`
 - 使用`cp .config config`命令复制一份配置文件，并修改里面的 token 字段为你想要的 token（越长越好）
 - 运行程序 `flask run`启动后端。
-  - 默认监听 127.0.0.1:5000，如果需要任意网络访问请使用参数-h 0.0.0.0（非常不建议）
+  - 默认监听 127.0.0.1:5000，如果需要任意网络访问请使用参数-h 0.0.0.0（安全角度非常不建议）
