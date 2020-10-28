@@ -4,6 +4,13 @@ from flask_cors import *
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
+conf = json.load(open('config.json', 'r'))
+if conf['use_sql'] == True:
+    try:
+        import pymysql
+    except Exception:
+        print("pymysql库缺失，你需要使用pip install pymysql命令安装这个库后才能启用统计功能")
+
 
 @app.route('/v1/ping', methods=["GET"])
 @cross_origin()
@@ -12,36 +19,80 @@ def ping():
     return(make_response('success', 200))
 
 
+@app.route('/v1/get_user_count', methods=["GET"])
+@cross_origin()
+def get_user_count():
+    if conf['use_sql'] == True:
+        return(make_response(db().get_count(), 200))
+    else:
+        return(make_response({'count': False}, 200))
+
+
 @app.route('/v1/get_answer', methods=["POST"])
 @cross_origin()
 def index():
     if request.method == "POST":
         submit_info = request.get_json()
-        conf = json.load(open('config.json', 'r'))
         resp = {}
         if submit_info["token"] == conf['token']:
             try:
                 data = json.loads(submit_info['question_data'])
-                print("* 已处理来自[ %s ]的试卷分析请求，返回答案数据给用户" %
-                      (data['data']['sourceIp']))
                 answers = answer_proccesser(data['data']['questions'])
                 resp['status'] = 'success'
                 resp['answers'] = answers
                 resp['paper_id'] = data['data']['answerPaperRecordId']
                 resp['ip_addr'] = data['data']['sourceIp']
+                if conf['use_sql'] == True:
+                    db().insert_user_data(data['data']['sourceIp'])
                 return make_response(resp, 200)
-            except Exception:
+            except Exception as e:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
-                print("* 用户数据内容错误，返回错误消息")
+                print('[错误捕捉] %s' % (e))
                 resp['status'] = 'error'
                 resp['error_msg'] = error_msg
                 return make_response(resp, 200)
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
-            print("* 用户密钥错误，返回错误消息")
             resp['status'] = 'error'
             resp['error_msg'] = error_msg
             return make_response(resp, 200)
+
+
+class db:
+    def __init__(self):
+        self.db = pymysql.connect(
+            conf['sql_host'], conf['sql_username'], conf['sql_password'], conf['sql_basename'])
+        self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
+
+    def __del__(self):
+        self.db.close()
+
+    def insert_data(self, uuid, answers, raw):
+        '''插入数据库参数，接受值：试卷UUID，试卷答案数据，试卷原数据'''
+        sql = """INSERT INTO `jlu_exam`.`exam`(`uuid`, `answers`, `raw_data`) \
+        VALUES ("%s", "%s", %s")""" % (uuid, answers, raw)
+        try:
+            self.cursor.execute(sql)
+            self.db.commit()
+        except Exception as e:
+            print('[数据库存储失败] %s' % (e))
+            self.db.rollback()
+
+    def insert_user_data(self, ip_addr):
+        '''插入数据库参数，接受值：用户IP地址'''
+        sql = """INSERT INTO `jlu_exam`.`users`(`ip_addr`) \
+        VALUES ("%s")""" % (ip_addr)
+        try:
+            self.cursor.execute(sql)
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+
+    def get_count(self):
+        '''获取工具使用次数'''
+        sql = """SELECT COUNT(ip_addr) FROM users"""
+        self.cursor.execute(sql)
+        return {'count': self.cursor.fetchone()['COUNT(ip_addr)']}
 
 
 def answer_proccesser(data):

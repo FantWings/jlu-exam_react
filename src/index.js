@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom'
 import 'whatwg-fetch'
 import "./styles.css";
 
+// 服务器地址
+// var server_url = 'https://api.htips.cn/jlu_helper/v1'
+// 开发测试用，正常情况下勿动
+var server_url = 'http://127.0.0.1:5000/v1'
+
 function Bars(props) {
     return (
         <span className={'bar ' + props.status}>
@@ -25,13 +30,42 @@ function Title() {
     return (
         <div id='title'>
             <h2>吉林大学作业小助手</h2>
-            <p id="s_title"><small id="notice">做你身边最牛逼的电子辅导老师</small></p>
+            <UsageCount/>
             <small id="menu">
                 <a href="https://github.com/FantWings/jlu_homework_helper" target="_blank" rel="noopener noreferrer">需要帮助</a>
                 <a href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework" target="_blank" rel="noopener noreferrer">作业管理</a>
             </small>
         </div>
     )
+}
+
+class UsageCount extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            count: false
+        }
+    }
+
+    componentDidMount() {
+        fetch(server_url + '/get_user_count').then(
+            (response) => response.json().then(json => {
+                this.setState({count: json.count})
+            })
+        )
+    }
+
+    render() {
+        if (this.state.count) {
+            return(
+                <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，累计已被{this.state.count}位同学使用</small></p>
+            )
+        }else{
+            return(
+                <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，统计功能未启用</small></p>
+            )
+        }
+    }
 }
 
 function EZforms() {
@@ -66,7 +100,7 @@ class SendQuestion extends React.Component {
             "token": document.querySelector("#token").value
         }
         
-        fetch('https://api.htips.cn/jlu_helper/v1/get_answer',{
+        fetch(server_url + '/get_answer',{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -160,7 +194,7 @@ class Footer extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://api.htips.cn/jlu_helper/v1/ping').then(
+        fetch(server_url + '/ping').then(
             (response) => {
                 if(response.status === 200) {
                     this.setState({isConnected: true, text:'服务器连接已建立'})

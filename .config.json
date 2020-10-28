@@ -1,3 +1,8 @@
 {
-  "token": "PASTEYOURTOKENHERE"
+  "token": "PASTEYOURTOKENHERE",
+  "use_sql": false,
+  "sql_host": "",
+  "sql_basename": "",
+  "sql_username": "",
+  "sql_password": ""
 }
