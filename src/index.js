@@ -4,9 +4,9 @@ import 'whatwg-fetch'
 import "./styles.css";
 
 // 服务器地址
-// var server_url = 'https://api.htips.cn/jlu_helper/v1'
+var server_url = 'https://api.htips.cn/jlu_helper/v1'
 // 开发测试用，正常情况下勿动
-var server_url = 'http://127.0.0.1:5000/v1'
+// var server_url = 'http://127.0.0.1:5000/v1'
 
 function Bars(props) {
     return (
@@ -208,7 +208,7 @@ class Footer extends React.Component {
         return(
             <footer>
                 <ul>
-                    <li>版本 version 2.0（<a href="https://reactjs.org/">ReactJS</a>）</li>
+                    <li>版本 version 2.1a（<a href="https://reactjs.org/">ReactJS</a>）</li>
                     <li><span id={this.state.isConnected ? 'connected':'disconnected'} className='ping'></span>{this.state.text}</li>
                     <li>适用于 吉林大学弘成科技发展有限公司 学生作业系统</li>
                     <li>源代码：<a href="https://github.com/FantWings/jlu_homework_helper">GitHub</a></li>
