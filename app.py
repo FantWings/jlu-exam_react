@@ -10,12 +10,12 @@ if conf['use_sql'] == True:
         import pymysql
     except Exception:
         print("pymysql库缺失，你需要使用pip install pymysql命令安装这个库后才能启用统计功能")
+        conf['use_sql'] = False
 
 
 @app.route('/v1/ping', methods=["GET"])
 @cross_origin()
 def ping():
-    print('[PING] 客户端链路检测回复')
     return(make_response('success', 200))
 
 
@@ -161,7 +161,7 @@ class Select:
             key = key + 1
             answer = {
                 "question_type": value['questiontypename'],
-                "quesion_id": "第%s题" % (key),
+                "question_id": "第%s题" % (key),
                 "answer": self.answer_dict[value['answer']['id']]
             }
 
@@ -182,7 +182,7 @@ class Select:
                 gg = gg + self.answer_dict[ans]
             answer = {
                 "question_type": value['questiontypename'],
-                "quesion_id": "第%s题" % (key),
+                "question_id": "第%s题" % (key),
                 "answer": gg
             }
 
@@ -205,7 +205,7 @@ class Select:
                 key = key + 1
                 answer = {
                     "question_type": value['questiontypename'],
-                    "quesion_id": "第%s题" % (key),
+                    "question_id": "第%s题" % (key),
                     "question": value['stem'].lstrip('<p>').rstrip('</p>'),
                     "answer": self.answer_dict[value['answer']['id']]
                 }
@@ -231,7 +231,7 @@ def judge(question):
         key = key + 1
         answer = {
             "question_type": value['questiontypename'],
-            "quesion_id": "第%s题" % (key),
+            "question_id": "第%s题" % (key),
             "answer": answer_dict[value['answer']['id']]
         }
 
