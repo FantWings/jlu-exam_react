@@ -44,7 +44,7 @@ class UsageCount extends React.Component {
         super(props)
         this.state = {
             count: false,
-            text: '正在获取使用统计...'
+            text: '使用统计功能未启用'
         }
     }
 
@@ -53,19 +53,19 @@ class UsageCount extends React.Component {
             (response) => response.json().then(json => {
                 this.setState({count: json.count})
             }).catch(
-                this.setState({count: 'error'})
+                this.setState({count: '统计数据获取失败'})
             )
         )
     }
 
     render() {
-        if (this.state.count !== 'error') {
+        if (this.state.count) {
             return(
                 <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，累计已被<span> {this.state.count} </span>位同学使用</small></p>
             )
         }else{
             return(
-                <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，使用统计功能未启用</small></p>
+            <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，{this.state.text}</small></p>
             )
         }
     }
