@@ -43,7 +43,8 @@ class UsageCount extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            count: false
+            count: false,
+            text: '正在获取使用统计...'
         }
     }
 
@@ -51,18 +52,20 @@ class UsageCount extends React.Component {
         fetch(server_url + '/get_user_count').then(
             (response) => response.json().then(json => {
                 this.setState({count: json.count})
-            })
+            }).catch(
+                this.setState({count: 'error'})
+            )
         )
     }
 
     render() {
-        if (this.state.count) {
+        if (this.state.count !== 'error') {
             return(
-                <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，累计已被{this.state.count}位同学使用</small></p>
+                <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，累计已被<span> {this.state.count} </span>位同学使用</small></p>
             )
         }else{
             return(
-                <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，统计功能未启用</small></p>
+                <p id="s_title"><small id="notice">你身边最牛逼的作业小助手，使用统计功能未启用</small></p>
             )
         }
     }
@@ -94,7 +97,7 @@ class SendQuestion extends React.Component {
     }
 
     handleClick(e) {
-        e.preventDefault();
+        e.preventDefault()
         let data = {
             "question_data": document.querySelector("#question_feid").value,
             "token": document.querySelector("#token").value
@@ -124,6 +127,7 @@ class SendQuestion extends React.Component {
             this.setState({status:'success',text:'再次解析'})
             ReactDOM.render(<Notices paper_id={data.paper_id} ip_addr={data.ip_addr}/>,document.querySelector("#bar_container"))
             ReactDOM.render(<AnswerProccesser data={data.answers}/>,document.querySelector("#answer_container"))
+            window.scrollTo(0,0)
         } else if (data.status === 'error') {
             ReactDOM.render(<Bars status={data.status} title='错误' text={data.error_msg}/>,document.querySelector("#bar_container"))
             this.setState({status:'failure',text:'重试一次'})
@@ -147,6 +151,7 @@ function AnswerProccesser(props) {
             rows.push(<AnswerContain answer_data={props.data[key]} type_id={key} key={key}/>)
         }
     }
+    rows.push(<span id='liner'><span id='liner_text'>再次解析</span></span>)
     return(rows)
 }
 
@@ -167,19 +172,35 @@ function AnswerList(props) {
     return(rows)
 }
 
-function AnswerBlock(props) {
-    return(
-        <div className="answer_block">
-            <span className={'answer ' + props.type_id}>{props.data.answer}</span>
-            <div>
-                <span className="q_id">
-                    {props.data.question_id}
-                    <small className="question_type">{props.data.question_type}</small>
-                </span>
-                <span className="question">{props.data.question}</span>
+
+class AnswerBlock extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isSelected: false
+        }
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick(e) {
+        e.preventDefault()
+        this.setState({isSelected:!this.state.isSelected})
+    }
+
+    render() {
+        return(
+            <div className="answer_block" id={this.state.isSelected ? "selected": ""} onClick={this.handleClick}>
+                <span className={'answer ' + this.props.type_id}>{this.props.data.answer}</span>
+                <div>
+                    <span className="q_id">
+                        {this.props.data.question_id}
+                        <small className="question_type">{this.props.data.question_type}</small>
+                    </span>
+                    <span className="question">{this.props.data.question}</span>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 class Footer extends React.Component {

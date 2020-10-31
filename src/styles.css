@@ -33,6 +33,9 @@ a:hover {
   color: #a0a0a0;
   margin: 0;
 }
+#title #s_title small span {
+  color: orange;
+}
 #title #menu {
   margin-top: 5px;
 }
@@ -107,6 +110,23 @@ form #question_feid {
 #answer_container {
   flex: 100% 1;
 }
+#answer_container #liner {
+  border-bottom: #eaeaea 2px dashed;
+  display: block;
+  margin-bottom: 16px;
+}
+#answer_container #liner_text {
+  display: block;
+  background-color: #f9f9fb;
+  padding: 6px 6px 6px 18px;
+  color: #aeaeae;
+  position: relative;
+  width: 180px;
+  text-align: center;
+  top: 17px;
+  letter-spacing: 16px;
+  margin: auto;
+}
 .answer_contain {
   padding: 32px;
   box-shadow: 0px 0px 35px #e7e7ef;
@@ -122,16 +142,20 @@ form #question_feid {
   text-align: center;
   margin: 10px 0 30px 0;
 }
+.answer_contain #selected {
+  border: 2px solid #8d8eff;
+}
 .answer_block {
   display: flex;
   margin: 10px 5px;
   padding: 10px 8px;
-  border: 1.5px solid #eeeeee;
+  border: 2px solid #eeeeee;
   border-radius: 5px;
   transition: 0.5s;
+  cursor: pointer;
 }
 .answer_block:hover {
-  border: 1.5px solid #8d8eff;
+  border: 2px solid #8d8eff;
 }
 .answer_block .q_id {
   margin: 0;
@@ -139,17 +163,17 @@ form #question_feid {
   margin-bottom: 2px;
 }
 .answer_block .q_id .question_type {
-  color: #a3a3a3;
-  margin-left: 6px;
+  color: #9fa6bf;
 }
 .answer_block .question {
-  color: #777777;
+  color: #6d758d;
   font-size: small;
 }
 .answer_block .answer {
   margin: auto;
   font-size: 30px;
   margin: auto 20px;
+  color: #2b2d38;
 }
 .answer_block .multi {
   font-size: 20px;
@@ -268,8 +292,10 @@ footer ul li {
   flex: 100%;
 }
 span.ping::before {
-  content: '● ';
+  content: '●';
   font-size: larger;
+  margin-right: 4px;
+  transition: 0.5s;
 }
 span#disconnected::before {
   color: #fa4e4e;
