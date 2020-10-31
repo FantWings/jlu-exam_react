@@ -229,7 +229,7 @@ class Footer extends React.Component {
         return(
             <footer>
                 <ul>
-                    <li>版本 version 2.1a（<a href="https://reactjs.org/">ReactJS</a>）</li>
+                    <li>版本 version 2.3f（<a href="https://reactjs.org/">ReactJS</a>）</li>
                     <li><span id={this.state.isConnected ? 'connected':'disconnected'} className='ping'></span>{this.state.text}</li>
                     <li>适用于 吉林大学弘成科技发展有限公司 学生作业系统</li>
                     <li>源代码：<a href="https://github.com/FantWings/jlu_homework_helper">GitHub</a></li>
