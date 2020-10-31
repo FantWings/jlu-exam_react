@@ -146,12 +146,13 @@ class SendQuestion extends React.Component {
 
 function AnswerProccesser(props) {
     let rows = []
+    rows.push(<span className='liner' key='liner_head'><span className='liner_text'>标准答案</span></span>)
     for (const key in props.data) {
         if (Object.keys(props.data[key].answer).length > 0) {
             rows.push(<AnswerContain answer_data={props.data[key]} type_id={key} key={key}/>)
         }
     }
-    rows.push(<span id='liner' key='liner'><span id='liner_text'>再次解析</span></span>)
+    rows.push(<span className='liner' key='liner_foot'><span className='liner_text'>再次解析</span></span>)
     return(rows)
 }
 

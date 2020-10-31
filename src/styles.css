@@ -110,18 +110,18 @@ form #question_feid {
 #answer_container {
   flex: 100% 1;
 }
-#answer_container #liner {
+#answer_container .liner {
   border-bottom: #eaeaea 2px dashed;
   display: block;
   margin-bottom: 16px;
 }
-#answer_container #liner_text {
+#answer_container .liner_text {
   display: block;
   background-color: #f9f9fb;
   padding: 6px 6px 6px 18px;
   color: #aeaeae;
   position: relative;
-  width: 180px;
+  width: 160px;
   text-align: center;
   top: 17px;
   letter-spacing: 16px;
