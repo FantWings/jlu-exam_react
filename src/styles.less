@@ -10,6 +10,10 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  @media screen and (min-width: 768px) {
+    padding: 16px;
+  }
+  padding: 8px;
 }
 
 a {
@@ -103,9 +107,10 @@ form {
     }
   }
   #question_feid {
-    width: 90%;
     box-sizing: border-box;
     resize: none;
+    transition: 0.5s;
+    width: 100%;
   }
 }
 
@@ -114,6 +119,9 @@ form {
 }
 
 .answer_contain {
+  @media screen and (max-width: 500px) {
+    padding: 32px 12px;
+  }
   padding: 32px;
   box-shadow: 0px 0px 35px rgb(231, 231, 239);
   margin: 40px auto;

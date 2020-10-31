@@ -8,6 +8,12 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 8px;
+}
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 16px;
+  }
 }
 a {
   text-decoration: none;
@@ -93,9 +99,10 @@ form #key_feid p {
   margin: 45px 0;
 }
 form #question_feid {
-  width: 90%;
   box-sizing: border-box;
   resize: none;
+  transition: 0.5s;
+  width: 100%;
 }
 #answer_container {
   flex: 100% 1;
@@ -105,6 +112,11 @@ form #question_feid {
   box-shadow: 0px 0px 35px #e7e7ef;
   margin: 40px auto;
   flex: 100%;
+}
+@media screen and (max-width: 500px) {
+  .answer_contain {
+    padding: 32px 12px;
+  }
 }
 .answer_contain .q_type {
   text-align: center;

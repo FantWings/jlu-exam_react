@@ -107,7 +107,7 @@ class SendQuestion extends React.Component {
             },
             body: JSON.stringify(data),
             mode: 'cors',
-            credentials: 'omit'
+            credentials: 'omit',
         }).then(
             (response) => response.json().then(json => this.handleData(json))
         ).catch(e => {
@@ -143,8 +143,6 @@ class SendQuestion extends React.Component {
 function AnswerProccesser(props) {
     let rows = []
     for (const key in props.data) {
-        console.log(props.data[key])
-        console.log(Object.keys(props.data[key].answer).length)
         if (Object.keys(props.data[key].answer).length > 0) {
             rows.push(<AnswerContain answer_data={props.data[key]} type_id={key} key={key}/>)
         }
@@ -198,9 +196,11 @@ class Footer extends React.Component {
             (response) => {
                 if(response.status === 200) {
                     this.setState({isConnected: true, text:'服务器连接已建立'})
+                    console.log('嗯，服务看起来还没炸。')
                 }
             }).catch((e) => {
                 this.setState({isConnected: false, text:'与服务器通讯失败'})
+                console.log('日！服务器又双叒叕炸了！')
             })
     }
 
