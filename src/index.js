@@ -4,9 +4,9 @@ import 'whatwg-fetch'
 import "./styles.css";
 
 // 服务器地址
-// var server_url = 'https://api.htips.cn/jlu_helper/v1'
+var server_url = 'https://api.htips.cn/jlu_helper/v1'
 // 开发测试用，正常情况下勿动
-var server_url = 'http://127.0.0.1:5000/v1'
+// var server_url = 'http://127.0.0.1:5000/v1'
 
 function Bars(props) {
     return (
