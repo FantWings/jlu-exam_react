@@ -4,9 +4,9 @@ import 'whatwg-fetch'
 import "./styles.css";
 
 // 服务器地址
-var server_url = 'https://api.htips.cn/jlu_helper/v1'
+// var server_url = 'https://api.htips.cn/jlu_helper/v1'
 // 开发测试用，正常情况下勿动
-// var server_url = 'http://127.0.0.1:5000/v1'
+var server_url = 'http://127.0.0.1:5000/v1'
 
 function Bars(props) {
     return (
@@ -151,7 +151,7 @@ function AnswerProccesser(props) {
             rows.push(<AnswerContain answer_data={props.data[key]} type_id={key} key={key}/>)
         }
     }
-    rows.push(<span id='liner'><span id='liner_text'>再次解析</span></span>)
+    rows.push(<span id='liner' key='liner'><span id='liner_text'>再次解析</span></span>)
     return(rows)
 }
 
@@ -193,8 +193,8 @@ class AnswerBlock extends React.Component {
                 <span className={'answer ' + this.props.type_id}>{this.props.data.answer}</span>
                 <div>
                     <span className="q_id">
-                        {this.props.data.question_id}
-                        <small className="question_type">{this.props.data.question_type}</small>
+                        <small id="question_id">{this.props.data.question_id}</small>
+                        <small id="question_type">{this.props.data.question_type}</small>
                     </span>
                     <span className="question">{this.props.data.question}</span>
                 </div>

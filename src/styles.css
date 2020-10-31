@@ -160,10 +160,14 @@ form #question_feid {
 .answer_block .q_id {
   margin: 0;
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
-.answer_block .q_id .question_type {
+.answer_block .q_id #question_type {
   color: #9fa6bf;
+}
+.answer_block .q_id #question_id {
+  color: #638eeb;
+  margin-right: 4px;
 }
 .answer_block .question {
   color: #6d758d;
