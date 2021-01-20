@@ -1,0 +1,178 @@
+{
+  "answers": {
+    "1 single": {
+      "answer": [
+        {
+          "answer": "C",
+          "question": "关系模型的程序员不需熟悉数据库的",
+          "question_id": "第1题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "数据库物理存储方式的描述称为",
+          "question_id": "第2题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "D",
+          "question": "下列哪一个不是数据库开发的可选数据库。",
+          "question_id": "第3题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *",
+          "question_id": "第4题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "在下面给出的内容中，不属于DBA职责的是",
+          "question_id": "第5题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "ER图中的主要元素是",
+          "question_id": "第6题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "SPAN style=\"FONT-SIZE: 16px; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-ansi-language: EN-US; mso-fareast-language: ZH-CN; mso-bidi-language: AR-SA\">在<SPAN>DBS中，DBMS和OS之间的关系是</SPAN></SPAN",
+          "question_id": "第7题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "A",
+          "question": "数据库系统中的数据模型通常由（ ）三部分组成",
+          "question_id": "第8题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "D",
+          "question": "SQL语言中，创建一个表的命令是",
+          "question_id": "第9题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *",
+          "question_id": "第10题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "A",
+          "question": "SPAN style=\"FONT-SIZE: 16px; FONT-FAMILY: 宋体; mso-bidi-font-family: 宋体; mso-ansi-language: EN-US; mso-fareast-language: ZH-CN; mso-bidi-language: AR-SA\">五种基本关系代数运算是</SPAN",
+          "question_id": "第11题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "如果关系模式R中的每一个非主属性既不部分依赖也不传递依赖于键，则称这个关系模式属于",
+          "question_id": "第12题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "DBMS提供DML实现对数据的操作。可以独立交互使用的DML称为",
+          "question_id": "第13题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "在数据库设计中，将ER图转换成关系数据模型的过程属于",
+          "question_id": "第14题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "A",
+          "question": "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *",
+          "question_id": "第15题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "SQL语言中，更新一个表的命令是",
+          "question_id": "第16题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *",
+          "question_id": "第17题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "A",
+          "question": "数据库管理系统由三级模式组成，其中决定DBMS功能的是",
+          "question_id": "第18题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "数据库系统依靠__支持了数据独立性",
+          "question_id": "第19题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "（ ）完成对数据库数据的查询与更新",
+          "question_id": "第20题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "下列运算中（ ）不是关系代数的基本操作",
+          "question_id": "第21题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "* 这个题目含有影响排版的混合数据，反正你也会不关心题目内容，这里不再显示 *",
+          "question_id": "第22题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "关系代数的四个组合操作是：交、自然联接、联接和",
+          "question_id": "第23题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "B",
+          "question": "有关系R和S，R∩S的运算等价于",
+          "question_id": "第24题",
+          "question_type": "单选"
+        },
+        {
+          "answer": "C",
+          "question": "在关系中能唯一标识元组的属性集称为关系模型的",
+          "question_id": "第25题",
+          "question_type": "单选"
+        }
+      ],
+      "type_name": "选择题"
+    },
+    "2 multi": {
+      "answer": [],
+      "type_name": "多选题"
+    },
+    "3 judge": {
+      "answer": [],
+      "type_name": "判断题"
+    },
+    "4 fill_in": {
+      "answer": [],
+      "type_name": "完形填空"
+    },
+    "5 read_understand": {
+      "answer": [],
+      "type_name": "阅读理解"
+    }
+  },
+  "ip_addr": "5.193.153.89",
+  "paper_id": "3b813242-540e-4e55-b455-6713391a18ee",
+  "status": "success"
+}
