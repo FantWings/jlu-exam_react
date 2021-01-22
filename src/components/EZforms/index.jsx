@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Bars from '../Bars'
 import Notices from '../Notices'
@@ -23,7 +23,7 @@ export default function EZforms() {
   )
 }
 
-class SendQuestion extends React.Component {
+class SendQuestion extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -140,7 +140,7 @@ function AnswerList(props) {
   return rows
 }
 
-class AnswerBlock extends React.Component {
+class AnswerBlock extends Component {
   constructor(props) {
     super(props)
     this.state = {

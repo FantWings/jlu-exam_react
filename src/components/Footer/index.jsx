@@ -1,5 +1,5 @@
-import React from 'react'
-export default class Footer extends React.Component {
+import React, { Component } from 'react'
+export default class Footer extends Component {
   state = {
     isConnected: null,
     text: '正在联系服务器....',
