@@ -24,17 +24,12 @@ export default function EZforms() {
 }
 
 class SendQuestion extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      status: 'ready',
-      text: '提交',
-    }
-    this.handleClick = this.handleClick.bind(this)
-    this.handleData = this.handleData.bind(this)
+  state = {
+    status: 'ready',
+    text: '提交',
   }
 
-  handleClick(e) {
+  handleClick = (e) => {
     e.preventDefault()
     let data = {
       question_data: document.querySelector('#question_feid').value,
@@ -70,7 +65,7 @@ class SendQuestion extends Component {
     this.setState({ status: 'sending', text: '别着急' })
   }
 
-  handleData(data) {
+  handleData = (data) => {
     if (data.status === 'success') {
       this.setState({ status: 'success', text: '再次解析' })
       ReactDOM.render(
