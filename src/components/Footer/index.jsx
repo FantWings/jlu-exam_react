@@ -19,7 +19,7 @@ export default class Footer extends Component {
       <footer>
         <ul>
           <li>
-            版本 version 2.3f（<a href="https://reactjs.org/">ReactJS</a>）
+            版本 version 2.5j（<a href="https://reactjs.org/">ReactJS</a>）
           </li>
           <li>
             <span id={this.state.isConnected ? 'connected' : 'disconnected'} className="ping"></span>
