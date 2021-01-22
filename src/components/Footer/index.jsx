@@ -1,23 +1,21 @@
 import React from 'react'
-
+import axios from '../../axios'
 export default class Footer extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isConnected: null,
-      text: '正在联系服务器....',
-    }
+  state = {
+    isConnected: null,
+    text: '正在联系服务器....',
   }
 
   componentDidMount() {
-    fetch('http://127.0.0.1:5000/v1/get_user_count')
+    axios
+      .get('ping')
       .then((response) => {
         if (response.status === 200) {
           this.setState({ isConnected: true, text: '服务器连接已建立' })
           console.log('嗯，服务看起来还没炸。')
         }
       })
-      .catch((e) => {
+      .catch((error) => {
         this.setState({ isConnected: false, text: '与服务器通讯失败' })
         console.log('日！服务器又双叒叕炸了！')
       })

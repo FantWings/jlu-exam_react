@@ -1,13 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import axios from 'axios'
+import axios from '../../axios'
 import Bars from '../Bars'
 import Notices from '../Notices'
-
-// 服务器地址
-// var server_url = 'https://api.htips.cn/jlu_helper/v1'
-// 开发测试用，正常情况下勿动
-var server_url = 'http://127.0.0.1:5000/v1'
 
 export default function EZforms() {
   return (
@@ -73,10 +68,8 @@ class SendQuestion extends React.Component {
       .request({
         method: 'post',
         url: '/get_answer',
-        baseURL: server_url,
         headers: { 'Content-Type': 'application/json' },
         data: JSON.stringify(data),
-        timeout: 1000,
       })
       .then((response) => this.handleData(response.data))
       .catch((error) => console.log(error))

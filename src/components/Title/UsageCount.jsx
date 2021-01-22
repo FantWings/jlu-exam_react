@@ -1,23 +1,17 @@
 import React from 'react'
+import axios from '../../axios'
 
 export default class UsageCount extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      count: false,
-      text: '使用统计功能未启用',
-    }
+  state = {
+    count: false,
+    text: '使用统计功能未启用',
   }
 
   componentDidMount() {
-    fetch('http://127.0.0.1:5000/v1/get_user_count').then((response) =>
-      response
-        .json()
-        .then((json) => {
-          this.setState({ count: json.count })
-        })
-        .catch(this.setState({ count: '统计数据获取失败' }))
-    )
+    axios
+      .get('get_user_count')
+      .then((response) => this.setState({ count: response.data.count }))
+      .catch(this.setState({ count: '读取中' }))
   }
 
   render() {
