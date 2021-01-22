@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import axios from '../../axios'
 import Bars from '../Bars'
 import Notices from '../Notices'
 
@@ -42,37 +41,27 @@ class SendQuestion extends React.Component {
       token: document.querySelector('#token').value,
     }
 
-    // fetch(server_url + '/get_answer', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    //   mode: 'cors',
-    //   credentials: 'omit',
-    // })
-    //   .then((response) => response.json().then((json) => this.handleData(json)))
-    //   .catch((e) => {
-    //     ReactDOM.render(
-    //       <Bars
-    //         status="error"
-    //         title="连接错误"
-    //         text="服务器连接失败，可能是网络连接超时，如果您确定不是网络问题，请联系开发者 微信@FantWings"
-    //       />,
-    //       document.querySelector('#bar_container')
-    //     )
-    //     this.setState({ status: 'failure', text: '重试一次' })
-    //   })
-
-    axios
-      .request({
-        method: 'post',
-        url: '/get_answer',
-        headers: { 'Content-Type': 'application/json' },
-        data: JSON.stringify(data),
+    fetch('https://api.htips.cn/jlu_helper/v1/get_answer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      mode: 'cors',
+      credentials: 'omit',
+    })
+      .then((response) => response.json().then((json) => this.handleData(json)))
+      .catch((e) => {
+        ReactDOM.render(
+          <Bars
+            status="error"
+            title="连接错误"
+            text="服务器连接失败，可能是网络连接超时，如果您确定不是网络问题，请联系开发者 微信@FantWings"
+          />,
+          document.querySelector('#bar_container')
+        )
+        this.setState({ status: 'failure', text: '重试一次' })
       })
-      .then((response) => this.handleData(response.data))
-      .catch((error) => console.log(error))
 
     ReactDOM.render(
       <Bars status="info" title="处理中" text="服务器正在处理你的数据，这可能需要一点时间，请稍后...." />,

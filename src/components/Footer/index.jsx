@@ -1,24 +1,32 @@
 import React from 'react'
-import axios from '../../axios'
 export default class Footer extends React.Component {
   state = {
     isConnected: null,
     text: '正在联系服务器....',
   }
 
-  componentDidMount() {
-    axios
-      .get('ping')
-      .then((response) => {
-        if (response.status === 200) {
-          this.setState({ isConnected: true, text: '服务器连接已建立' })
-          console.log('嗯，服务看起来还没炸。')
-        }
-      })
-      .catch((error) => {
-        this.setState({ isConnected: false, text: '与服务器通讯失败' })
-        console.log('日！服务器又双叒叕炸了！')
-      })
+  componentDidMount = async () => {
+    // axios
+    //   .get('ping')
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       this.setState({ isConnected: true, text: '服务器连接已建立' })
+    //       console.log('嗯，服务看起来还没炸。')
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     this.setState({ isConnected: false, text: '与服务器通讯失败' })
+    //     console.log('日！服务器又双叒叕炸了！')
+    //   })
+
+    try {
+      await fetch('https://api.htips.cn/jlu_helper/v1/ping')
+      this.setState({ isConnected: true, text: '服务器连接已建立' })
+      console.log('嗯，服务看起来还没炸。')
+    } catch {
+      this.setState({ isConnected: false, text: '与服务器通讯失败' })
+      console.log('日！服务器又双叒叕炸了！')
+    }
   }
 
   render() {
