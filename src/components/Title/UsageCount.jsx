@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import axios from '../../axios'
+import PubSub from 'pubsub-js'
 
 export default class UsageCount extends Component {
   state = {
@@ -14,6 +14,7 @@ export default class UsageCount extends Component {
       const response = await fetch('https://api.htips.cn/jlu_helper/v1/get_user_count')
       const data = await response.json()
       this.setState({ isSuccess: true, count: data.count, isLoading: false })
+      PubSub.publish('isConnected', this.state.isSuccess)
     } catch {
       this.setState({ isSuccess: false })
     }
