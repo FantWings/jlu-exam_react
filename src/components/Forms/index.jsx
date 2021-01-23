@@ -61,7 +61,7 @@ class SendQuestion extends Component {
 
     try {
       this.setState({ status: 'sending', text: '别着急' })
-      const response = await fetch('/dev/v1/get_answer', {
+      const response = await fetch('https://api.htips.cn/jlu_helper/v1/get_answer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,8 +89,6 @@ class SendQuestion extends Component {
         ip_addr: data.ip_addr,
         isNotices: true,
       })
-      // ReactDOM.render(<AnswerProccesser data={data.answers} />, document.querySelector('#answer_container'))
-      // window.scrollTo(0, 0)
       PubSub.publish('answers_data', data.answers)
     } else {
       PubSub.publish('barinfo', {
