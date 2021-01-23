@@ -63,7 +63,7 @@ class db:
         self.db = pymysql.connect(
             host=conf['sql_host'],
             user=conf['sql_username'],
-            passowrd=conf['sql_password'],
+            password=conf['sql_password'],
             database=conf['sql_basename'])
         self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
 
