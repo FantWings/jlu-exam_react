@@ -1,12 +1,12 @@
-#answer_container {
+.answersBody {
   flex: 100% 1;
 }
-#answer_container .liner {
+.answersBody .liner {
   border-bottom: #eaeaea 2px dashed;
   display: block;
   margin-bottom: 16px;
 }
-#answer_container .liner_text {
+.answersBody .liner_text {
   display: block;
   background-color: #f9f9fb;
   padding: 6px 6px 6px 18px;
