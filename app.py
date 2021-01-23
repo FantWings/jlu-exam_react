@@ -61,10 +61,10 @@ def index():
 class db:
     def __init__(self):
         self.db = pymysql.connect(
-            conf['sql_host'],
-            conf['sql_username'],
-            conf['sql_password'],
-            conf['sql_basename'])
+            host=conf['sql_host'],
+            user=conf['sql_username'],
+            passowrd=conf['sql_password'],
+            database=conf['sql_basename'])
         self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
 
     # def __del__(self):
