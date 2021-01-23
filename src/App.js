@@ -1,7 +1,8 @@
 import './styles.css'
 import Title from './components/Title'
 import Footer from './components/Footer'
-import EZforms from './components/EZforms'
+import Forms from './components/Forms'
+import Bars from './components/Bars'
 
 export default function App() {
   console.log(
@@ -38,9 +39,9 @@ export default function App() {
   return (
     <div className="container">
       <Title />
-      <div id="bar_container"></div>
+      <Bars />
       <div id="answer_container"></div>
-      <EZforms />
+      <Forms />
       <Footer />
     </div>
   )
