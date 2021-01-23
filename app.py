@@ -82,15 +82,15 @@ class db:
     #         print('[数据库存储失败] %s' % (e))
     #         self.db.rollback()
 
-    # def insert_user_data(self, ip_addr):
-    #     '''插入数据库参数，接受值：用户IP地址'''
-    #     sql = """INSERT INTO `jlu_exam`.`users`(`ip_addr`) \
-    #     VALUES ("%s")""" % (ip_addr)
-    #     try:
-    #         self.cursor.execute(sql)
-    #         self.db.commit()
-    #     except Exception as e:
-    #         self.db.rollback()
+    def insert_user_data(self, ip_addr):
+        '''插入数据库参数，接受值：用户IP地址'''
+        sql = """INSERT INTO `jlu_exam`.`users`(`ip_addr`) \
+        VALUES ("%s")""" % (ip_addr)
+        try:
+            self.cursor.execute(sql)
+            self.db.commit()
+        except Exception:
+            self.db.rollback()
 
     def get_count(self):
         '''获取工具使用次数'''
