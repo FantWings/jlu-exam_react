@@ -1,11 +1,11 @@
 from flask import Flask, request, make_response
 import json
-from flask_cors import *
+from flask_cors import cross_origin
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 conf = json.load(open('config.json', 'r'))
-if conf['use_sql'] == True:
+if conf['use_sql'] is True:
     try:
         import pymysql
     except Exception:
@@ -22,7 +22,7 @@ def ping():
 @app.route('/v1/get_user_count', methods=["GET"])
 @cross_origin()
 def get_user_count():
-    if conf['use_sql'] == True:
+    if conf['use_sql'] is True:
         return(make_response(db().get_count(), 200))
     else:
         return(make_response({'count': False}, 200))
@@ -34,7 +34,7 @@ def index():
     if request.method == "POST":
         submit_info = request.get_json()
         resp = {}
-        if submit_info["token"] == conf['token']:
+        if submit_info["token"] is conf['token']:
             try:
                 data = json.loads(submit_info['question_data'])
                 answers = answer_proccesser(data['data']['questions'])
@@ -42,7 +42,7 @@ def index():
                 resp['answers'] = answers
                 resp['paper_id'] = data['data']['answerPaperRecordId']
                 resp['ip_addr'] = data['data']['sourceIp']
-                if conf['use_sql'] == True:
+                if conf['use_sql'] is True:
                     db().insert_user_data(data['data']['sourceIp'])
                 return make_response(resp, 200)
             except Exception as e:
@@ -61,32 +61,36 @@ def index():
 class db:
     def __init__(self):
         self.db = pymysql.connect(
-            conf['sql_host'], conf['sql_username'], conf['sql_password'], conf['sql_basename'])
+            conf['sql_host'],
+            conf['sql_username'],
+            conf['sql_password'],
+            conf['sql_basename'])
         self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
 
-    def __del__(self):
-        self.db.close()
+    # def __del__(self):
+    #     self.db.close()
 
-    def insert_data(self, uuid, answers, raw):
-        '''插入数据库参数，接受值：试卷UUID，试卷答案数据，试卷原数据'''
-        sql = """INSERT INTO `jlu_exam`.`exam`(`uuid`, `answers`, `raw_data`) \
-        VALUES ("%s", "%s", %s")""" % (uuid, answers, raw)
-        try:
-            self.cursor.execute(sql)
-            self.db.commit()
-        except Exception as e:
-            print('[数据库存储失败] %s' % (e))
-            self.db.rollback()
+    # def insert_data(self, uuid, answers, raw):
+    #     '''插入数据库参数，接受值：试卷UUID，试卷答案数据，试卷原数据'''
+    #     sql = """INSERT INTO `jlu_exam`.`exam`(`uuid`, `answers`, \
+    # `raw_data`)
+    #     VALUES ("%s", "%s", %s")""" % (uuid, answers, raw)
+    #     try:
+    #         self.cursor.execute(sql)
+    #         self.db.commit()
+    #     except Exception as e:
+    #         print('[数据库存储失败] %s' % (e))
+    #         self.db.rollback()
 
-    def insert_user_data(self, ip_addr):
-        '''插入数据库参数，接受值：用户IP地址'''
-        sql = """INSERT INTO `jlu_exam`.`users`(`ip_addr`) \
-        VALUES ("%s")""" % (ip_addr)
-        try:
-            self.cursor.execute(sql)
-            self.db.commit()
-        except Exception as e:
-            self.db.rollback()
+    # def insert_user_data(self, ip_addr):
+    #     '''插入数据库参数，接受值：用户IP地址'''
+    #     sql = """INSERT INTO `jlu_exam`.`users`(`ip_addr`) \
+    #     VALUES ("%s")""" % (ip_addr)
+    #     try:
+    #         self.cursor.execute(sql)
+    #         self.db.commit()
+    #     except Exception as e:
+    #         self.db.rollback()
 
     def get_count(self):
         '''获取工具使用次数'''
@@ -212,7 +216,7 @@ class Select:
                     "answer": self.answer_dict[value['answer']['id']],
                     "uuid": value['questionId']
                 }
-                if i == key:
+                if i is key:
                     answer["is_last"] = True
                 if value['stem'] == "":
                     answer['question_master_type'] = "fill_in"
