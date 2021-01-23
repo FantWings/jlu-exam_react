@@ -3,6 +3,7 @@ import Title from './components/Title'
 import Footer from './components/Footer'
 import Forms from './components/Forms'
 import Bars from './components/Bars'
+import AnswerBody from './components/Answers'
 
 export default function App() {
   console.log(
@@ -40,7 +41,7 @@ export default function App() {
     <div className="container">
       <Title />
       <Bars />
-      <div id="answer_container"></div>
+      <AnswerBody />
       <Forms />
       <Footer />
     </div>

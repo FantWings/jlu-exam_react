@@ -14,6 +14,10 @@ export default class AnswerBody extends Component {
     })
   }
 
+  componentWillUnmount() {
+    PubSub.unsubscribe('answers_data')
+  }
+
   render() {
     return (
       <div className="answersBody">{this.state.enable ? <AnswerProccesser data={this.state.answers} /> : <div />}</div>
@@ -52,11 +56,9 @@ function AnswerBlock(props) {
 }
 
 function AnswerList(props) {
-  let rows = []
-  for (const i in props.data) {
-    rows.push(<AnswerRow data={props.data[i]} key={i} type_id={props.type_id} />)
-  }
-  return rows
+  return props.data.map((data) => {
+    return <AnswerRow data={data} key={data.uuid} type_id={data.type_id} />
+  })
 }
 
 class AnswerRow extends Component {

@@ -162,7 +162,8 @@ class Select:
             answer = {
                 "question_type": value['questiontypename'],
                 "question_id": "第%s题" % (key),
-                "answer": self.answer_dict[value['answer']['id']]
+                "answer": self.answer_dict[value['answer']['id']],
+                "uuid": value['questionId']
             }
 
             if len(value['stem']) >= 200:
@@ -183,7 +184,8 @@ class Select:
             answer = {
                 "question_type": value['questiontypename'],
                 "question_id": "第%s题" % (key),
-                "answer": gg
+                "answer": gg,
+                "uuid": value['questionId']
             }
 
             if len(value['stem']) >= 200:
@@ -207,7 +209,8 @@ class Select:
                     "question_type": value['questiontypename'],
                     "question_id": "第%s题" % (key),
                     "question": value['stem'].lstrip('<p>').rstrip('</p>'),
-                    "answer": self.answer_dict[value['answer']['id']]
+                    "answer": self.answer_dict[value['answer']['id']],
+                    "uuid": value['questionId']
                 }
                 if i == key:
                     answer["is_last"] = True
@@ -232,7 +235,8 @@ def judge(question):
         answer = {
             "question_type": value['questiontypename'],
             "question_id": "第%s题" % (key),
-            "answer": answer_dict[value['answer']['id']]
+            "answer": answer_dict[value['answer']['id']],
+            "uuid": value['questionId']
         }
 
         if len(value['stem']) >= 200:
