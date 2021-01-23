@@ -34,7 +34,7 @@ def index():
     if request.method == "POST":
         submit_info = request.get_json()
         resp = {}
-        if submit_info["token"] is conf['token']:
+        if submit_info["token"] == conf['token']:
             try:
                 data = json.loads(submit_info['question_data'])
                 answers = answer_proccesser(data['data']['questions'])
