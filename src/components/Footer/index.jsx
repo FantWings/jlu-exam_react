@@ -15,6 +15,10 @@ export default class Footer extends Component {
     })
   }
 
+  componentWillUnmount() {
+    PubSub.unsubscribe('isConnected')
+  }
+
   render() {
     return (
       <footer>
