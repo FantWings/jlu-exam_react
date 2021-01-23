@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
+import './index.css'
 export default class Footer extends Component {
   state = {
     isConnected: null,

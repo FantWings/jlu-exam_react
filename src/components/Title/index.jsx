@@ -1,4 +1,5 @@
 import UsageCount from './UsageCount'
+import './index.css'
 
 export default function Title() {
   return (

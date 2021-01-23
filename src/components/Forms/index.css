@@ -1,0 +1,105 @@
+form {
+  text-align: center;
+  margin-top: 35px;
+  flex: 100% 1;
+}
+form input[type='password'] {
+  min-width: 60%;
+  max-width: 380px;
+  padding: 8px;
+  border: #8d8eff solid 1px;
+}
+form input[type='password']::placeholder {
+  text-align: center;
+}
+form #key_feid {
+  margin: 35px 0 45px 0;
+}
+form #key_feid p {
+  margin: 45px 0;
+}
+form #question_feid {
+  box-sizing: border-box;
+  resize: none;
+  transition: 0.5s;
+  width: 100%;
+}
+textarea,
+.flex-text-wrap {
+  outline: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+  *padding-bottom: 0 !important;
+}
+.flex-text-wrap textarea,
+.flex-text-wrap pre {
+  white-space: pre-wrap;
+  flex: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  *white-space: pre;
+  *word-wrap: break-word;
+}
+.flex-text-wrap textarea {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  flex: 100%;
+  resize: none;
+  /* IE7 box-sizing fudge factor */
+  *height: 94%;
+  width: 100%;
+}
+.flex-text-wrap pre {
+  display: block;
+  visibility: hidden;
+}
+textarea,
+.flex-text-wrap pre {
+  border: #8d8eff solid 1px;
+  min-height: 400px;
+  max-height: 400px;
+  padding: 8px;
+}
+.flex-text-wrap {
+  position: relative;
+  *zoom: 1;
+}
+#submit {
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  padding: 10px 80px;
+  border-radius: 999em;
+  background: #5882dd;
+  color: #fff;
+  margin: auto;
+  transition: 0.3s;
+}
+#submit:hover {
+  background: #6596ff;
+}
+#submit:active {
+  background: #4a6fbe;
+}
+#submit.sending {
+  background: #b8ceff;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+#submit.failure {
+  background: #fa4e4e;
+}
+#submit.failure:hover {
+  background: #ff8080;
+}
+#submit.failure:active {
+  background: #ca6565;
+}
+#form_contain {
+  flex: 100%;
+}

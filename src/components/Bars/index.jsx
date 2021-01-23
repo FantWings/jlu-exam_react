@@ -1,5 +1,7 @@
 import { Component } from 'react'
 import PubSub from 'pubsub-js'
+import './index.css'
+
 export default class Bars extends Component {
   state = {
     isNotices: false,

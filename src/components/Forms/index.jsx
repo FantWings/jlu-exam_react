@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import PubSub from 'pubsub-js'
+import './index.css'
 
 export default class Forms extends Component {
   data = React.createRef()
@@ -69,7 +69,6 @@ class SendQuestion extends Component {
         body: JSON.stringify(req),
       })
       const data = await response.json()
-      console.log(data)
       this.handleData(data)
     } catch (error) {
       PubSub.publish('barinfo', {
@@ -90,8 +89,9 @@ class SendQuestion extends Component {
         ip_addr: data.ip_addr,
         isNotices: true,
       })
-      ReactDOM.render(<AnswerProccesser data={data.answers} />, document.querySelector('#answer_container'))
-      window.scrollTo(0, 0)
+      // ReactDOM.render(<AnswerProccesser data={data.answers} />, document.querySelector('#answer_container'))
+      // window.scrollTo(0, 0)
+      PubSub.publish('answers_data', data.answers)
     } else {
       PubSub.publish('barinfo', {
         status: 'error',
@@ -107,73 +107,6 @@ class SendQuestion extends Component {
       <button onClick={this.handleClick} id="submit" className={this.state.status}>
         {this.state.text}
       </button>
-    )
-  }
-}
-
-function AnswerProccesser(props) {
-  let rows = []
-  rows.push(
-    <span className="liner" key="liner_head">
-      <span className="liner_text">标准答案</span>
-    </span>
-  )
-  for (const key in props.data) {
-    if (Object.keys(props.data[key].answer).length > 0) {
-      rows.push(<AnswerContain answer_data={props.data[key]} type_id={key} key={key} />)
-    }
-  }
-  rows.push(
-    <span className="liner" key="liner_foot">
-      <span className="liner_text">再次解析</span>
-    </span>
-  )
-  return rows
-}
-
-function AnswerContain(props) {
-  return (
-    <div className="answer_contain">
-      <h3 className="q_type">{props.answer_data.type_name}</h3>
-      <AnswerList data={props.answer_data.answer} type_id={props.type_id} />
-    </div>
-  )
-}
-
-function AnswerList(props) {
-  let rows = []
-  for (const i in props.data) {
-    rows.push(<AnswerBlock data={props.data[i]} key={i} type_id={props.type_id} />)
-  }
-  return rows
-}
-
-class AnswerBlock extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isSelected: false,
-    }
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  handleClick(e) {
-    e.preventDefault()
-    this.setState({ isSelected: !this.state.isSelected })
-  }
-
-  render() {
-    return (
-      <div className="answer_block" id={this.state.isSelected ? 'selected' : ''} onClick={this.handleClick}>
-        <span className={'answer ' + this.props.type_id}>{this.props.data.answer}</span>
-        <div>
-          <span className="q_id">
-            <small id="question_id">{this.props.data.question_id}</small>
-            <small id="question_type">{this.props.data.question_type}</small>
-          </span>
-          <span className="question">{this.props.data.question}</span>
-        </div>
-      </div>
     )
   }
 }
