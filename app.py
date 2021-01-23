@@ -38,7 +38,7 @@ def index():
             try:
                 data = json.loads(submit_info['question_data'])
                 answers = answer_proccesser(data['data']['questions'])
-                resp['status'] = 'success'
+                resp['success'] = True
                 resp['answers'] = answers
                 resp['paper_id'] = data['data']['answerPaperRecordId']
                 resp['ip_addr'] = data['data']['sourceIp']
@@ -48,14 +48,14 @@ def index():
             except Exception as e:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
                 print('[错误捕捉] %s' % (e))
-                resp['status'] = 'error'
+                resp['success'] = False
                 resp['error_msg'] = error_msg
-                return make_response(resp, 200)
+                return make_response(resp, 400)
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
-            resp['status'] = 'error'
+            resp['success'] = False
             resp['error_msg'] = error_msg
-            return make_response(resp, 200)
+            return make_response(resp, 401)
 
 
 class db:
