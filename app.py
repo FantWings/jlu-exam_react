@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, session
+from flask import Flask, request, make_response, session, jsonify
 import json
 from flask_cors import cross_origin
 
@@ -57,7 +57,7 @@ def index():
                 response = make_response(resp, 400)
             finally:
                 response.headers['Access-Control-Allow-Credentials'] = 'true'
-                return response
+                return jsonify(response)
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
             resp['success'] = False
