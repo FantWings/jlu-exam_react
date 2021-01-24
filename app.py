@@ -26,7 +26,6 @@ def get_state():
     if conf['use_sql'] is True:
         state['count'] = db().get_count()
     response = make_response(state, 200)
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 
 
@@ -47,7 +46,6 @@ def index():
                 if conf['use_sql'] is True:
                     db().insert_user_data(data['data']['sourceIp'])
                 session['authed'] = True
-                # session.permanent = True
                 response = make_response(resp, 200)
             except Exception as e:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
@@ -56,7 +54,6 @@ def index():
                 resp['error_msg'] = error_msg
                 response = make_response(resp, 400)
             finally:
-                response.headers['Access-Control-Allow-Credentials'] = 'true'
                 return jsonify(response)
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
