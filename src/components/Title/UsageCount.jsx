@@ -14,7 +14,7 @@ export default class UsageCount extends Component {
       this.setState({ isLoading: true })
       const response = await fetch('https://api.htips.cn/jlu_helper/v1/get_state', {
         credentials: 'include',
-        mode: 'no-cors',
+        mode: 'cors',
       })
       const data = await response.json()
       const { count, authed } = data

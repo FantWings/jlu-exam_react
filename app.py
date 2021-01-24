@@ -25,7 +25,9 @@ def get_state():
         }
     if conf['use_sql'] is True:
         state['count'] = db().get_count()
-    return make_response(state, 200)
+    response = make_response(state, 200)
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    return response
 
 
 @app.route('/v1/get_answer', methods=["POST"])
@@ -54,6 +56,7 @@ def index():
                 resp['error_msg'] = error_msg
                 response = make_response(resp, 400)
             finally:
+                response.headers['Access-Control-Allow-Credentials'] = 'true'
                 return response
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
