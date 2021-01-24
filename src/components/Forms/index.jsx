@@ -95,7 +95,7 @@ class SendQuestion extends Component {
 
       this.setState({ status: 'sending', text: '别着急' })
 
-      const response = await fetch('/dev/v1/get_answer', {
+      const response = await fetch('https://api.htips.cn/jlu_helper/v1/get_answer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

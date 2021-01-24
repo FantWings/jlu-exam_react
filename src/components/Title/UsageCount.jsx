@@ -12,7 +12,7 @@ export default class UsageCount extends Component {
   componentDidMount = async () => {
     try {
       this.setState({ isLoading: true })
-      const response = await fetch('/dev/v1/get_state', {
+      const response = await fetch('https://api.htips.cn/jlu_helper/v1/get_state', {
         credentials: 'include',
         mode: 'no-cors',
       })
