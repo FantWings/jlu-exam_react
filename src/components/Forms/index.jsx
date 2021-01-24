@@ -100,6 +100,8 @@ class SendQuestion extends Component {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
+        mode: 'cors',
         body: JSON.stringify(req),
       })
 
