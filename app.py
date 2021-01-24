@@ -1,9 +1,10 @@
 from flask import Flask, request, make_response, session, jsonify
 import json
-from flask_cors import cross_origin
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 app.config['JSON_AS_ASCII'] = False
 app.config['SECRET_KEY'] = "RADOMKDSLKWJOUEOAJSKLHFVHWIORUQOUIE"
 
@@ -17,7 +18,6 @@ if conf['use_sql'] is True:
 
 
 @app.route('/v1/get_state', methods=["GET"])
-@cross_origin()
 def get_state():
     state = {
         'count': False,
@@ -25,12 +25,10 @@ def get_state():
         }
     if conf['use_sql'] is True:
         state['count'] = db().get_count()
-    response = make_response(state, 200)
-    return response
+    return make_response(state, 200)
 
 
 @app.route('/v1/get_answer', methods=["POST"])
-@cross_origin()
 def index():
     if request.method == "POST":
         submit_info = request.get_json()
