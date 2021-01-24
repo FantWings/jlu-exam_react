@@ -1,8 +1,11 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, session
 import json
 from flask_cors import cross_origin
+
+
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
+app.config['SECRET_KEY'] = "RADOMKDSLKWJOUEOAJSKLHFVHWIORUQOUIE"
 
 conf = json.load(open('config.json', 'r'))
 if conf['use_sql'] is True:
@@ -13,19 +16,16 @@ if conf['use_sql'] is True:
         conf['use_sql'] = False
 
 
-@app.route('/v1/ping', methods=["GET"])
+@app.route('/v1/get_state', methods=["GET"])
 @cross_origin()
-def ping():
-    return(make_response('success', 200))
-
-
-@app.route('/v1/get_user_count', methods=["GET"])
-@cross_origin()
-def get_user_count():
+def get_state():
+    state = {
+        'count': False,
+        'authed': session.get('authed')
+        }
     if conf['use_sql'] is True:
-        return(make_response(db().get_count(), 200))
-    else:
-        return(make_response({'count': False}, 200))
+        state['count'] = db().get_count()
+    return make_response(state, 200)
 
 
 @app.route('/v1/get_answer', methods=["POST"])
@@ -34,7 +34,7 @@ def index():
     if request.method == "POST":
         submit_info = request.get_json()
         resp = {}
-        if submit_info["token"] == conf['token']:
+        if submit_info["token"] == conf['token'] or session.get('authed'):
             try:
                 data = json.loads(submit_info['question_data'])
                 answers = answer_proccesser(data['data']['questions'])
@@ -44,13 +44,17 @@ def index():
                 resp['ip_addr'] = data['data']['sourceIp']
                 if conf['use_sql'] is True:
                     db().insert_user_data(data['data']['sourceIp'])
-                return make_response(resp, 200)
+                session['authed'] = True
+                # session.permanent = True
+                response = make_response(resp, 200)
             except Exception as e:
                 error_msg = "你输入的试卷数据不正确或试卷数据不完整，解析失败！"
                 print('[错误捕捉] %s' % (e))
                 resp['success'] = False
                 resp['error_msg'] = error_msg
-                return make_response(resp, 400)
+                response = make_response(resp, 400)
+            finally:
+                return response
         else:
             error_msg = "密钥不正确，请重新输入正确的密钥！"
             resp['success'] = False
@@ -96,7 +100,7 @@ class db:
         '''获取工具使用次数'''
         sql = """SELECT COUNT(ip_addr) FROM users"""
         self.cursor.execute(sql)
-        return {'count': self.cursor.fetchone()['COUNT(ip_addr)']}
+        return self.cursor.fetchone()['COUNT(ip_addr)']
 
 
 def answer_proccesser(data):

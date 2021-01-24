@@ -7,8 +7,19 @@ export default class Forms extends Component {
   data = React.createRef()
   token = React.createRef()
 
+  state = {
+    isAuthed: false,
+  }
+
+  componentDidMount() {
+    PubSub.subscribe('isAuthed', (_, isAuthed) => {
+      this.setState({ isAuthed })
+    })
+  }
+
   render() {
     const { TextArea } = Input
+    const { isAuthed } = this.state
     return (
       <form method="post" name="form">
         {/* <textarea name="question" id="question_feid" required></textarea> */}
@@ -21,7 +32,12 @@ export default class Forms extends Component {
         />
         <div id="key_feid">
           <h4>执行密钥</h4>
-          <Input.Password placeholder="为了避免恶意请求，请输入执行密钥" id="token" ref={this.token} />
+          <Input.Password
+            placeholder={isAuthed ? '密钥处于有效期，无需重复输入' : '为了避免恶意请求，请输入执行密钥'}
+            id="token"
+            ref={this.token}
+            disabled={isAuthed}
+          />
           <p>
             <SendQuestion data={this.data} token={this.token} />
           </p>
@@ -58,6 +74,16 @@ class SendQuestion extends Component {
 
     const req = { question_data: data, token: token }
 
+    if (data.length === 0) {
+      message.error({
+        content: '您忘了填写试卷数据！请检查！',
+        style: {
+          marginTop: '2vh',
+        },
+      })
+      return
+    }
+
     try {
       message.loading({
         content: '服务器正在处理你的数据，这可能需要一点时间，请稍后....',
@@ -69,7 +95,7 @@ class SendQuestion extends Component {
 
       this.setState({ status: 'sending', text: '别着急' })
 
-      const response = await fetch('https://api.htips.cn/jlu_helper/v1/get_answer', {
+      const response = await fetch('/dev/v1/get_answer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
