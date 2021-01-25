@@ -22,7 +22,6 @@ export default class Forms extends Component {
     const { isAuthed } = this.state
     return (
       <form method="post" name="form">
-        {/* <textarea name="question" id="question_feid" required></textarea> */}
         <TextArea
           showCount
           placeholder="将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击“需要帮助”"
@@ -135,6 +134,7 @@ class SendQuestion extends Component {
           marginTop: '2vh',
         },
       })
+      PubSub.publish('isAuthed', true)
     } else {
       message.error({
         content: data.error_msg,

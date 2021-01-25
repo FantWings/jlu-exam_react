@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 
-export default class UsageCount extends Component {
+export default class State extends Component {
   state = {
     isLoading: false,
     isSuccess: false,
