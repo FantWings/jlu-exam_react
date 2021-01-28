@@ -12,7 +12,7 @@ export default class State extends Component {
   componentDidMount = async () => {
     try {
       this.setState({ isLoading: true })
-      const response = await fetch('https://api.htips.cn/jlu_helper/api', {
+      const response = await fetch('https://api.htips.cn/jlu_helper/api/getState', {
         credentials: 'include',
         mode: 'cors',
       })
