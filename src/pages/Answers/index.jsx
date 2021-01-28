@@ -19,7 +19,7 @@ export default class AnswerBody extends Component {
   componentDidMount = async () => {
     //向服务器请求试卷数据
     try {
-      const response = await fetch(`/dev/api/paper/${this.props.match.params.paper_id}`)
+      const response = await fetch(`https://api.htips.cn/jlu_helper/api/paper/${this.props.match.params.paper_id}`)
       const data = await response.json()
 
       //请求成功后的操作
