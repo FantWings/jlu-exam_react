@@ -9,7 +9,7 @@ export default class Bars extends Component {
     title: '',
     text: '',
     paper_id: '',
-    ip_addr: '',
+    submit_time: '',
   }
 
   componentDidMount() {
@@ -19,12 +19,12 @@ export default class Bars extends Component {
   }
 
   render() {
-    const { isNotices, status, title, text, paper_id, ip_addr } = this.state
+    const { isNotices, status, title, text, paper_id, submit_time } = this.state
     return isNotices ? (
       <span id="notices" className="bar error">
         <p>本工具仅供交流学习用途，请适度使用！任何因本工具导致的问题将不会为你付任何责任！</p>
         <small id="info">
-          试卷号（UUID）：{paper_id} 丨 IP地址：{ip_addr}
+          试卷号（UUID）：{paper_id} 丨 提交时间：{submit_time}
         </small>
       </span>
     ) : (
