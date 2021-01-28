@@ -1,0 +1,32 @@
+#submit {
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  padding: 10px 80px;
+  border-radius: 999em;
+  background: #5882dd;
+  color: #fff;
+  margin: auto;
+  transition: 0.3s;
+  &:hover {
+    background: #6596ff;
+  }
+
+  &:active {
+    background: #4a6fbe;
+  }
+  &.sending {
+    background: #b8ceff;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  &.failure {
+    background: #fa4e4e;
+  }
+  &.failure:hover {
+    background: #ff8080;
+  }
+  &.failure:active {
+    background: #ca6565;
+  }
+}

@@ -21,37 +21,6 @@ form #question_feid {
   transition: 0.5s;
   width: 100%;
 }
-#submit {
-  cursor: pointer;
-  outline: none;
-  border: 0;
-  padding: 10px 80px;
-  border-radius: 999em;
-  background: #5882dd;
-  color: #fff;
-  margin: auto;
-  transition: 0.3s;
-}
-#submit:hover {
-  background: #6596ff;
-}
-#submit:active {
-  background: #4a6fbe;
-}
-#submit.sending {
-  background: #b8ceff;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-#submit.failure {
-  background: #fa4e4e;
-}
-#submit.failure:hover {
-  background: #ff8080;
-}
-#submit.failure:active {
-  background: #ca6565;
-}
 #form_contain {
   flex: 100%;
 }
