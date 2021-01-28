@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 import './index.css'
 import Renamer from './Renamer'
-import { message } from 'antd'
+import { message, Spin } from 'antd'
 
 export default class AnswerBody extends Component {
   state = {
+    loading: true,
     paper_id: undefined,
     submit_time: undefined,
     isOwner: undefined,
@@ -19,7 +20,7 @@ export default class AnswerBody extends Component {
       const data = await response.json()
 
       if (data.success) {
-        this.setState({ ...data.data })
+        this.setState({ ...data.data, loading: false })
         const { paper_id, submit_time } = this.state
 
         PubSub.publish('barinfo', {
@@ -41,8 +42,10 @@ export default class AnswerBody extends Component {
     const { paper_id, answers, isOwner, paper_name } = this.state
     return (
       <div className="answersBody">
-        <Renamer paper_id={paper_id} paper_name={paper_name} isOwner={isOwner} />
-        <AnswerProccesser data={answers} />
+        <Spin spinning={this.state.loading} tip="下载答案数据....">
+          <Renamer paper_id={paper_id} paper_name={paper_name} isOwner={isOwner} />
+          <AnswerProccesser data={answers} />
+        </Spin>
       </div>
     )
   }

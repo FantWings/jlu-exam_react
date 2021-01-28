@@ -13,11 +13,6 @@ export default class Renamer extends Component {
     const { newPaperName } = this.state
     if (newPaperName.length >= 4) {
       try {
-        message.loading({
-          content: '正在提交命名请求...',
-          key: 'loading',
-        })
-
         const req = { paper_id: this.props.paper_id, new_name: newPaperName }
         const response = await fetch('/dev/api/paper/setPaperName', {
           method: 'POST',
@@ -32,6 +27,7 @@ export default class Renamer extends Component {
         const response_data = await response.json()
         message.destroy('loading')
         if (response_data.success) {
+          this.setState({ loading: false })
           message.success({
             content: response_data.msg,
             style: {

@@ -35,7 +35,7 @@ export default class State extends Component {
         ) : isSuccess ? (
           count ? (
             <small id="notice">
-              你身边最牛逼的作业小助手，累计已处理<span> {count} </span>个试卷
+              你身边最牛逼的作业小助手，累计已处理<span> {count} </span>张试卷
             </small>
           ) : (
             <small id="notice">你身边最牛逼的作业小助手，使用统计功能未启用</small>

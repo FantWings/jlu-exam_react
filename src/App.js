@@ -43,8 +43,8 @@ export default function App() {
       <Header />
       <Bars />
       <Route path="/answer/:paper_id" component={AnswerBody} />
-      {/* <Route path="/" component={Forms} /> */}
-      <Forms />
+      <Route path="/history" component={Forms} strict={true} />
+      <Route path="/" component={Forms} strict={true} />
       <Footer />
     </div>
   )

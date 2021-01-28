@@ -7,8 +7,8 @@ export default function Header() {
       <h2>吉林大学作业小助手</h2>
       <State />
       <small id="menu">
-        <a href="https://github.com/FantWings/jlu_homework_helper" target="_blank" rel="noopener noreferrer">
-          需要帮助
+        <a href="/" rel="noopener noreferrer">
+          返回主页
         </a>
         <a
           href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework"
@@ -17,8 +17,9 @@ export default function Header() {
         >
           作业管理
         </a>
-        <a href="/" rel="noopener noreferrer">
-          返回主页
+        <span Style="color:gray; margin:0 5px;">提交历史</span>
+        <a href="https://github.com/FantWings/jlu_homework_helper" target="_blank" rel="noopener noreferrer">
+          需要帮助
         </a>
       </small>
     </div>
