@@ -12,7 +12,7 @@ export default class State extends Component {
   componentDidMount = async () => {
     try {
       this.setState({ isLoading: true })
-      const response = await fetch('https://api.htips.cn/jlu_helper/v1/get_state', {
+      const response = await fetch('/dev/api', {
         credentials: 'include',
         mode: 'cors',
       })
@@ -35,7 +35,7 @@ export default class State extends Component {
         ) : isSuccess ? (
           count ? (
             <small id="notice">
-              你身边最牛逼的作业小助手，累计已被<span> {count} </span>位同学使用
+              你身边最牛逼的作业小助手，累计已处理<span> {count} </span>个试卷
             </small>
           ) : (
             <small id="notice">你身边最牛逼的作业小助手，使用统计功能未启用</small>

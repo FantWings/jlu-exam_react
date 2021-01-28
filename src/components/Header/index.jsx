@@ -1,7 +1,7 @@
 import State from './State'
 import './index.css'
 
-export default function Title() {
+export default function Header() {
   return (
     <div id="title">
       <h2>吉林大学作业小助手</h2>
@@ -16,6 +16,9 @@ export default function Title() {
           rel="noopener noreferrer"
         >
           作业管理
+        </a>
+        <a href="/" rel="noopener noreferrer">
+          返回主页
         </a>
       </small>
     </div>

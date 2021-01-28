@@ -1,9 +1,10 @@
-import './styles.css'
-import Title from './components/Title'
+import { Route } from 'react-router-dom'
+import Header from './components/Header'
 import Footer from './components/Footer'
 import Forms from './components/Forms'
 import Bars from './components/Bars'
-import AnswerBody from './components/Answers'
+import AnswerBody from './pages/Answers'
+import './styles.css'
 
 export default function App() {
   console.log(
@@ -39,9 +40,10 @@ export default function App() {
 
   return (
     <div className="container">
-      <Title />
+      <Header />
       <Bars />
-      <AnswerBody />
+      <Route path="/answer/:paper_id" component={AnswerBody} />
+      {/* <Route path="/" component={Forms} /> */}
       <Forms />
       <Footer />
     </div>

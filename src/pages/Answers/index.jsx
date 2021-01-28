@@ -1,26 +1,49 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 import './index.css'
+import Renamer from './Renamer'
+import { message } from 'antd'
 
 export default class AnswerBody extends Component {
   state = {
-    enable: false,
+    paper_id: undefined,
+    submit_time: undefined,
+    isOwner: undefined,
     answers: undefined,
+    paper_name: false,
   }
 
-  componentDidMount() {
-    PubSub.subscribe('answers_data', (_, data) => {
-      this.setState({ answers: data, enable: true })
-    })
-  }
+  componentDidMount = async () => {
+    try {
+      const response = await fetch(`/dev/api/paper/${this.props.match.params.paper_id}`)
+      const data = await response.json()
 
-  componentWillUnmount() {
-    PubSub.unsubscribe('answers_data')
+      if (data.success) {
+        this.setState({ ...data.data })
+        const { paper_id, submit_time } = this.state
+
+        PubSub.publish('barinfo', {
+          paper_id: paper_id,
+          submit_time: submit_time,
+          isNotices: true,
+        })
+        window.scrollTo(0, 0)
+      } else {
+        message.error(`错误！${data.msg}`)
+        return
+      }
+    } catch (error) {
+      message.error(`答案数据下载失败！${error}`)
+    }
   }
 
   render() {
+    const { paper_id, answers, isOwner, paper_name } = this.state
     return (
-      <div className="answersBody">{this.state.enable ? <AnswerProccesser data={this.state.answers} /> : <div />}</div>
+      <div className="answersBody">
+        <Renamer paper_id={paper_id} paper_name={paper_name} isOwner={isOwner} />
+        <AnswerProccesser data={answers} />
+      </div>
     )
   }
 }
