@@ -2,21 +2,24 @@ import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 import './index.css'
 export default class Footer extends Component {
+  //初始化状态
   state = {
     isConnected: null,
     text: '正在联系服务器....',
   }
 
+  //组件挂载后订阅消息
   componentDidMount() {
-    PubSub.subscribe('isConnected', (_, state) => {
+    this.pubsub_token = PubSub.subscribe('isConnected', (_, state) => {
       state
         ? this.setState({ isConnected: state, text: '服务器连接已建立' })
         : this.setState({ isConnected: state, text: '与服务器通讯失败' })
     })
   }
 
+  //组件卸载后取消订阅消息
   componentWillUnmount() {
-    PubSub.unsubscribe('isConnected')
+    PubSub.unsubscribe(this.pubsub_token)
   }
 
   render() {

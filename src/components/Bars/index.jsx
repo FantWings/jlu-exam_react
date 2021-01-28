@@ -3,6 +3,7 @@ import PubSub from 'pubsub-js'
 import './index.css'
 
 export default class Bars extends Component {
+  //初始化函数
   state = {
     isNotices: false,
     status: '',
@@ -12,10 +13,16 @@ export default class Bars extends Component {
     submit_time: '',
   }
 
+  //组件挂载后订阅消息
   componentDidMount() {
-    PubSub.subscribe('barinfo', (_, data) => {
+    this.pubsub_token = PubSub.subscribe('barinfo', (_, data) => {
       this.setState({ ...data })
     })
+  }
+
+  //组件卸载后取消订阅消息
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.pubsub_token)
   }
 
   render() {

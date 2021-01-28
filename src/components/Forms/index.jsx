@@ -5,17 +5,25 @@ import Submit from './Submit'
 import './index.css'
 
 export default class Forms extends Component {
+  //创建ref容器
   data = React.createRef()
   token = React.createRef()
 
+  //初始化状态
   state = {
     isAuthed: false,
   }
 
+  //组件挂载时订阅消息
   componentDidMount() {
-    PubSub.subscribe('isAuthed', (_, isAuthed) => {
+    this.pubsub_token = PubSub.subscribe('isAuthed', (_, isAuthed) => {
       this.setState({ isAuthed })
     })
+  }
+
+  //组件卸载时取消订阅
+  componentWillUnmount() {
+    PubSub.unsubscribe(this.pubsub_token)
   }
 
   render() {

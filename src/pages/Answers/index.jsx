@@ -5,6 +5,7 @@ import Renamer from './Renamer'
 import { message, Spin } from 'antd'
 
 export default class AnswerBody extends Component {
+  //初始化函数
   state = {
     loading: true,
     paper_id: undefined,
@@ -14,26 +15,34 @@ export default class AnswerBody extends Component {
     paper_name: false,
   }
 
+  //组件挂载后的动作函数
   componentDidMount = async () => {
+    //向服务器请求试卷数据
     try {
       const response = await fetch(`/dev/api/paper/${this.props.match.params.paper_id}`)
       const data = await response.json()
 
+      //请求成功后的操作
       if (data.success) {
+        //向状态直接赋值
         this.setState({ ...data.data, loading: false })
         const { paper_id, submit_time } = this.state
 
+        //向Bar组件发布消息
         PubSub.publish('barinfo', {
           paper_id: paper_id,
           submit_time: submit_time,
           isNotices: true,
         })
+        //将用户浏览器视口重置到顶部
         window.scrollTo(0, 0)
       } else {
+        //服务器请求成功，但返回失败的结果处理
         message.error(`错误！${data.msg}`)
         return
       }
     } catch (error) {
+      //连接服务器失败结果处理
       message.error(`答案数据下载失败！${error}`)
     }
   }

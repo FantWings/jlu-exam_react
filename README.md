@@ -7,8 +7,8 @@
 ![screenshot](public/demo.png)
 适用范围：吉林大学弘成科技发展有限公司开发的学生作业系统
 
-**前端程序语言**：[ReactJS](https://reactjs.org/)，[Fetch](https://github.com/github/fetch)  
-**后端程序语言**：[Python3](https://www.python.org/)，[Flask](https://github.com/pallets/flask)
+**前端程序**：[ReactJS](https://reactjs.org/)，[Fetch](https://github.com/github/fetch)  
+**后端程序**：[Python3](https://www.python.org/)，[Flask](https://github.com/pallets/flask)
 
 ## 使用方法
 
@@ -33,11 +33,11 @@
 
 - 将前端文件挪移至任意位置。
 - 单独下载前端，自己修改成喜欢的样式。
-- 单独下载前端，让其和任意位置的后端交互（自己部署或者用公共后端）
+- 单独下载前端，让其和任意位置的后端交互
 
 ## 统计支持
 
-**现工具已支持 MYSQL 作为数据存储后端，修改`config.json`配置的`use_sql`值为`true`,正确填写 SQL 相关配置即可启用统计功能，统计工具的被使用次数。**
+**现工具正式使用 MYSQL 作为数据存储后端，具有基础用户试卷数据的 CRUD 功能，修改`config.json`配置的`use_sql`值为`true`,即使用 MySQL，设置为`false`则使用 SQLite，用于统计工具的被使用次数，记录用户提交过的试卷数据以及答案。**
 
 ## 下载源码试一试
 
@@ -62,7 +62,7 @@
 ### 后端
 
 - 请确保系统内安装了 3.X 或以上的 Python 版本，使用`python -v`查看 Python 版本。
-- 安装 flask 扩展 `pip install flask flask_cors`
+- 安装 flask 扩展 `pip install flask flask_cors sqlalchemy`
 - 使用`cp .config config`命令复制一份配置文件，并修改里面的 token 字段为你想要的 token（越长越好）
 - 运行程序 `flask run`启动后端。
   - 默认监听 127.0.0.1:5000，如果需要任意网络访问请使用参数-h 0.0.0.0（安全角度非常不建议）
