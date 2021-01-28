@@ -1,8 +1,9 @@
 {
-  "token": "PASTEYOURTOKENHERE",
-  "use_sql": false,
-  "sql_host": "",
-  "sql_basename": "",
+  "token": "PLACEYOURTOKENHERE",
+  "use_sql": true,
+  "sql_hostname": "127.0.0.1",
+  "sql_database": "",
   "sql_username": "",
-  "sql_password": ""
+  "sql_password": "",
+  "sql_port": "3306"
 }

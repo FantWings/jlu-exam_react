@@ -46,7 +46,7 @@ class Submit extends Component {
 
     try {
       const { answerPaperRecordId } = req.question_data.data
-      const response = await fetch(`/dev/api/paper/${answerPaperRecordId}`, {
+      const response = await fetch(`https://api.htips.cn/jlu_helper/api/paper/${answerPaperRecordId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
