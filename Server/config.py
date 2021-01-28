@@ -30,4 +30,4 @@ class Config(object):
     SECRET_KEY = os.urandom(24)
 
     # 设置SESSION有效期
-    PERMANENT_SESSION_LIFETIME = timedelta(days=7)
+    PERMANENT_SESSION_LIFETIME = timedelta(days=31)

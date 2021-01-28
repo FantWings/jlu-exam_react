@@ -8,19 +8,21 @@ import Server.lib.Oprater as Oprater
 
 
 conf = json.load(open('config.json'))
-
 api = Blueprint('api', __name__)
+
+
+@api.before_request
+def before_request():
+    session.permanent = True
 
 
 @api.route('/', methods=["GET"])
 def get_state():
     isAuthed = session.get('authed')
-    userToken = session.get('token')
     state = {
         'count': Oprater.getPaperCount(),
         'authed': isAuthed
         }
-    print('UserToken: %s , Authed: %s' % (userToken, isAuthed))
     return make_response(state)
 
 
