@@ -38,12 +38,13 @@ export default function App() {
     `
   )
 
+  //APP外壳函数
   return (
     <div className="container">
       <Header />
       <Bars />
       <Route path="/answer/:paper_id" component={AnswerBody} />
-      <Route path="/history" component={Forms} strict={true} />
+      {/* <Route path="/history" component={Forms} strict={true} /> */}
       <Route path="/" component={Forms} strict={true} />
       <Footer />
     </div>

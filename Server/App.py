@@ -13,11 +13,18 @@ api = Blueprint('api', __name__)
 
 @api.before_request
 def before_request():
+    """
+    设置用户Session有效期
+    """
     session.permanent = True
 
 
 @api.route('/getState', methods=["GET"])
 def get_state():
+    """
+    状态接口，承接前端第一次请求
+    返回程序被使用次数，用户登录态
+    """
     isAuthed = session.get('authed')
     state = {
         'count': Oprater.getPaperCount(),
@@ -28,6 +35,9 @@ def get_state():
 
 @api.route('/paper/<paper_id>', methods=['GET', 'POST'])
 def paper(paper_id):
+    """
+    试卷处理接口
+    """
     if request.method == "GET":
         # 验证用户是否已经处于登录状态
         if session.get('authed'):
@@ -71,8 +81,12 @@ def paper(paper_id):
                 ), 401)
 
 
+
 @api.route('/paper/setPaperName', methods=['POST'])
 def index():
+    """
+    试卷名称修改接口，处理用户的试卷名称更新请求
+    """
     submit = request.get_json()
     result = Oprater.setPaperName(submit['paper_id'],
                                   submit['new_name'],
