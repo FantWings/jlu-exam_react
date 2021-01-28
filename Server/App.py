@@ -16,7 +16,7 @@ def before_request():
     session.permanent = True
 
 
-@api.route('/', methods=["GET"])
+@api.route('/getState', methods=["GET"])
 def get_state():
     isAuthed = session.get('authed')
     state = {
@@ -78,8 +78,3 @@ def index():
                                   submit['new_name'],
                                   session.get('token'))
     return make_response(result, result['code'])
-
-
-@api.route('/test', methods=['GET'])
-def test():
-    return Oprater.getPaperCount()
