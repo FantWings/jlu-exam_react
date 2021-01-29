@@ -37,7 +37,7 @@ class Submit extends Component {
       message.warning('您忘了填写试卷数据！请检查！')
       return
     } else {
-      message.loading({ content: '正在处理数据....', key: 'loading' })
+      message.loading({ content: '数据处理中，请稍等....', key: 'loading', duration: 0 })
       this.setState({ status: 'sending', text: '别着急' })
     }
 
