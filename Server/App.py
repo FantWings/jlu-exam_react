@@ -81,7 +81,6 @@ def paper(paper_id):
                 ), 401)
 
 
-
 @api.route('/paper/setPaperName', methods=['POST'])
 def index():
     """
