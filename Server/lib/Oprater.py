@@ -1,5 +1,4 @@
 import json
-import math
 from sqlalchemy import func
 
 from Server.lib.sql import db
@@ -133,5 +132,5 @@ def getPaperList(limit, index):
         Paper.id,
         Paper.paper_name,
         Paper.submit_time).all()
-    totalPage = math.ceil(Paper.query.count() / limit)
-    return json_res(True, data=results, msg={'pageTotal': totalPage})
+    total = Paper.query.count()
+    return json_res(True, data=results, msg={'Total': total})
