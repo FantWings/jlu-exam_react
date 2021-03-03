@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
+import { notification } from 'antd'
 
 export default class State extends Component {
   //初始化状态
@@ -26,6 +27,12 @@ export default class State extends Component {
     } catch {
       //请求失败处理
       this.setState({ isSuccess: false, isLoading: false })
+      notification.error({
+        message: '服务器通讯失败',
+        description:
+          '这种情况往往是网络连接失败，或者服务器出现了问题，如果问题依然存在，请与开发者取得联系，此工具的功能将无法正常运作。',
+        duration: 0,
+      })
     }
     //状态发布
     PubSub.publish('isConnected', this.state.isSuccess)
