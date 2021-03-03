@@ -127,7 +127,8 @@ def getPaperList(limit, index):
     """
     从数据库获取试卷列表
     """
-    results = Paper.query.limit(limit).offset(
+    results = Paper.query.order_by(
+        Paper.submit_time.desc()).limit(limit).offset(
         (index - 1) * limit).with_entities(
         Paper.id,
         Paper.paper_name,
