@@ -28,7 +28,7 @@ config.json
 test.py
 
 # for testing
-data
+mock
 
 # vscode
 .vscode
