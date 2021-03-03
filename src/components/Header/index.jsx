@@ -17,7 +17,7 @@ export default function Header() {
         >
           作业管理
         </a>
-        <span style={{ color: 'gray', margin: '0 5px' }}>提交历史</span>
+        <a href="/history">提交历史</a>
         <a href="https://github.com/FantWings/jlu_homework_helper" target="_blank" rel="noopener noreferrer">
           需要帮助
         </a>

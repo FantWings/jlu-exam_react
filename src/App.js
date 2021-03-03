@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Forms from './components/Forms'
 import Bars from './components/Bars'
+import History from './pages/History'
 import AnswerBody from './pages/Answers'
 import './styles.css'
 
@@ -44,7 +45,7 @@ export default function App() {
       <Header />
       <Bars />
       <Route path="/answer/:paper_id" component={AnswerBody} />
-      {/* <Route path="/history" component={Forms} strict={true} /> */}
+      <Route path="/history" component={History} strict={true} />
       <Route path="/" component={Forms} strict={true} />
       <Footer />
     </div>

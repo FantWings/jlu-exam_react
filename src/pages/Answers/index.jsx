@@ -41,11 +41,13 @@ export default class AnswerBody extends Component {
         window.scrollTo(0, 0)
       } else {
         //服务器请求成功，但返回失败的结果处理
+        this.setState({ loading: false })
         message.error(`错误！${data.msg}`)
         return
       }
     } catch (error) {
       //连接服务器失败结果处理
+      this.setState({ loading: false })
       message.error(`答案数据下载失败！${error}`)
     }
   }
