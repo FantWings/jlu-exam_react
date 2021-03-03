@@ -40,16 +40,16 @@ def paper(paper_id):
     """
     if request.method == "GET":
         # 验证用户是否已经处于登录状态
-        if session.get('authed'):
-            # 获取试卷数据
-            answers = Oprater.getPapers(paper_id, session.get('token'))
-            # 处理完成，返回答案数据给前端
-            return make_response(answers, answers['code'])
-        else:
-            return make_response(json_res(
-                False,
-                msg='Token丢失或无效，请返回主页并刷新页面再试！'
-                ), 401)
+        # if session.get('authed'):
+        # 获取试卷数据
+        answers = Oprater.getPapers(paper_id, session.get('token'))
+        # 处理完成，返回答案数据给前端
+        return make_response(answers, answers['code'])
+        # else:
+        #     return make_response(json_res(
+        #         False,
+        #         msg='Token丢失或无效，请返回主页并刷新页面再试！'
+        #         ), 401)
 
     if request.method == "POST":
         # 获取前端传来的JSON数据

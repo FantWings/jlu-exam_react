@@ -131,6 +131,6 @@ def getPaperList(limit, index):
         (index - 1) * limit).with_entities(
         Paper.id,
         Paper.paper_name,
-        Paper.submit_time).all()
+        func.date_format(Paper.submit_time, "%Y年-%m月-%d日 %H时-%i分-%s秒")).all()
     total = Paper.query.count()
     return json_res(True, data=results, msg={'total': total})
