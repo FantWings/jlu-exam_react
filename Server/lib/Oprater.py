@@ -133,4 +133,4 @@ def getPaperList(limit, index):
         Paper.paper_name,
         Paper.submit_time).all()
     total = Paper.query.count()
-    return json_res(True, data=results, msg={'Total': total})
+    return json_res(True, data=results, msg={'total': total})
