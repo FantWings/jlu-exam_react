@@ -128,8 +128,9 @@ def getPaperList(limit, index):
     从数据库获取试卷列表
     """
     results = Paper.query.limit(limit).offset(
-        (int(index) - 1) * int(limit)).with_entities(
+        (index - 1) * limit).with_entities(
         Paper.id,
         Paper.paper_name,
         Paper.submit_time).all()
-    return json_res(True, data=results)
+    totalPage = Paper.query.count() / limit
+    return json_res(True, data=results, msg={'pageTotal': totalPage})

@@ -98,6 +98,6 @@ def get_paper_list():
     """
     获取工具存储的试卷列表
     """
-    limit = request.args.get('limit', default=10)
-    index = request.args.get('index', default=1)
+    limit = int(request.args.get('limit', default=10))
+    index = int(request.args.get('index', default=1))
     return make_response(Oprater.getPaperList(limit, index))
