@@ -82,7 +82,7 @@ def paper(paper_id):
 
 
 @api.route('/paper/setPaperName', methods=['POST'])
-def index():
+def remane():
     """
     试卷名称修改接口，处理用户的试卷名称更新请求
     """
@@ -91,3 +91,13 @@ def index():
                                   submit['new_name'],
                                   session.get('token'))
     return make_response(result, result['code'])
+
+
+@api.route('/paper/lists', methods=['GET'])
+def get_paper_list():
+    """
+    获取工具存储的试卷列表
+    """
+    limit = request.args.get('limit', default=10)
+    index = request.args.get('index', default=1)
+    return make_response(Oprater.getPaperList(limit, index))

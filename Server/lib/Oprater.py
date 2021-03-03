@@ -121,3 +121,15 @@ def getPaperCount():
     """
     result = db.session.query(func.sum(Paper.used_count)).scalar() or 0
     return int(result)
+
+
+def getPaperList(limit, index):
+    """
+    从数据库获取试卷列表
+    """
+    results = Paper.query.limit(limit).offset(
+        (int(index) - 1) * int(limit)).with_entities(
+        Paper.id,
+        Paper.paper_name,
+        Paper.submit_time).all()
+    return json_res(True, data=results)
