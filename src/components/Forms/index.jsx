@@ -33,7 +33,7 @@ export default class Forms extends Component {
       <form method="post" name="form">
         <TextArea
           showCount
-          placeholder="将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击“需要帮助”"
+          placeholder="将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击菜单上的“使用教程”"
           autoSize={{ minRows: 20, maxRows: 20 }}
           allowClear
           ref={this.data}
