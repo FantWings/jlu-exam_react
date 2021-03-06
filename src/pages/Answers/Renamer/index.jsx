@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { message } from 'antd'
 import './index.css'
 
+import { BASE_URL } from '../../../api'
+
 export default class Renamer extends Component {
   //初始化状态
   state = { newPaperName: '' }
@@ -19,7 +21,7 @@ export default class Renamer extends Component {
     if (newPaperName.length >= 4) {
       try {
         const req = { paper_id: this.props.paper_id, new_name: newPaperName }
-        const response = await fetch('https://api.htips.cn/jlu_helper/api/paper/setPaperName', {
+        const response = await fetch(`${BASE_URL}/paper/setPaperName`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

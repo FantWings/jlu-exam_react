@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 import { notification } from 'antd'
+import { BASE_URL } from '../../../api'
 
 export default class State extends Component {
   //初始化状态
@@ -15,7 +16,7 @@ export default class State extends Component {
   componentDidMount = async () => {
     try {
       this.setState({ isLoading: true })
-      const response = await fetch('https://api.htips.cn/jlu_helper/api/getState', {
+      const response = await fetch(`${BASE_URL}/getState`, {
         credentials: 'include',
         mode: 'cors',
       })

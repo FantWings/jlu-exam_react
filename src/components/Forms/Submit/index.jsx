@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { message } from 'antd'
 import './index.css'
+import { BASE_URL } from '../../../api'
 
 class Submit extends Component {
   //初始化状态
@@ -53,7 +54,7 @@ class Submit extends Component {
     //向服务器发送试卷数据
     try {
       const { answerPaperRecordId } = req.question_data.data
-      const response = await fetch(`https://api.htips.cn/jlu_helper/api/paper/${answerPaperRecordId}`, {
+      const response = await fetch(`${BASE_URL}/paper/${answerPaperRecordId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import { Pagination, message, Spin } from 'antd'
 import './index.css'
 import ListObject from './listObject'
 
-const apiAddress = 'https://api.htips.cn/jlu_helper/api'
+import { BASE_URL } from '../../api'
 
 export default class History extends Component {
   //初始化状态
@@ -18,7 +18,7 @@ export default class History extends Component {
       //设置页面为加载状态
       this.setState({ isLoading: true })
       //获取数据
-      const response = await fetch(`${apiAddress}/paper/lists`)
+      const response = await fetch(`${BASE_URL}/paper/lists`)
       const data = await response.json()
       //使用数据更新组件状态
       this.setState({ isLoading: false, data: data.data, total: data.msg.total })
@@ -34,7 +34,7 @@ export default class History extends Component {
       //设置页面为加载状态
       this.setState({ isLoading: true })
       //获取数据
-      const response = await fetch(`${apiAddress}/paper/lists?limit=${limit}&index=${index}`)
+      const response = await fetch(`${BASE_URL}/paper/lists?limit=${limit}&index=${index}`)
       const data = await response.json()
       //使用数据更新组件状态
       this.setState({ isLoading: false, data: data.data, total: data.msg.total })

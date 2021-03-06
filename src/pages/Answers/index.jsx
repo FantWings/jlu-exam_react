@@ -5,6 +5,7 @@ import Renamer from './Renamer'
 import { message, Spin } from 'antd'
 
 import Bars from './Bars'
+import { BASE_URL } from '../../api'
 
 export default class AnswerBody extends Component {
   //初始化函数
@@ -21,7 +22,7 @@ export default class AnswerBody extends Component {
   componentDidMount = async () => {
     //向服务器请求试卷数据
     try {
-      const response = await fetch(`https://api.htips.cn/jlu_helper/api/paper/${this.props.match.params.paper_id}`, {
+      const response = await fetch(`${BASE_URL}/paper/${this.props.match.params.paper_id}`, {
         credentials: 'include',
         mode: 'cors',
       })
