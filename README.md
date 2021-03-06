@@ -7,25 +7,25 @@
 ![screenshot](public/demo.png)
 适用范围：吉林大学弘成科技发展有限公司开发的学生作业系统
 
-**前端程序**：[ReactJS](https://reactjs.org/)，[Fetch](https://github.com/github/fetch)  
-**后端程序**：[Python3](https://www.python.org/)，[Flask](https://github.com/pallets/flask)
+**前端**：[ReactJS](https://reactjs.org/)，[Fetch](https://github.com/github/fetch)  
+**后端**：[Python3](https://www.python.org/)，[Flask](https://github.com/pallets/flask)
 
 ## 使用方法
 
-**在线使用：https://tools.htips.cn/jlu_helper**
+**在线使用：https://jlu.htips.cn**
 
 ### 操作步骤
 
 - 在操作之前，请先点击开始考试，进入考试界面
-- 按下 F12 键，打开浏览器调试工具（**如果你用的是苹果电脑自带的 Safari 浏览器，请看下面**）
-  - Safari 默认关闭了开发者模式，请先[启用开发模式](https://jingyan.baidu.com/article/6dad507529d1c8a122e36e50.html)）才可调出 F12 界面
+- 按下 F12 键，打开浏览器调试工具（**如果你用的是苹果电脑自带的 Safari 浏览器请看下面，其他浏览器请跳过**）
+  - Safari 默认关闭了开发者模式，请先[启用开发模式](https://jingyan.baidu.com/article/9113f81bfa87586b3214c7d4.html)，才可调出 F12 界面
   - 开发者模式启用后，在页面按下键盘 Option+Command+A 组合键，继续下一步。
 - 选择"网络（Network）"，在筛选器上筛选“XHR”
 - 在题目上随便选一个答案，点击“保存”
 - 这时可以在网络工具下看到出现一个“SubmitAnserPaper”
 - 选中“SubmitAnserPaper”，点“响应（Response）”
-- 按下键盘 Ctrl+A（苹果电脑 Command+A）全选，复制预览内容
-- 粘贴至解析工具，输入执行密钥，点击提交。
+- 按下键盘 `Ctrl+A`（苹果电脑 `Command+A`）全选，并按下`Ctrl+C`（苹果电脑 `Command+C`）复制全部内容。
+- 将复制的数据`Ctrl+V`（苹果电脑 `Command+V`）粘贴至解析工具，输入执行密钥，点击提交，即可解析答案。
 
 ## 前后分离
 
@@ -53,16 +53,17 @@
 
 ### 前端
 
-- 修改项目文件夹 `src/index.js` 内的后端地址为你自己的后端地址（例：http://localhost:5000）
+- 修改项目文件夹 `src/api.js` 内的后端地址为你自己的后端地址（例：http://localhost:5000）
 - 测试&构建前端页面
-  - 使用 `npm start` 测试前端是否正常配置
-  - 使用 `npm run build` 构建静态前端页面
-- 构建的前端静态页面会生成在 `build` 文件夹
+  - 使用 `yarn start` 启动开发服务器
+  - 使用 `yarn build` 构建静态前端页面
+- 构建的前端静态页面会生成在 `build` 文件夹，可将这些文件放到 OSS 或者外部的网页服务器上供其他人使用。
+- 注：请勿将 yarn start 启动的开发服务器暴露给外网，开发服务器的文件是没有经过优化的。
 
 ### 后端
 
 - 请确保系统内安装了 3.X 或以上的 Python 版本，使用`python -v`查看 Python 版本。
-- 安装 flask 扩展 `pip install flask flask_cors sqlalchemy`
-- 使用`cp .config config`命令复制一份配置文件，并修改里面的 token 字段为你想要的 token（越长越好）
+- 在根目录执行`pip install Server/requirements.txt`安装 flask 所需要的扩展
+- 使用`cp .config config`命令将模板复制成一份可用的配置文件，并修改里面的 token 字段为你想要的 token（越长越好），这个是对应页面的执行密钥
 - 运行程序 `flask run`启动后端。
   - 默认监听 127.0.0.1:5000，如果需要任意网络访问请使用参数-h 0.0.0.0（安全角度非常不建议）
