@@ -1,3 +1,6 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
+
 import State from './State'
 import './index.css'
 
@@ -7,9 +10,7 @@ export default function Header() {
       <h2>吉林大学作业小助手</h2>
       <State />
       <small id="menu">
-        <a href="/" rel="noopener noreferrer">
-          返回主页
-        </a>
+        <Link to="/home">主页</Link>
         <a
           href="http://dec.jlu.edu.cn/learning/entity/student/student_toOuterSystem.action?key=homework"
           target="_blank"
@@ -17,9 +18,9 @@ export default function Header() {
         >
           作业管理
         </a>
-        <a href="/history">提交历史</a>
+        <Link to="/history">答案库</Link>
         <a href="https://github.com/FantWings/jlu_homework_helper" target="_blank" rel="noopener noreferrer">
-          需要帮助
+          使用教程
         </a>
       </small>
     </div>

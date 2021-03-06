@@ -51,12 +51,12 @@ export default class History extends Component {
       <div className="answer_contain">
         <h1 className="q_type">答案库</h1>
         <small class="smallTitle">这里收集了所有同学有史以来提交过的试卷数据</small>
-        <Spin spinning={this.state.isLoading} tip="向服务器请求数据....">
+        <Spin spinning={this.state.isLoading} tip="向服务器请求数据...." className="loader">
           <ListObject data={data}></ListObject>
-          <span id="pagination">
-            <Pagination showSizeChanger defaultCurrent={1} total={total} onChange={this.handleChange}></Pagination>
-          </span>
         </Spin>
+        <span id="pagination">
+          <Pagination showSizeChanger defaultCurrent={1} total={total} onChange={this.handleChange}></Pagination>
+        </span>
       </div>
     )
   }

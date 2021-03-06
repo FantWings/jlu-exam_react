@@ -16,7 +16,13 @@ div.answer_contain span.historyPaperUUID {
   color: #cacaca;
   font-size: smaller;
 }
-div.answer_contain span#pagination > ul {
+@media screen and (max-width: 500px) {
+  div.answer_contain span.historyPaperUUID {
+    display: none;
+  }
+}
+div.answer_contain span#pagination {
+  display: block;
   margin-top: 3em;
 }
 div.answer_contain small.smallTitle {

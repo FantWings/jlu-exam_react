@@ -4,7 +4,7 @@
 .answersBody .liner {
   border-bottom: #eaeaea 2px dashed;
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 2em;
 }
 .answersBody .liner_text {
   display: block;

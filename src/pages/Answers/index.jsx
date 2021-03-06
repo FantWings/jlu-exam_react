@@ -4,6 +4,8 @@ import './index.css'
 import Renamer from './Renamer'
 import { message, Spin } from 'antd'
 
+import Bars from './Bars'
+
 export default class AnswerBody extends Component {
   //初始化函数
   state = {
@@ -56,10 +58,17 @@ export default class AnswerBody extends Component {
     const { paper_id, answers, isOwner, paper_name } = this.state
     return (
       <div className="answersBody">
+        <Bars />
+        <Renamer paper_id={paper_id} paper_name={paper_name} isOwner={isOwner} />
+        <span className="liner" key="liner_head">
+          <span className="liner_text">标准答案</span>
+        </span>
         <Spin spinning={this.state.loading} tip="下载答案数据....">
-          <Renamer paper_id={paper_id} paper_name={paper_name} isOwner={isOwner} />
           <AnswerProccesser data={answers} />
         </Spin>
+        <span className="liner" key="liner_foot">
+          <span className="liner_text">再次解析</span>
+        </span>
       </div>
     )
   }
@@ -67,21 +76,11 @@ export default class AnswerBody extends Component {
 
 function AnswerProccesser(props) {
   let rows = []
-  rows.push(
-    <span className="liner" key="liner_head">
-      <span className="liner_text">标准答案</span>
-    </span>
-  )
   for (const key in props.data) {
     if (Object.keys(props.data[key].answer).length > 0) {
       rows.push(<AnswerBlock answer_data={props.data[key]} type_id={key} key={key} />)
     }
   }
-  rows.push(
-    <span className="liner" key="liner_foot">
-      <span className="liner_text">再次解析</span>
-    </span>
-  )
   return rows
 }
 
