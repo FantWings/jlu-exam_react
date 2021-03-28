@@ -3,24 +3,3 @@ body {
   font-family: Arial, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background: #f9f9fb;
 }
-.container {
-  margin: 40px auto;
-  max-width: 1000px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-}
-@media screen and (min-width: 768px) {
-  .container {
-    padding: 38px;
-  }
-}
-a {
-  text-decoration: none;
-  color: cornflowerblue;
-  transition: 0.3s;
-}
-a:hover {
-  color: #7ea7f5;
-}
