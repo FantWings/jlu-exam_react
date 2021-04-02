@@ -64,6 +64,9 @@
 
 - 请确保系统内安装了 3.X 或以上的 Python 版本，使用`python -v`查看 Python 版本。
 - 在根目录执行`pip install Server/requirements.txt`安装 flask 所需要的扩展
+  - 注意 mysqlclient 需要依赖 mysql-config，如果你是 Ubuntu/Debian 系统，请注意安装 libmysqlclient-dev
 - 使用`cp .config config`命令将模板复制成一份可用的配置文件，并修改里面的 token 字段为你想要的 token（越长越好），这个是对应页面的执行密钥
-- 运行程序 `flask run`启动后端。
+- 运行 `flask run`启动开发后端。
   - 默认监听 127.0.0.1:5000，如果需要任意网络访问请使用参数-h 0.0.0.0（安全角度非常不建议）
+- 运行`uwsgi --socket 0.0.0.0:5000 --protocol=http -p 3 -w wsgi:app` 启动生产环境后端。
+  - 建议配合 NGINX 来启动后端更为安全。
