@@ -1,56 +1,63 @@
 import React, { useState, useEffect } from 'react'
-import { Pagination, message, Spin } from 'antd'
+import { Pagination, Spin } from 'antd'
 import { BASE_URL } from '../api'
 import styled from 'styled-components'
+import { useHistory } from 'react-router'
+import { fetchData } from '../common/fetchData'
 
 export default function History() {
-  const [state, setState] = useState({
-    isLoading: false,
-    data: undefined,
-    total: 0,
+  const [data, setData] = useState({
+    data: [],
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [pagination, setPagination] = useState([1, 10])
 
   useEffect(() => {
-    setState({ isLoading: true })
-    try {
-      fetch(`${BASE_URL}/paper/lists`).then((response) => {
-        setState({ data: response.json() })
-      })
-    } catch (error) {
-      return message.error(`服务器错误，${error}`)
+    const getData = async () => {
+      setIsLoading(true)
+      setData(await fetchData(`${BASE_URL}/paper/lists?limit=${pagination[1]}&index=${pagination[0]}`))
+      setIsLoading(false)
     }
-    setState({ isLoading: false })
-  }, [])
+    getData()
+  }, [pagination])
 
   function HandleChange(index, limit) {
-    try {
-      //设置页面为加载状态
-      setState({ isLoading: true })
-      //获取数据
-      fetch(`${BASE_URL}/paper/lists?limit=${limit}&index=${index}`).then((response) => {
-        const data = response.json()
-        //使用数据更新组件状态
-        setState({ isLoading: false, data: data.data, total: data.msg.total })
-      })
-    } catch (error) {
-      //请求失败处理
-      setState({ isLoading: false })
-      return message.error(`数据获取失败，请重试！${error}`)
-    }
+    setPagination([index, limit])
   }
 
   return (
     <AnswerContain>
       <h1 className="q_type">答案库</h1>
       <small className="smallTitle">这里收集了所有同学有史以来提交过的试卷数据</small>
-      <Spin spinning={state.isLoading} tip="向服务器请求数据...." className="loader">
-        {/* <ListObject data={state.data}></ListObject> */}
+      <Spin spinning={isLoading} tip="向服务器请求数据...." className="loader">
+        <ListObject data={data.results} />
       </Spin>
       <span id="pagination">
-        <Pagination showSizeChanger defaultCurrent={1} total={state.total} onChange={HandleChange}></Pagination>
+        <Pagination showSizeChanger defaultCurrent={1} total={data.total} onChange={HandleChange}></Pagination>
       </span>
     </AnswerContain>
   )
+}
+
+function ListObject(data) {
+  const history = useHistory()
+  function handleClick(uuid) {
+    history.push(`/answer/${uuid}`)
+  }
+  if (data.data) {
+    return data.data.map((data) => {
+      return (
+        <div className="answer_block" key={data[0]} onClick={() => handleClick(data[0])}>
+          <span className="historyPaperInfo">
+            {data[1] != null ? <h3 id="titled">《 {data[1]} 》</h3> : <h3 id="untitled">《 无名试卷 》</h3>}
+            <span>{data[2]}</span>
+          </span>
+          <span className="historyPaperUUID">{data[0]}</span>
+        </div>
+      )
+    })
+  }
+  return null
 }
 
 const AnswerContain = styled.div`
@@ -103,5 +110,17 @@ const AnswerContain = styled.div`
     position: relative;
     bottom: 2em;
     color: #7b7b7b;
+  }
+  .answer_block {
+    display: flex;
+    margin: 10px 5px;
+    padding: 10px 8px;
+    border: 2px solid rgb(238, 238, 238);
+    border-radius: 5px;
+    transition: 0.5s;
+    cursor: pointer;
+    &:hover {
+      border: 2px solid rgb(141, 142, 255);
+    }
   }
 `

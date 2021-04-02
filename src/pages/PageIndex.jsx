@@ -3,6 +3,8 @@ import { Input, message } from 'antd'
 import { ConnectionState } from '../common/Context'
 import styled from 'styled-components'
 import { BASE_URL } from '../api'
+import { useHistory } from 'react-router'
+import { fetchData } from '../common/fetchData'
 
 export default function ComponentsFroms() {
   const [FromData, setFromData] = useState({
@@ -38,12 +40,13 @@ export default function ComponentsFroms() {
 }
 
 function Submit(data, token) {
+  const history = useHistory()
   const [status, setStatus] = useState({
     status: 'ready',
     text: '提交',
   })
 
-  function handleClick(e) {
+  const handleClick = async (e, data) => {
     e.preventDefault()
 
     //判断用户是否输入了内容
@@ -63,39 +66,56 @@ function Submit(data, token) {
     }
 
     const { answerPaperRecordId } = req.question_data.data
-    try {
-      fetch(`${BASE_URL}/paper/${answerPaperRecordId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        mode: 'cors',
-        body: JSON.stringify(req),
-      }).then((response) => {
-        const { data, success, msg } = response.json()
-        if (success) {
-          setStatus({ status: 'success', text: '再次解析' })
-          message.success('答案解析完成')
-          // history.push(`/answer/${data}`)
-        } else {
-          //处理失败，报错，并让用户重试
-          message.error({ content: msg, key: 'loading' })
-          setStatus({ status: 'failure', text: '重试一次' })
-        }
-        //重定向用户浏览器视口到顶部
-        window.scrollTo(0, 0)
-        message.destroy('loading')
-      })
-    } catch (error) {
-      //请求失败处理
-      message.error({ content: `请求发送失败，${error}`, key: 'loading' })
-      this.setState({ status: 'failure', text: '重试一次' })
+    //   try {
+    //     fetch(`${BASE_URL}/paper/${answerPaperRecordId}`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       credentials: 'include',
+    //       mode: 'cors',
+    //       body: JSON.stringify(req),
+    //     }).then((response) => {
+    //       const { data, success, msg } = response.json()
+    //       if (success) {
+    //         setStatus({ status: 'success', text: '再次解析' })
+    //         message.success('答案解析完成')
+    //         history.push(`/answer/${data}`)
+    //       } else {
+    //         //处理失败，报错，并让用户重试
+    //         message.error({ content: msg, key: 'loading' })
+    //         setStatus({ status: 'failure', text: '重试一次' })
+    //       }
+    //       //重定向用户浏览器视口到顶部
+    //       window.scrollTo(0, 0)
+    //       message.destroy('loading')
+    //     })
+    //   } catch (error) {
+    //     //请求失败处理
+    //     message.error({ content: `请求发送失败，${error}`, key: 'loading' })
+    //     this.setState({ status: 'failure', text: '重试一次' })
+    //   }
+    // }
+
+    const { data: uuid } = await fetchData(`${BASE_URL}/paper/${answerPaperRecordId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      mode: 'cors',
+      body: JSON.stringify(req),
+    })
+
+    if (data) {
+      history.push(`/answer/${uuid}`)
+      //重定向用户浏览器视口到顶部
+      window.scrollTo(0, 0)
     }
   }
 
   return (
-    <button onClick={(e) => handleClick(e)} id="submit" className={status.status}>
+    <button onClick={(e) => handleClick(e, data)} id="submit" className={status.status}>
       {status.text}
     </button>
   )

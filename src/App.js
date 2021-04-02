@@ -11,6 +11,7 @@ import Froms from './pages/PageIndex'
 import History from './pages/PageHistory'
 
 import { BASE_URL } from './api'
+import PageAnswer from './pages/PageAnswer'
 
 export default function App() {
   const [status, setStatus] = useState({
@@ -49,6 +50,7 @@ export default function App() {
         <Header />
         <Route path="/history" component={History} strict={true} />
         <Route path="/" component={Froms} exact={true} />
+        <Route path="/answer/:paper_id" component={PageAnswer} />
         {/* <Route path="/answer/:paper_id" component={AnswerBody} />
         <Route path="/(home|answer)" component={Forms} strict={true} /> */}
         <Footer />
@@ -67,13 +69,4 @@ const Container = styled.div`
     padding: 38px;
   }
   padding: 20px;
-  a {
-    text-decoration: none;
-    color: cornflowerblue;
-    transition: 0.3s;
-  }
-
-  a:hover {
-    color: rgb(126, 167, 245);
-  }
 `
