@@ -28,28 +28,28 @@ def getAnswers(original_data):
             except Exception:
                 pass
 
-    data = {
-        '1 single': {
+    data = [
+        {
             "type_name": "选择题",
             "answer": Select(pre_proccess).single()
         },
-        '2 multi': {
+        {
             "type_name": "多选题",
             "answer": Select(pre_proccess).multi()
         },
-        '3 judge': {
+        {
             "type_name": "判断题",
             "answer": judge(pre_proccess)
         },
-        '4 fill_in': {
+        {
             "type_name": "完形填空",
             "answer": Select(pre_proccess).combound()['fill_in']
         },
-        '5 read_understand': {
+        {
             "type_name": "阅读理解",
             "answer": Select(pre_proccess).combound()['read_understand']
         },
-    }
+    ]
 
     return data
 

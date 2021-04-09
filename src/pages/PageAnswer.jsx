@@ -45,7 +45,6 @@ export default function PageAnswer() {
     }
   }
 
-  console.log(data)
   return (
     <AnswersBody>
       <span id="notices" className="bar error">
@@ -75,9 +74,6 @@ export default function PageAnswer() {
       <Spin spinning={isLoading} tip="下载答案数据....">
         <AnswerProccesser data={data.answers} />
       </Spin>
-      {/* <span className="liner" key="liner_foot">
-        <span className="liner_text">再次解析</span>
-      </span> */}
     </AnswersBody>
   )
 }
@@ -90,7 +86,6 @@ function AnswerProccesser(props) {
       rows.push(
         <div className="answer_contain">
           <h3 className="q_type">{type_name}</h3>
-          {/* <AnswerList data={answer} type_id={props.type_id} /> */}
           {answer.map((answer) => {
             return <AnswerRow data={answer} key={answer.uuid} />
           })}
@@ -101,16 +96,10 @@ function AnswerProccesser(props) {
   return rows
 }
 
-// function AnswerList(props) {
-//   return props.data.map((data) => {
-//     return <AnswerRow data={data} key={data.uuid} />
-//   })
-// }
-
 function AnswerRow(data) {
   const [isSelected, setIsSelected] = useState(false)
   return (
-    <div className="answer_block" id={isSelected ? 'selected' : ''} onClick={() => setIsSelected(!isSelected)}>
+    <div className="answer_block" id={isSelected ? 'selected' : undefined} onClick={() => setIsSelected(!isSelected)}>
       <span className={'answer'}>{data.data.answer}</span>
       <div>
         <span className="q_id">
@@ -155,7 +144,7 @@ const AnswersBody = styled.div`
       margin: 10px 0 30px 0;
     }
     #selected {
-      border: 2px solid rgb(141, 142, 255);
+      border: 1px solid rgb(141, 142, 255);
       background-color: #f8f8ff;
     }
   }
@@ -164,13 +153,22 @@ const AnswersBody = styled.div`
     display: flex;
     margin: 10px 5px;
     padding: 10px 8px;
-    border: 2px solid rgb(238, 238, 238);
+    border: 1px solid rgb(238, 238, 238);
     border-radius: 5px;
     transition: 0.5s;
     cursor: pointer;
+    max-height: 100px;
+
     &:hover {
-      border: 2px solid rgb(141, 142, 255);
+      border: 1px solid rgb(141, 142, 255);
+      transform: scale(1.02);
+      box-shadow: 0px 0px 5px rgb(216, 216, 255);
     }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
     .q_id {
       margin: 0;
       display: block;
@@ -185,7 +183,11 @@ const AnswersBody = styled.div`
     }
     .question {
       color: #6d758d;
-      font-size: small;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     .answer {
       margin: auto;
@@ -263,5 +265,10 @@ const AnswersBody = styled.div`
         outline: none;
       }
     }
+  }
+  #CompletedCounter {
+    position: fixed;
+    bottom: 80px;
+    right: 25px;
   }
 `

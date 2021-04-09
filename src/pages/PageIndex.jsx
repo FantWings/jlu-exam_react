@@ -66,37 +66,6 @@ function Submit(data, token) {
     }
 
     const { answerPaperRecordId } = req.question_data.data
-    //   try {
-    //     fetch(`${BASE_URL}/paper/${answerPaperRecordId}`, {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       credentials: 'include',
-    //       mode: 'cors',
-    //       body: JSON.stringify(req),
-    //     }).then((response) => {
-    //       const { data, success, msg } = response.json()
-    //       if (success) {
-    //         setStatus({ status: 'success', text: '再次解析' })
-    //         message.success('答案解析完成')
-    //         history.push(`/answer/${data}`)
-    //       } else {
-    //         //处理失败，报错，并让用户重试
-    //         message.error({ content: msg, key: 'loading' })
-    //         setStatus({ status: 'failure', text: '重试一次' })
-    //       }
-    //       //重定向用户浏览器视口到顶部
-    //       window.scrollTo(0, 0)
-    //       message.destroy('loading')
-    //     })
-    //   } catch (error) {
-    //     //请求失败处理
-    //     message.error({ content: `请求发送失败，${error}`, key: 'loading' })
-    //     this.setState({ status: 'failure', text: '重试一次' })
-    //   }
-    // }
-
     const { data: uuid } = await fetchData(`${BASE_URL}/paper/${answerPaperRecordId}`, {
       method: 'POST',
       headers: {
@@ -125,6 +94,7 @@ const Form = styled.form`
   text-align: center;
   margin-top: 35px;
   flex: 1;
+  padding: 20px;
 
   #key_feid {
     margin: 35px 0 45px 0;
@@ -162,9 +132,11 @@ const Form = styled.form`
     transition: 0.3s;
     &:hover {
       background: #6596ff;
+      transform: scale(1.02);
     }
 
     &:active {
+      transform: scale(0.98);
       background: #4a6fbe;
     }
     &.sending {

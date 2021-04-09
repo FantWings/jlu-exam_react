@@ -26,7 +26,7 @@ export default function History() {
   }
 
   return (
-    <AnswerContain>
+    <AnswerContain key="animContent">
       <h1 className="q_type">答案库</h1>
       <small className="smallTitle">这里收集了所有同学有史以来提交过的试卷数据</small>
       <Spin spinning={isLoading} tip="向服务器请求数据...." className="loader">
@@ -73,7 +73,7 @@ const AnswerContain = styled.div`
     margin: 10px 0 30px 0;
   }
   #selected {
-    border: 2px solid rgb(141, 142, 255);
+    border: 1px solid rgb(141, 142, 255);
     background-color: #f8f8ff;
   }
   span.historyPaperInfo {
@@ -115,12 +115,17 @@ const AnswerContain = styled.div`
     display: flex;
     margin: 10px 5px;
     padding: 10px 8px;
-    border: 2px solid rgb(238, 238, 238);
+    border: 1px solid rgb(238, 238, 238);
     border-radius: 5px;
     transition: 0.5s;
     cursor: pointer;
     &:hover {
-      border: 2px solid rgb(141, 142, 255);
+      border: 1px solid rgb(141, 142, 255);
+      transform: scale(1.02);
+      box-shadow: 0px 0px 5px rgb(216, 216, 255);
+    }
+    &:active {
+      transform: scale(0.98);
     }
   }
 `
