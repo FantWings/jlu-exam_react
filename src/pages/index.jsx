@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Spin } from 'antd'
+import { Spin, notification } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { notification } from 'antd'
 
 import { BASE_URL } from '../api'
 
@@ -72,10 +71,10 @@ export default function PageContianer(props) {
         <Footer>
           <ul>
             <li>
-              版本 version 4.1c（<a href="https://reactjs.org">ReactJS</a>）
+              版本 version 4.4b（<a href="https://reactjs.org">ReactJS</a>）
             </li>
             <li>
-              <span id={status.isSuccess ? 'connected' : 'disconnected'} className="ping"></span>
+              <span id={status.isSuccess ? 'connected' : 'disconnected'} className="ping" />
               {status.isSuccess ? '服务器通讯已建立' : '与服务器通讯失败'}
             </li>
             <li>适用于 吉林大学弘成科技发展有限公司 学生作业系统</li>

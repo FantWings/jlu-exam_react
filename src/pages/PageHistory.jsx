@@ -33,7 +33,7 @@ export default function History() {
         <ListObject data={data.results} />
       </Spin>
       <span id="pagination">
-        <Pagination showSizeChanger defaultCurrent={1} total={data.total} onChange={HandleChange}></Pagination>
+        <Pagination showSizeChanger defaultCurrent={1} total={data.total} onChange={HandleChange} />
       </span>
     </AnswerContain>
   )
