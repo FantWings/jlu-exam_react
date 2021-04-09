@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
-import App from './App'
+import Router from './router'
 
 //ReactRender入口函数
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Router />
   </BrowserRouter>,
   document.querySelector('#root')
 )

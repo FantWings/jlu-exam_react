@@ -86,27 +86,26 @@ function AnswerProccesser(props) {
   let rows = []
   for (const key in props.data) {
     if (Object.keys(props.data[key].answer).length > 0) {
-      rows.push(<AnswerBlock answer_data={props.data[key]} type_id={key} key={key} />)
+      const { answer, type_name } = props.data[key]
+      rows.push(
+        <div className="answer_contain">
+          <h3 className="q_type">{type_name}</h3>
+          {/* <AnswerList data={answer} type_id={props.type_id} /> */}
+          {answer.map((answer) => {
+            return <AnswerRow data={answer} key={answer.uuid} />
+          })}
+        </div>
+      )
     }
   }
   return rows
 }
 
-function AnswerBlock(props) {
-  const { answer, type_name } = props.answer_data
-  return (
-    <div className="answer_contain">
-      <h3 className="q_type">{type_name}</h3>
-      <AnswerList data={answer} type_id={props.type_id} />
-    </div>
-  )
-}
-
-function AnswerList(props) {
-  return props.data.map((data) => {
-    return <AnswerRow data={data} key={data.uuid} />
-  })
-}
+// function AnswerList(props) {
+//   return props.data.map((data) => {
+//     return <AnswerRow data={data} key={data.uuid} />
+//   })
+// }
 
 function AnswerRow(data) {
   const [isSelected, setIsSelected] = useState(false)

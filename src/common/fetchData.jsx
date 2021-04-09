@@ -5,7 +5,7 @@ import { message } from 'antd'
  * config：fetch高级配置
  *
  */
-export const fetchData = async (url: string, config?: RequestInit | undefined) => {
+export const fetchData = async (url, config) => {
   try {
     const res = await fetch(url, config)
     if (!res.ok) {
