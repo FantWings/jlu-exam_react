@@ -114,6 +114,7 @@ function AnswerRow(data) {
 
 const AnswersBody = styled.div`
   flex: 100% 1;
+  margin: 0 0 90px 0;
   .liner {
     border-bottom: #eaeaea 2px dashed;
     display: block;
