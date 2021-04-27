@@ -71,7 +71,7 @@ export default function PageContianer(props) {
         <Footer>
           <ul>
             <li>
-              版本 version 4.4b（<a href="https://reactjs.org">ReactJS</a>）
+              版本 version 4.5r（<a href="https://reactjs.org">ReactJS</a>）
             </li>
             <li>
               <span id={status.isSuccess ? 'connected' : 'disconnected'} className="ping" />
@@ -89,7 +89,8 @@ export default function PageContianer(props) {
 }
 
 const Container = styled.div`
-  margin: 40px auto;
+  height: 100%;
+  margin: auto;
   max-width: 1000px;
   display: flex;
   flex-wrap: wrap;
