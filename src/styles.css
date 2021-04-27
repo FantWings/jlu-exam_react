@@ -5,6 +5,11 @@ body {
   background: #f9f9fb;
 }
 
+#root {
+  width: 100%;
+  height: 100%;
+}
+
 .ant-spin-nested-loading {
   flex: 1;
 }
