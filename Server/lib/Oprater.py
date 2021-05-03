@@ -26,8 +26,8 @@ def addPapers(paper_data):
             try:
                 answers = getAnswers(paper_data)
             except Exception:
-                return json_res(True, msg='你输入的试卷数据不正确或试卷数据不完整，解析失败！',
-                                code=400)
+                return json_res(msg='你输入的试卷数据不正确或试卷数据不完整，解析失败！',
+                                code=1)
 
             # 将试卷号、提交者IP地址、原试卷数据、答案数据写入数据库
             new_paper = Paper(
@@ -41,15 +41,14 @@ def addPapers(paper_data):
             db.session.commit()
 
             # 返回处理结果以及试卷号
-            return json_res(True, data=paper_id, code=200)
+            return json_res(data=paper_id)
         # 异常处理
         except Exception as e:
-            return json_res(True, msg=e, code=500)
+            return json_res(msg=e, code=1)
 
     paper.used_count = Paper.used_count + 1
     db.session.commit()
-    return json_res(True, data=paper_id,
-                    code=200,
+    return json_res(data=paper_id,
                     msg="答案已在数据库中，直接从数据库中返回答案数据")
 
 
@@ -65,7 +64,7 @@ def getPapers(paper_id, user_token):
 
     # 判断数据库内是否已经有这份试卷了
     if paper is None:
-        return json_res(False, msg='试卷不存在，请检查试卷号是否正确。', code=404)
+        return json_res(msg='试卷不存在，请检查试卷号是否正确。', code=1)
     else:
         response = {
             'paper_id': paper.id,
@@ -75,7 +74,7 @@ def getPapers(paper_id, user_token):
             'answers': json.loads(paper.answer)
         }
 
-        return json_res(True, data=response, code=200)
+        return json_res(data=response)
 
 
 def setPaperName(paper_id, new_name, token):
@@ -91,11 +90,11 @@ def setPaperName(paper_id, new_name, token):
         try:
             paper.paper_name = new_name
             db.session.commit()
-            return json_res(True, msg="试卷数据更新成功！")
+            return json_res(msg="试卷数据更新成功！")
         except Exception as e:
-            return json_res(False, msg=e, code=500)
+            return json_res(msg=e, code=1)
     else:
-        return json_res(False, msg='你不是该试卷的所有者，无法改动试卷数据！', code=404)
+        return json_res(msg='你不是该试卷的所有者，无法改动试卷数据！', code=1)
 
 
 def updatePaperOwner(paper_id, token):
@@ -137,4 +136,4 @@ def getPaperList(limit, index):
     data = []
     for result in results:
         data.append(list(result))
-    return json_res(True, data={"results": data, "total": total})
+    return json_res(data={"results": data, "total": total})

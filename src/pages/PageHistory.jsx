@@ -9,31 +9,35 @@ export default function History() {
   const [data, setData] = useState({
     data: [],
   })
-  const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState([1, 10])
 
   useEffect(() => {
     const getData = async () => {
-      setIsLoading(true)
-      setData(await fetchData(`${BASE_URL}/paper/lists?limit=${pagination[1]}&index=${pagination[0]}`))
-      setIsLoading(false)
+      await fetchData(
+        `${BASE_URL}/paper/lists?limit=${pagination[1]}&index=${pagination[0]}`,
+        undefined,
+        setLoading,
+        setData
+      )
     }
     getData()
   }, [pagination])
-
-  function HandleChange(index, limit) {
-    setPagination([index, limit])
-  }
 
   return (
     <AnswerContain key="animContent">
       <h1 className="q_type">答案库</h1>
       <small className="smallTitle">这里收集了所有同学有史以来提交过的试卷数据</small>
-      <Spin spinning={isLoading} tip="向服务器请求数据...." className="loader">
+      <Spin spinning={loading} tip="向服务器请求数据...." className="loader">
         <ListObject data={data.results} />
       </Spin>
       <span id="pagination">
-        <Pagination showSizeChanger defaultCurrent={1} total={data.total} onChange={HandleChange} />
+        <Pagination
+          current={pagination[0]}
+          total={data.total}
+          onChange={(index, limit) => setPagination([index, limit])}
+          showSizeChanger
+        />
       </span>
     </AnswerContain>
   )

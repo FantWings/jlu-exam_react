@@ -30,7 +30,7 @@ def get_state():
         'count': Oprater.getPaperCount(),
         'authed': isAuthed
         }
-    return make_response(state)
+    return make_response(json_res(data=state))
 
 
 @api.route('/paper/<paper_id>', methods=['GET', 'POST'])
@@ -44,7 +44,7 @@ def paper(paper_id):
         # 获取试卷数据
         answers = Oprater.getPapers(paper_id, session.get('token'))
         # 处理完成，返回答案数据给前端
-        return make_response(answers, answers['code'])
+        return make_response(answers)
         # else:
         #     return make_response(json_res(
         #         False,
@@ -72,13 +72,11 @@ def paper(paper_id):
             session['authed'] = True
 
             # 处理完成，返回试卷号给前端
-            return make_response(answers, answers['code'])
+            return make_response(answers)
         # 验证失败，返回原因给前端
         else:
-            return make_response(json_res(
-                False,
-                msg='密钥不正确，请重新输入正确的密钥！'
-                ), 401)
+            return make_response(
+                json_res(msg='密钥不正确，请重新输入正确的密钥！', code=1))
 
 
 @api.route('/paper/setPaperName', methods=['POST'])

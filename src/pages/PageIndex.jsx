@@ -75,7 +75,6 @@ function Submit(data, token) {
       mode: 'cors',
       body: JSON.stringify(req),
     })
-
     if (data) {
       history.push(`/answer/${uuid}`)
       //重定向用户浏览器视口到顶部

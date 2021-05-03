@@ -13,25 +13,23 @@ export default function PageAnswer() {
     answers: [],
     paper_name: undefined,
   })
-  const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [paperName, setPaperName] = useState(undefined)
 
   const { paper_id } = useParams()
 
   useEffect(() => {
     const getData = async () => {
-      setIsLoading(true)
-      setData(await fetchData(`${BASE_URL}/paper/${paper_id}`))
-      setIsLoading(false)
+      await fetchData(`${BASE_URL}/paper/${paper_id}`, undefined, setLoading, setData)
     }
     getData()
   }, [paper_id])
 
   const renamePaper = async () => {
     if (paperName.length >= 4) {
-      setIsLoading(true)
-      setData(
-        await fetchData(`${BASE_URL}/paper/setPaperName`, {
+      await fetchData(
+        `${BASE_URL}/paper/setPaperName`,
+        {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -39,9 +37,10 @@ export default function PageAnswer() {
           credentials: 'include',
           mode: 'cors',
           body: JSON.stringify({ paper_id: data.paper_id, new_name: paperName }),
-        })
+        },
+        setLoading,
+        undefined
       )
-      setIsLoading(false)
     }
   }
 
@@ -71,7 +70,7 @@ export default function PageAnswer() {
       <span className="liner" key="liner_head">
         <span className="liner_text">标准答案</span>
       </span>
-      <Spin spinning={isLoading} tip="下载答案数据....">
+      <Spin spinning={loading} tip="下载答案数据....">
         <AnswerProccesser data={data.answers} />
       </Spin>
     </AnswersBody>

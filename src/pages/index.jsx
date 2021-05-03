@@ -1,53 +1,43 @@
 import React, { useState, useEffect } from 'react'
-import { Spin, notification } from 'antd'
+import { Spin } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { fetchData } from '../common/fetchData'
 import { BASE_URL } from '../api'
 
 export default function PageContianer(props) {
-  const [status, setStatus] = useState({
-    isLoading: true,
-    isSuccess: false,
-    count: false,
-    authed: false,
-  })
+  const [data, setData] = useState({})
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    setStatus({ isLoading: true })
-    fetch(`${BASE_URL}/getState`, {
-      credentials: 'include',
-      mode: 'cors',
-    }).then((response) => {
-      if (response.ok) {
-        response.json().then((data) => {
-          setStatus({ isLoading: false, isSuccess: true, count: data.count, authed: data.authed })
-        })
-      } else {
-        setStatus({ isSuccess: false, isLoading: false })
-        notification.error({
-          message: '服务器通讯失败',
-          description:
-            '这种情况往往是网络连接失败，或者服务器出现了问题，如果问题依然存在，请与开发者取得联系，此工具的功能将无法正常运作。',
-          duration: 0,
-        })
-      }
-    })
+    const getData = async () => {
+      await fetchData(
+        `${BASE_URL}/getState`,
+        {
+          credentials: 'include',
+          mode: 'cors',
+        },
+        setLoading,
+        setData
+      )
+    }
+    getData()
   }, [])
 
   return (
     <Container>
-      <Spin spinning={status.isLoading} tip="工具初始化">
+      <Spin spinning={loading} tip="工具初始化">
         <PageTitle>
           <h2>吉林大学作业小助手</h2>
           <p id="s_title">
             <small id="notice">
               你身边最牛逼的作业小助手，
-              {status.isLoading
+              {loading
                 ? '统计数据加载中'
-                : status.isSuccess
-                ? status.count
-                  ? `累计已处理 ${status.count} 张试卷`
+                : data.count
+                ? data.count
+                  ? `累计已处理 ${data.count} 张试卷`
                   : '使用统计功能未启用'
                 : '获取统计数据失败'}
             </small>
@@ -74,8 +64,8 @@ export default function PageContianer(props) {
               版本 version 4.5r（<a href="https://reactjs.org">ReactJS</a>）
             </li>
             <li>
-              <span id={status.isSuccess ? 'connected' : 'disconnected'} className="ping" />
-              {status.isSuccess ? '服务器通讯已建立' : '与服务器通讯失败'}
+              <span id={data.count ? 'connected' : 'disconnected'} className="ping" />
+              {data.count ? '服务器通讯已建立' : '与服务器通讯失败'}
             </li>
             <li>适用于 吉林大学弘成科技发展有限公司 学生作业系统</li>
             <li>
