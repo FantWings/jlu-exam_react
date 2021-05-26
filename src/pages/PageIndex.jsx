@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Input, message } from 'antd'
-import { ConnectionState } from '../common/Context'
+// import { ConnectionState } from '../common/Context'
 import styled from 'styled-components'
 import { BASE_URL } from '../api'
 import { useHistory } from 'react-router'
@@ -9,9 +9,8 @@ import { fetchData } from '../common/fetchData'
 export default function ComponentsFroms() {
   const [FromData, setFromData] = useState({
     data: undefined,
-    token: undefined,
+    token: '',
   })
-  const { isAuthed } = ConnectionState
   const { TextArea } = Input
 
   return (
@@ -24,16 +23,7 @@ export default function ComponentsFroms() {
         allowClear
       />
       <div id="key_feid">
-        <h4>执行密钥</h4>
-        <Input.Password
-          placeholder={isAuthed ? '密钥处于有效期，无需重复输入' : '为了避免恶意请求，请输入执行密钥'}
-          id="token"
-          onChange={(e) => setFromData({ ...FromData, token: e.target.value })}
-          disabled={isAuthed}
-        />
-        <p>
           <Submit data={FromData.data} token={FromData.token} />
-        </p>
       </div>
     </Form>
   )

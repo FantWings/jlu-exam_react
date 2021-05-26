@@ -88,7 +88,7 @@ const Container = styled.div`
   @media screen and (min-width: 768px) {
     padding: 38px;
   }
-  /* padding: 20px; */
+  padding: 20px;
 `
 
 const PageTitle = styled.div`
