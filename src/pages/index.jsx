@@ -61,7 +61,7 @@ export default function PageContianer(props) {
         <Footer>
           <ul>
             <li>
-              版本 version 4.5r（<a href="https://reactjs.org">ReactJS</a>）
+              版本 version 4.6a（<a href="https://reactjs.org">ReactJS</a>）
             </li>
             <li>
               <span id={data.count ? 'connected' : 'disconnected'} className="ping" />
