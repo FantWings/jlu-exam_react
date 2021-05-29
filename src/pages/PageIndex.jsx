@@ -19,17 +19,24 @@ export default function PageForms() {
 
     //判断用户是否输入了内容
     if (FromData.length >= 10000) {
-      message.loading('数据处理中，请稍等....')
+      message.loading({ content: '数据处理中，请稍等....', key: 'statusbar', duration: 0 })
       setStatus({ status: 'sending', text: '别着急' })
     } else {
-      return message.warning('您没有填写试卷数据！请检查！')
+      message.warning({
+        content: '您没有填写试卷数据或数据长度不正确，请检查是否提交了错误的数据！',
+        key: 'statusbar',
+      })
+      return setStatus({ status: 'failure', text: '重试一次' })
     }
 
     //判断用户是否输入的是错误的数据
     try {
       var req = { question_data: JSON.parse(FromData) }
     } catch (error) {
-      message.warning('你输入的试卷数据不正确或试卷数据不完整，请检查！')
+      message.warning({
+        content: '你输入的试卷数据不正确或试卷数据不完整，请检查！',
+        key: 'statusbar',
+      })
       return setStatus({ status: 'failure', text: '重试一次' })
     }
 
@@ -38,6 +45,7 @@ export default function PageForms() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        userIdent: localStorage.getItem('userIdent'),
       },
       credentials: 'include',
       mode: 'cors',
@@ -45,15 +53,14 @@ export default function PageForms() {
     })
 
     const { code, msg } = await response.json()
-    message.destroy()
-
     if (code) {
-      message.error(msg)
+      message.error({ content: msg, key: 'statusbar' })
+      return setStatus({ status: 'failure', text: '重试一次' })
     } else {
       history.push(`/answer/${answerPaperRecordId}`)
       //重定向用户浏览器视口到顶部
       window.scrollTo(0, 0)
-      if (msg) message.info(msg)
+      if (msg) message.info({ content: msg, key: 'statusbar' })
     }
   }
 

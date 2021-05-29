@@ -1,26 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Spin } from 'antd'
+import { message, Spin } from 'antd'
 import { BASE_URL } from '../api'
 import styled from 'styled-components'
 import { fetchData } from '../common/fetchData'
+import moment from 'moment'
 
 export default function PageAnswer() {
   const [data, setData] = useState({
-    paper_id: undefined,
-    submit_time: undefined,
-    isOwner: undefined,
+    paper_id: '加载中',
+    submit_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+    isOwner: false,
     answers: [],
-    paper_name: undefined,
+    paper_name: '加载中',
   })
   const [loading, setLoading] = useState(false)
-  const [paperName, setPaperName] = useState(undefined)
-
+  const [paperName, setPaperName] = useState(0)
   const { paper_id } = useParams()
+
+  if (loading)
+    message.loading({
+      content: '请稍等',
+      key: 'loading',
+    })
 
   useEffect(() => {
     const getData = async () => {
-      await fetchData(`${BASE_URL}/paper/${paper_id}`, undefined, setLoading, setData)
+      await fetchData(
+        `${BASE_URL}/paper/${paper_id}`,
+        {
+          headers: {
+            userIdent: localStorage.getItem('userIdent'),
+          },
+        },
+        setLoading,
+        setData
+      )
     }
     getData()
   }, [paper_id])
@@ -33,14 +48,15 @@ export default function PageAnswer() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            userIdent: localStorage.getItem('userIdent'),
           },
-          credentials: 'include',
-          mode: 'cors',
           body: JSON.stringify({ paper_id: data.paper_id, new_name: paperName }),
         },
         setLoading,
         undefined
       )
+    } else {
+      message.info({ content: '试卷名称需要大于4个字符', key: 'info_length', duration: 1 })
     }
   }
 
@@ -49,7 +65,7 @@ export default function PageAnswer() {
       <span id="notices" className="bar error">
         <p>本工具仅供交流学习用途！任何因本工具导致的问题将不会为你付任何责任！</p>
         <small id="info">
-          试卷号（UUID）：{data.paper_id} 丨 提交时间：{data.submit_time}
+          试卷号（UUID）：{data.paper_id} 丨 提交时间：{moment(data.submit_time).format('YYYY-MM-DD HH:mm:ss')}
         </small>
       </span>
       <span id="paper_name">
@@ -57,12 +73,11 @@ export default function PageAnswer() {
           《
           <input
             type="text"
-            placeholder={
-              data.paper_name ? data.paper_name : data.isOwner ? '点此处给这个试卷命名' : '没有试卷名称修改权限'
-            }
+            placeholder={data.paper_name ? data.paper_name : data.isOwner ? '点此处命名试卷' : '您无法修改该试卷的名称'}
             onChange={(e) => setPaperName(e.target.value)}
             onBlur={renamePaper}
             disabled={!data.isOwner}
+            maxLength={12}
           />
           》
         </h2>
@@ -142,6 +157,7 @@ const AnswersBody = styled.div`
     .q_type {
       text-align: center;
       margin: 10px 0 30px 0;
+      font-size: 18px;
     }
     #selected {
       border: 1px solid rgb(141, 142, 255);
@@ -155,7 +171,7 @@ const AnswersBody = styled.div`
     padding: 10px 8px;
     border: 1px solid rgb(238, 238, 238);
     border-radius: 5px;
-    transition: 0.5s;
+    transition: 0.3s;
     cursor: pointer;
     max-height: 100px;
 
