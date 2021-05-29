@@ -1,62 +1,40 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router'
 import { Input, message } from 'antd'
-// import { ConnectionState } from '../common/Context'
 import styled from 'styled-components'
 import { BASE_URL } from '../api'
-import { useHistory } from 'react-router'
-import { fetchData } from '../common/fetchData'
 
-export default function ComponentsFroms() {
-  const [FromData, setFromData] = useState({
-    data: undefined,
-    token: '',
-  })
-  const { TextArea } = Input
-
-  return (
-    <Form method="post" name="form">
-      <TextArea
-        showCount
-        placeholder="将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击菜单上的“使用教程”"
-        autoSize={{ minRows: 20, maxRows: 20 }}
-        onChange={(e) => setFromData({ ...FromData, data: e.target.value })}
-        allowClear
-      />
-      <div id="key_feid">
-          <Submit data={FromData.data} token={FromData.token} />
-      </div>
-    </Form>
-  )
-}
-
-function Submit(data, token) {
-  const history = useHistory()
+export default function PageForms() {
+  const [FromData, setFromData] = useState(0)
   const [status, setStatus] = useState({
     status: 'ready',
     text: '提交',
   })
 
-  const handleClick = async (e, data) => {
+  const history = useHistory()
+  const { TextArea } = Input
+
+  const handleClick = async (e) => {
     e.preventDefault()
 
     //判断用户是否输入了内容
-    if (data.length !== 0) {
-      message.loading({ content: '数据处理中，请稍等....', key: 'loading', duration: 0 })
+    if (FromData.length >= 10000) {
+      message.loading('数据处理中，请稍等....')
       setStatus({ status: 'sending', text: '别着急' })
     } else {
-      return message.warning('您忘了填写试卷数据！请检查！')
+      return message.warning('您没有填写试卷数据！请检查！')
     }
 
-    //判断用户是否输入的是垃圾数据
+    //判断用户是否输入的是错误的数据
     try {
-      var req = { question_data: JSON.parse(data), token: token }
+      var req = { question_data: JSON.parse(FromData) }
     } catch (error) {
-      message.warning({ content: '你输入的试卷数据不正确或试卷数据不完整，请检查！', key: 'loading' })
+      message.warning('你输入的试卷数据不正确或试卷数据不完整，请检查！')
       return setStatus({ status: 'failure', text: '重试一次' })
     }
 
     const { answerPaperRecordId } = req.question_data.data
-    const { data: uuid } = await fetchData(`${BASE_URL}/paper/${answerPaperRecordId}`, {
+    const response = await fetch(`${BASE_URL}/paper/${answerPaperRecordId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,17 +43,35 @@ function Submit(data, token) {
       mode: 'cors',
       body: JSON.stringify(req),
     })
-    if (data) {
-      history.push(`/answer/${uuid}`)
+
+    const { code, msg } = await response.json()
+    message.destroy()
+
+    if (code) {
+      message.error(msg)
+    } else {
+      history.push(`/answer/${answerPaperRecordId}`)
       //重定向用户浏览器视口到顶部
       window.scrollTo(0, 0)
+      if (msg) message.info(msg)
     }
   }
 
   return (
-    <button onClick={(e) => handleClick(e, data)} id="submit" className={status.status}>
-      {status.text}
-    </button>
+    <Form method="post" name="form">
+      <TextArea
+        showCount
+        placeholder="将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击菜单上的“使用教程”"
+        autoSize={{ minRows: 20, maxRows: 20 }}
+        onChange={(e) => setFromData(e.target.value)}
+        allowClear
+      />
+      <div id="key_feid">
+        <button onClick={(e) => handleClick(e, FromData)} id="submit" className={status.status}>
+          {status.text}
+        </button>
+      </div>
+    </Form>
   )
 }
 

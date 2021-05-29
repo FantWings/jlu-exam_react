@@ -12,9 +12,7 @@ import { message } from 'antd'
  */
 
 export const fetchData = async (url, config, setLoading = undefined, setData = undefined) => {
-  if (setLoading) {
-    setLoading(true)
-  }
+  if (setLoading) setLoading(true)
 
   try {
     const response = await fetch(url, config)
@@ -41,16 +39,12 @@ export const fetchData = async (url, config, setLoading = undefined, setData = u
         message.error(msg)
       } else {
         if (msg) message.success(msg)
-        if (setData) {
-          setData(data)
-        }
+        if (setData) setData(data)
       }
     }
   } catch (error) {
     message.error(`接口请求失败，请检查网络连接，如果问题依然存在，请联系管理员！${error}`)
   }
 
-  if (setLoading) {
-    setLoading(false)
-  }
+  if (setLoading) setLoading(false)
 }
