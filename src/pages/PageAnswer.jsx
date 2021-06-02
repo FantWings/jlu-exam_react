@@ -230,7 +230,7 @@ const AnswersBody = styled.div`
         /* margin-right: 12px; */
         color: #e2e0e0;
         flex: 1 50%;
-        font-size: 10px;
+        font-size: 12px;
         line-height: 26px;
         @media screen and (max-width: 500px) {
           flex: 1 100%;
