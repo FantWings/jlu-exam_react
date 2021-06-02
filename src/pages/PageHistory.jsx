@@ -53,7 +53,7 @@ function ListObject(data) {
       return (
         <div className="answer_block" key={data[0]} onClick={() => handleClick(data[0])}>
           <span className="historyPaperInfo">
-            <h3>《 {data[1] ? '未命名试卷' : data[1]} 》</h3>
+            <h3>《 {data[1] ? data[1] : '未命名试卷'} 》</h3>
             <span>于 {data[2]} 提交</span>
           </span>
           <span className="historyPaperUUID">{data[0]}</span>
