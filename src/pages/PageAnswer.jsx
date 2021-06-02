@@ -237,7 +237,7 @@ const AnswersBody = styled.div`
         }
       }
       #rightAnswer {
-        color: #8b91b3;
+        color: #828cc5;
       }
     }
     .answer {
