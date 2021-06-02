@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { message, Spin } from 'antd'
+import { message, Spin, Divider } from 'antd'
 import { BASE_URL } from '../api'
 import styled from 'styled-components'
 import { fetchData } from '../common/fetchData'
@@ -11,18 +11,12 @@ export default function PageAnswer() {
     paper_id: '加载中',
     submit_time: moment().format('YYYY-MM-DD HH:mm:ss'),
     isOwner: false,
-    answers: [],
+    answers: { 加载中: [] },
     paper_name: '加载中',
   })
   const [loading, setLoading] = useState(false)
   const [paperName, setPaperName] = useState(0)
   const { paper_id } = useParams()
-
-  if (loading)
-    message.loading({
-      content: '请稍等',
-      key: 'loading',
-    })
 
   useEffect(() => {
     const getData = async () => {
@@ -82,70 +76,93 @@ export default function PageAnswer() {
           》
         </h2>
       </span>
-      <span className="liner" key="liner_head">
-        <span className="liner_text">标准答案</span>
-      </span>
+      <Divider dashed style={{ color: '#eaeaea' }}>
+        标准答案
+      </Divider>
       <Spin spinning={loading} tip="下载答案数据....">
-        <AnswerProccesser data={data.answers} />
+        <AnswerContain source={data.answers.单选} title="单选题" />
+        <AnswerContain source={data.answers.多选} title="多选题" />
+        <AnswerContain source={data.answers.判断} title="判断题" />
+        <AnswerContain source={data.answers.完形填空} title="完形填空" />
       </Spin>
     </AnswersBody>
   )
 }
 
-function AnswerProccesser(props) {
-  let rows = []
-  for (const key in props.data) {
-    if (Object.keys(props.data[key].answer).length > 0) {
-      const { answer, type_name } = props.data[key]
-      rows.push(
-        <div className="answer_contain">
-          <h3 className="q_type">{type_name}</h3>
-          {answer.map((answer) => {
-            return <AnswerRow data={answer} key={answer.uuid} />
-          })}
-        </div>
-      )
-    }
-  }
+function AnswerContain(props) {
+  const { source, title } = props
+  const rows = []
+
+  if (!source) return null
+
+  rows.push(
+    <div className="answer_contain">
+      <h3 className="q_type">{title}</h3>
+      {source.map((item, index) => (
+        <Answer
+          answer={item.answer}
+          num={`第${index + 1}题`}
+          type={item.type}
+          question={item.question}
+          options={item.options}
+          key={item.id}
+        />
+      ))}
+    </div>
+  )
   return rows
 }
 
-function AnswerRow(data) {
+function Answer(props) {
+  const { answer, num, type, question, options } = props
   const [isSelected, setIsSelected] = useState(false)
+  const char = ['A', 'B', 'C', 'D', 'E', 'F']
+  const judge = ['NULL', '对', '错']
+
   return (
     <div className="answer_block" id={isSelected ? 'selected' : undefined} onClick={() => setIsSelected(!isSelected)}>
-      <span className={'answer'}>{data.data.answer}</span>
-      <div>
+      <span className={'answer'}>
+        {type === '单选'
+          ? char[answer.id]
+          : type === '判断'
+          ? judge[answer.id]
+          : answer.idList.map((item) => char[item])}
+      </span>
+      <div style={{ flex: 1 }}>
         <span className="q_id">
-          <small id="question_id">{data.data.question_id}</small>
-          <small id="question_type">{data.data.question_type}</small>
+          <small id="question_id">{num}</small>
+          <small id="question_type">{type}</small>
         </span>
-        <span className="question">{data.data.question}</span>
+        <span className="question">{question}</span>
+        <Divider dashed style={{ margin: '8px 0' }}></Divider>
+        <div className="options">
+          {options.map((items, index) => (
+            <span id={isRightAnswer(type, answer, index)}>
+              {char[index]}.{items}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )
 }
 
+function isRightAnswer(answerType, answer, index) {
+  if (answerType === '单选') {
+    if (answer.id * 0 === index) return 'rightAnswer'
+  }
+  if (answerType === '判断') {
+    if (answer.id - 1 === index) return 'rightAnswer'
+  }
+  if (answerType === '多选') {
+    for (var i = 0; i < answer.idList.length; i++) if (Number(answer.idList[i]) === index) return 'rightAnswer'
+  }
+}
+
 const AnswersBody = styled.div`
   flex: 100% 1;
   margin: 0 0 90px 0;
-  .liner {
-    border-bottom: #eaeaea 2px dashed;
-    display: block;
-    margin-bottom: 2em;
-  }
-  .liner_text {
-    display: block;
-    background-color: #f9f9fb;
-    padding: 6px 6px 6px 18px;
-    color: #aeaeae;
-    position: relative;
-    width: 160px;
-    text-align: center;
-    top: 17px;
-    letter-spacing: 16px;
-    margin: auto;
-  }
+
   .answer_contain {
     @media screen and (max-width: 500px) {
       padding: 32px 12px;
@@ -173,7 +190,6 @@ const AnswersBody = styled.div`
     border-radius: 5px;
     transition: 0.3s;
     cursor: pointer;
-    max-height: 100px;
 
     &:hover {
       border: 1px solid rgb(141, 142, 255);
@@ -204,6 +220,25 @@ const AnswersBody = styled.div`
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+    }
+    .options {
+      display: flex;
+      flex: 1;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      * {
+        /* margin-right: 12px; */
+        color: #e2e0e0;
+        flex: 1 50%;
+        font-size: 10px;
+        line-height: 26px;
+        @media screen and (max-width: 500px) {
+          flex: 1 100%;
+        }
+      }
+      #rightAnswer {
+        color: #8b91b3;
+      }
     }
     .answer {
       margin: auto;
