@@ -12,8 +12,8 @@ export default function router() {
       <Switch>
         <Route path="/" component={Froms} exact />
         <Route path="/history" component={History} exact />
-        <Route path="/answer/:paper_id" component={PageAnswer} exact/>
-        <Redirect to="/"/>
+        <Route path="/answer/:paper_id" component={PageAnswer} exact />
+        <Redirect to="/" />
       </Switch>
     </PageContainer>
   )
