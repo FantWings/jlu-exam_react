@@ -149,10 +149,10 @@ function Answer(props) {
 
 function isRightAnswer(answerType, answer, index) {
   if (answerType === '单选') {
-    if (answer.id * 0 === index) return 'rightAnswer'
+    if (Number(answer.id) === index) return 'rightAnswer'
   }
   if (answerType === '判断') {
-    if (answer.id - 1 === index) return 'rightAnswer'
+    if (Number(answer.id) === index) return 'rightAnswer'
   }
   if (answerType === '多选') {
     for (var i = 0; i < answer.idList.length; i++) if (Number(answer.idList[i]) === index) return 'rightAnswer'
