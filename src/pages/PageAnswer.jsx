@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { message, Divider, Skeleton } from 'antd'
+import { message, Divider, Skeleton, Switch } from 'antd'
 import { BASE_URL } from '../api'
 import styled from 'styled-components'
 import { fetchData } from '../common/fetchData'
@@ -16,6 +16,7 @@ export default function PageAnswer() {
   })
   const [loading, setLoading] = useState(false)
   const [paperName, setPaperName] = useState(0)
+  const [showOptions, setShowOptions] = useState(true)
   const { paper_id } = useParams()
 
   useEffect(() => {
@@ -76,20 +77,29 @@ export default function PageAnswer() {
           》
         </h2>
       </span>
-      <Divider dashed style={{ color: '#eaeaea' }}>
+      <span id="optionDisplayControl">
+        <text>题目选项显示</text>
+        <Switch
+          checkedChildren="开启"
+          unCheckedChildren="关闭"
+          defaultChecked
+          onChange={() => setShowOptions(!showOptions)}
+        />
+      </span>
+      <Divider dashed style={{ color: '#bfbfbf' }}>
         标准答案
       </Divider>
       {loading ? <Skeleton active /> : undefined}
-      <AnswerContain source={data.answers.单选} title="单选题" />
-      <AnswerContain source={data.answers.多选} title="多选题" />
-      <AnswerContain source={data.answers.判断} title="判断题" />
-      <AnswerContain source={data.answers.完形填空} title="完形填空" />
+      <AnswerContain source={data.answers.单选} title="单选题" showOptions={showOptions} />
+      <AnswerContain source={data.answers.多选} title="多选题" showOptions={showOptions} />
+      <AnswerContain source={data.answers.判断} title="判断题" showOptions={showOptions} />
+      <AnswerContain source={data.answers.完形填空} title="完形填空" showOptions={showOptions} />
     </AnswersBody>
   )
 }
 
 function AnswerContain(props) {
-  const { source, title } = props
+  const { source, title, showOptions } = props
   const rows = []
 
   if (!source) return null
@@ -105,6 +115,7 @@ function AnswerContain(props) {
           question={item.question}
           options={item.options}
           key={item.id}
+          showOptions={showOptions}
         />
       ))}
     </div>
@@ -113,7 +124,7 @@ function AnswerContain(props) {
 }
 
 function Answer(props) {
-  const { answer, num, type, question, options } = props
+  const { answer, num, type, question, options, showOptions } = props
   const [isSelected, setIsSelected] = useState(false)
   const char = ['A', 'B', 'C', 'D', 'E', 'F']
   const judge = ['NULL', '对', '错']
@@ -133,14 +144,18 @@ function Answer(props) {
           <small id="question_type">{type}</small>
         </span>
         <span className="question">{question}</span>
-        <Divider dashed style={{ margin: '8px 0' }}></Divider>
-        <div className="options">
-          {options.map((items, index) => (
-            <span id={isRightAnswer(type, answer, index)}>
-              {char[index]}.{items}
-            </span>
-          ))}
-        </div>
+        {showOptions ? (
+          <>
+            <Divider dashed style={{ margin: '8px 0' }}></Divider>
+            <div className="options">
+              {options.map((items, index) => (
+                <span id={isRightAnswer(type, answer, index)}>
+                  {char[index]}.{items}
+                </span>
+              ))}
+            </div>
+          </>
+        ) : undefined}
       </div>
     </div>
   )
@@ -244,7 +259,6 @@ const AnswersBody = styled.div`
       font-size: 30px;
       margin: auto 20px;
       color: #2b2d38;
-      max-width: 50px;
       text-align: center;
       overflow-wrap: break-word;
     }
@@ -319,6 +333,18 @@ const AnswersBody = styled.div`
       }
     }
   }
+
+  #optionDisplayControl {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+
+    text {
+      font-weight: 700;
+      margin-right: 16px;
+    }
+  }
+
   #CompletedCounter {
     position: fixed;
     bottom: 80px;
