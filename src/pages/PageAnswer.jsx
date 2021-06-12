@@ -245,6 +245,9 @@ const AnswersBody = styled.div`
       font-size: 30px;
       margin: auto 20px;
       color: #2b2d38;
+      max-width: 50px;
+      text-align: center;
+      overflow-wrap: break-word;
     }
     .multi {
       font-size: 20px;
