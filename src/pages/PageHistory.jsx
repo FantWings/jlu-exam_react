@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Pagination, Spin } from 'antd'
+import { Pagination, Skeleton } from 'antd'
 import { BASE_URL } from '../api'
 import styled from 'styled-components'
 import { useHistory } from 'react-router'
@@ -28,9 +28,8 @@ export default function History() {
     <AnswerContain key="animContent">
       <h1 className="q_type">答案库</h1>
       <small className="smallTitle">这里收集了所有同学有史以来提交过的试卷数据</small>
-      <Spin spinning={loading} tip="向服务器请求数据...." className="loader">
-        <ListObject data={data.results} />
-      </Spin>
+      <ListObject data={data.results} />
+      {loading ? <Skeleton active /> : undefined}
       <span id="pagination">
         <Pagination
           current={pagination[0]}

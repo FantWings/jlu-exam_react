@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { message, Spin, Divider } from 'antd'
+import { message, Divider, Skeleton } from 'antd'
 import { BASE_URL } from '../api'
 import styled from 'styled-components'
 import { fetchData } from '../common/fetchData'
@@ -79,12 +79,11 @@ export default function PageAnswer() {
       <Divider dashed style={{ color: '#eaeaea' }}>
         标准答案
       </Divider>
-      <Spin spinning={loading} tip="下载答案数据....">
-        <AnswerContain source={data.answers.单选} title="单选题" />
-        <AnswerContain source={data.answers.多选} title="多选题" />
-        <AnswerContain source={data.answers.判断} title="判断题" />
-        <AnswerContain source={data.answers.完形填空} title="完形填空" />
-      </Spin>
+      {loading ? <Skeleton active /> : undefined}
+      <AnswerContain source={data.answers.单选} title="单选题" />
+      <AnswerContain source={data.answers.多选} title="多选题" />
+      <AnswerContain source={data.answers.判断} title="判断题" />
+      <AnswerContain source={data.answers.完形填空} title="完形填空" />
     </AnswersBody>
   )
 }
