@@ -1,47 +1,13 @@
-import React, { useState, useEffect } from 'react'
 import { Spin } from 'antd'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { fetchData } from '../common/fetchData'
-import { BASE_URL } from '../api'
+import useFetch from '../hooks/useFetch'
+import useIdenCheck from '../hooks/useUserIdent'
 
 export default function PageContianer(props) {
-  const [data, setData] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [userIdent, setUserIdent] = useState(localStorage.getItem('userIdent'))
-
-  useEffect(() => {
-    if (!userIdent) {
-      const ident = guid()
-      localStorage.setItem('userIdent', ident)
-      setUserIdent(ident)
-      console.log(
-        '临时ID已分配：[',
-        ident,
-        ']，该身份ID用于识别试卷所有者，清除浏览器缓存可能会使你不能再修改试卷数据。'
-      )
-    } else {
-      console.log(
-        '使用已有的ID：[',
-        userIdent,
-        ']，该身份ID用于识别试卷所有者，清除浏览器缓存可能会使你不能再修改试卷数据。'
-      )
-    }
-
-    const getData = async () => {
-      await fetchData(
-        `${BASE_URL}/getState`,
-        {
-          credentials: 'include',
-          mode: 'cors',
-        },
-        setLoading,
-        setData
-      )
-    }
-    getData()
-  }, [userIdent])
+  const [data, loading] = useFetch(`https://api.htips.cn/api/getState`)
+  useIdenCheck()
 
   return (
     <Container>
@@ -51,13 +17,15 @@ export default function PageContianer(props) {
           <p id="s_title">
             <small id="notice">
               你身边最牛逼的作业小助手，
-              {loading
-                ? '统计数据加载中'
-                : data.count
-                ? data.count
-                  ? `累计已处理 ${data.count} 张试卷`
-                  : '使用统计功能未启用'
-                : '获取统计数据失败'}
+              {loading ? (
+                '统计数据加载中'
+              ) : data.count ? (
+                <span>
+                  累计已处理 <Counter>{data.count}</Counter> 张试卷
+                </span>
+              ) : (
+                '由于后端错误，获取统计数据失败'
+              )}
             </small>
           </p>
           <small id="menu">
@@ -96,12 +64,9 @@ export default function PageContianer(props) {
   )
 }
 
-function guid() {
-  function S4() {
-    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
-  }
-  return S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4()
-}
+const Counter = styled.span`
+  color: orange;
+`
 
 const Container = styled.div`
   height: 100%;
@@ -125,11 +90,6 @@ const PageTitle = styled.div`
     bottom: 10px;
     color: #a0a0a0;
     margin: 0;
-    small {
-      span {
-        color: orange;
-      }
-    }
   }
 
   #menu {

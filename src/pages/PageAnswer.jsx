@@ -1,55 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { message, Divider, Skeleton, Switch } from 'antd'
-import { BASE_URL } from '../api'
+import { BASE_URL } from '../config'
 import styled from 'styled-components'
-import { fetchData } from '../common/fetchData'
+import { useFetch, fetchData } from '../hooks/useFetch'
 import moment from 'moment'
 
 export default function PageAnswer() {
-  const [data, setData] = useState({
-    paper_id: '加载中',
-    submit_time: moment().format('YYYY-MM-DD HH:mm:ss'),
-    isOwner: false,
-    answers: { 加载中: [] },
-    paper_name: '加载中',
-  })
-  const [loading, setLoading] = useState(false)
+  const { paper_id } = useParams()
   const [paperName, setPaperName] = useState(0)
   const [showOptions, setShowOptions] = useState(true)
-  const { paper_id } = useParams()
-
-  useEffect(() => {
-    const getData = async () => {
-      await fetchData(
-        `${BASE_URL}/paper/${paper_id}`,
-        {
-          headers: {
-            userIdent: localStorage.getItem('userIdent'),
-          },
-        },
-        setLoading,
-        setData
-      )
-    }
-    getData()
-  }, [paper_id])
+  const [data, loading] = useFetch(`${BASE_URL}/paper/${paper_id}`)
 
   const renamePaper = async () => {
     if (paperName.length >= 4) {
-      await fetchData(
-        `${BASE_URL}/paper/setPaperName`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            userIdent: localStorage.getItem('userIdent'),
-          },
-          body: JSON.stringify({ paper_id: data.paper_id, new_name: paperName }),
+      await fetchData(`${BASE_URL}/paper/setPaperName`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          userIdent: localStorage.getItem('userIdent'),
         },
-        setLoading,
-        undefined
-      )
+        body: JSON.stringify({ paper_id: data.paper_id, new_name: paperName }),
+      })
     } else {
       message.info({ content: '试卷名称需要大于4个字符', key: 'info_length', duration: 1 })
     }
@@ -78,7 +50,7 @@ export default function PageAnswer() {
         </h2>
       </span>
       <span id="optionDisplayControl">
-        <text>题目选项显示</text>
+        <span id="switchText">题目选项显示</span>
         <Switch
           checkedChildren="开启"
           unCheckedChildren="关闭"
@@ -90,10 +62,14 @@ export default function PageAnswer() {
         标准答案
       </Divider>
       {loading ? <Skeleton active /> : undefined}
-      <AnswerContain source={data.answers.单选} title="单选题" showOptions={showOptions} />
-      <AnswerContain source={data.answers.多选} title="多选题" showOptions={showOptions} />
-      <AnswerContain source={data.answers.判断} title="判断题" showOptions={showOptions} />
-      <AnswerContain source={data.answers.完形填空} title="完形填空" showOptions={showOptions} />
+      {data ? (
+        <>
+          <AnswerContain source={data.answers.单选} title="单选题" showOptions={showOptions} />
+          <AnswerContain source={data.answers.多选} title="多选题" showOptions={showOptions} />
+          <AnswerContain source={data.answers.判断} title="判断题" showOptions={showOptions} />
+          <AnswerContain source={data.answers.完形填空} title="完形填空" showOptions={showOptions} />
+        </>
+      ) : undefined}
     </AnswersBody>
   )
 }
@@ -105,7 +81,7 @@ function AnswerContain(props) {
   if (!source) return null
 
   rows.push(
-    <div className="answer_contain">
+    <div className="answer_contain" key={title}>
       <h3 className="q_type">{title}</h3>
       {source.map((item, index) => (
         <Answer
@@ -149,7 +125,7 @@ function Answer(props) {
             <Divider dashed style={{ margin: '8px 0' }}></Divider>
             <div className="options">
               {options.map((items, index) => (
-                <span id={isRightAnswer(type, answer, index)}>
+                <span id={isRightAnswer(type, answer, index)} key={index}>
                   {char[index]}.{items}
                 </span>
               ))}
@@ -339,7 +315,7 @@ const AnswersBody = styled.div`
     justify-content: center;
     padding: 12px;
 
-    text {
+    #switchText {
       font-weight: 700;
       margin-right: 16px;
     }

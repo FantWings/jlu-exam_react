@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useHistory } from 'react-router'
 import { Input, message } from 'antd'
 import styled from 'styled-components'
-import { BASE_URL } from '../api'
+import { BASE_URL } from '../config'
+import { fetchData } from '../hooks/useFetch'
 
 export default function PageForms() {
   const [FromData, setFromData] = useState(0)
@@ -41,26 +42,22 @@ export default function PageForms() {
     }
 
     const { answerPaperRecordId } = req.question_data.data
-    const response = await fetch(`${BASE_URL}/paper/${answerPaperRecordId}`, {
+
+    const { code } = await fetchData(`${BASE_URL}/paper/${answerPaperRecordId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         userIdent: localStorage.getItem('userIdent'),
       },
-      credentials: 'include',
-      mode: 'cors',
       body: JSON.stringify(req),
     })
 
-    const { code, msg } = await response.json()
     if (code) {
-      message.error({ content: msg, key: 'statusbar' })
       return setStatus({ status: 'failure', text: '重试一次' })
     } else {
       history.push(`/answer/${answerPaperRecordId}`)
       //重定向用户浏览器视口到顶部
       window.scrollTo(0, 0)
-      if (msg) message.info({ content: msg, key: 'statusbar' })
     }
   }
 

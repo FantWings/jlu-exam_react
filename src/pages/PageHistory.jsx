@@ -1,28 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Pagination, Skeleton } from 'antd'
-import { BASE_URL } from '../api'
+import { BASE_URL } from '../config'
 import styled from 'styled-components'
 import { useHistory } from 'react-router'
-import { fetchData } from '../common/fetchData'
+
+import useFetch from '../hooks/useFetch'
 
 export default function History() {
-  const [data, setData] = useState({
-    data: [],
-  })
-  const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState([1, 10])
-
-  useEffect(() => {
-    const getData = async () => {
-      await fetchData(
-        `${BASE_URL}/paper/lists?limit=${pagination[1]}&index=${pagination[0]}`,
-        undefined,
-        setLoading,
-        setData
-      )
-    }
-    getData()
-  }, [pagination])
+  const [data, loading] = useFetch(`${BASE_URL}/paper/lists?limit=${pagination[1]}&index=${pagination[0]}`)
 
   return (
     <AnswerContain key="animContent">
