@@ -58,6 +58,7 @@ export default function PageForms() {
       history.push(`/answer/${answerPaperRecordId}`)
       //重定向用户浏览器视口到顶部
       window.scrollTo(0, 0)
+      message.destroy('statusbar')
     }
   }
 
