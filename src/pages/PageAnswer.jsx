@@ -13,6 +13,7 @@ export default function PageAnswer() {
   const [data, loading] = useFetch(`${BASE_URL}/paper/${paper_id}`)
 
   const renamePaper = async () => {
+    message.loading({ content: '正在重命名试卷...', key: 'info_length' })
     if (paperName.length >= 4) {
       await fetchData(`${BASE_URL}/paper/setPaperName`, {
         method: 'POST',
@@ -22,6 +23,7 @@ export default function PageAnswer() {
         },
         body: JSON.stringify({ paper_id: data.paper_id, new_name: paperName }),
       })
+      message.destroy('info_length')
     } else {
       message.info({ content: '试卷名称需要大于4个字符', key: 'info_length', duration: 1 })
     }
