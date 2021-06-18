@@ -16,10 +16,10 @@ export default function PageForms() {
 
   const history = useHistory()
   const { TextArea } = Input
-  
 
   const handleClick = async (e) => {
     e.preventDefault()
+    setButtomStatus({ ...buttomStatus, loading: true, text: '请稍等' })
 
     if (!FromData) return message.warn('提交的数据不可为空，请填写后重试')
 
@@ -28,7 +28,7 @@ export default function PageForms() {
       var req = { question_data: JSON.parse(FromData) }
     } catch (error) {
       message.warning('你输入的数据不正确或不完整，请检查后重新提交')
-      return setButtomStatus({ ...buttomStatus, failure: true, text: '重试一次' })
+      return setButtomStatus({ ...buttomStatus, failure: true, loading: false, text: '重试一次' })
     }
 
     const { answerPaperRecordId } = req.question_data.data
@@ -42,7 +42,7 @@ export default function PageForms() {
     })
 
     if (code) {
-      return setButtomStatus({ ...buttomStatus, failure: true, text: '重试一次' })
+      return setButtomStatus({ ...buttomStatus, failure: true, loading: false, text: '重试一次' })
     } else {
       history.push(`/answer/${answerPaperRecordId}`)
       //重定向用户浏览器视口到顶部
@@ -56,7 +56,7 @@ export default function PageForms() {
         showCount
         placeholder="将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击菜单上的“使用教程”"
         autoSize={{ minRows: 20, maxRows: 20 }}
-        onChange={(e) => setFromData(e.target.value) }
+        onChange={(e) => setFromData(e.target.value)}
         allowClear
       />
       <div id="key_feid">
