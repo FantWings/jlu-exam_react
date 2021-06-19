@@ -125,8 +125,8 @@ function Answer(props) {
         <div
           style={{
             overflow: 'hidden',
-            maxHeight: showOptions ? 500 : 0,
-            transition: '1s cubic-bezier(0.39, 0.58, 0.57, 1)',
+            maxHeight: showOptions ? 150 : 0,
+            transition: '0.8s cubic-bezier(0.39, 0.58, 0.57, 1)',
           }}
         >
           <Divider dashed style={{ margin: '8px 0' }}></Divider>
