@@ -122,18 +122,22 @@ function Answer(props) {
           <small id="question_type">{type}</small>
         </span>
         <span className="question">{question}</span>
-        {showOptions ? (
-          <>
-            <Divider dashed style={{ margin: '8px 0' }}></Divider>
-            <div className="options">
-              {options.map((items, index) => (
-                <span id={isRightAnswer(type, answer, index)} key={index}>
-                  {char[index]}.{items}
-                </span>
-              ))}
-            </div>
-          </>
-        ) : undefined}
+        <div
+          style={{
+            overflow: 'hidden',
+            maxHeight: showOptions ? 500 : 0,
+            transition: '1s cubic-bezier(0.39, 0.58, 0.57, 1)',
+          }}
+        >
+          <Divider dashed style={{ margin: '8px 0' }}></Divider>
+          <div className="options">
+            {options.map((items, index) => (
+              <span id={isRightAnswer(type, answer, index)} key={index}>
+                {char[index]}.{items}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
