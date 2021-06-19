@@ -7,8 +7,8 @@ import { fetchData } from '../hooks/useFetch'
 
 export default function PageForms() {
   const [FromData, setFromData] = useState(0)
+  const [blindClick, setBlindClick] = useState(0)
   const [buttomStatus, setButtomStatus] = useState({
-    disable: true,
     failure: false,
     loading: false,
     text: '提交',
@@ -22,7 +22,12 @@ export default function PageForms() {
     setButtomStatus({ ...buttomStatus, loading: true, text: '请稍等' })
 
     if (!FromData) {
-      message.warn('提交的数据不可为空，请填写后重试')
+      message.warn(blindClick >= 5 ? '嘿！别闹了，不填数据就点提交是行不通的！' : '提交的数据不可为空，请填写后重试')
+      if (blindClick === 10) {
+        message.error({ content: '....别按了！喝口茶冷静下！', duration: 0 })
+      }
+
+      setBlindClick(blindClick + 1)
       return setButtomStatus({
         ...buttomStatus,
         failure: true,
@@ -62,7 +67,11 @@ export default function PageForms() {
     <Form method="post" name="form">
       <TextArea
         showCount
-        placeholder="将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击菜单上的“使用教程”"
+        placeholder={
+          blindClick >= 11
+            ? '你是真的牛逼！'
+            : '将获取到的试卷数据粘贴到这里，如果您不清楚如何获取数据，请点击菜单上的“使用教程”'
+        }
         autoSize={{ minRows: 20, maxRows: 20 }}
         onChange={(e) => setFromData(e.target.value)}
         allowClear
@@ -76,6 +85,7 @@ export default function PageForms() {
           style={{ padding: '0 80px' }}
           danger={buttomStatus.failure}
           loading={buttomStatus.loading}
+          disabled={blindClick >= 11 ? true : false}
         >
           {buttomStatus.text}
         </Button>
