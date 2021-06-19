@@ -21,7 +21,10 @@ export default function PageForms() {
     e.preventDefault()
     setButtomStatus({ ...buttomStatus, loading: true, text: '请稍等' })
 
-    if (!FromData) return message.warn('提交的数据不可为空，请填写后重试')
+    if (!FromData) {
+      message.warn('提交的数据不可为空，请填写后重试')
+      return setButtomStatus({ ...buttomStatus, failure: true, loading: false, text: '重试一次' })
+    }
 
     //判断用户是否输入的是错误的数据
     try {
