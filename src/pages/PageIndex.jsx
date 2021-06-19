@@ -24,7 +24,7 @@ export default function PageForms() {
     if (!FromData) {
       message.warn(blindClick >= 5 ? '嘿！别闹了，不填数据就点提交是行不通的！' : '提交的数据不可为空，请填写后重试')
       if (blindClick === 10) {
-        message.error({ content: '....别按了！喝口茶冷静下！', duration: 0 })
+        message.error({ content: '....球球你别按了！快去喝口茶冷静下！', duration: 0 })
       }
 
       setBlindClick(blindClick + 1)
