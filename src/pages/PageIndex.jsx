@@ -75,6 +75,7 @@ export default function PageForms() {
         autoSize={{ minRows: 20, maxRows: 20 }}
         onChange={(e) => setFromData(e.target.value)}
         allowClear
+        disabled={blindClick >= 11 ? true : false}
       />
       <div id="key_feid">
         <Button
