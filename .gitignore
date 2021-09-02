@@ -22,13 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# python
-__pycache__
-config.json
-test.py
-
-# for testing
-mock
+# api
+config.jsx
 
 # vscode
 .vscode
