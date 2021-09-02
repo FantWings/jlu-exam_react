@@ -5,8 +5,10 @@ import styled from 'styled-components'
 import useFetch from '../hooks/useFetch'
 import useIdenCheck from '../hooks/useUserIdent'
 
+import { BASE_URL } from '../config'
+
 export default function PageContianer(props) {
-  const [data, loading] = useFetch(`https://api.htips.cn/api/getState`)
+  const [data, loading] = useFetch(`${BASE_URL}/getState`)
   useIdenCheck()
 
   return (
